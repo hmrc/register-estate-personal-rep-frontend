@@ -21,7 +21,7 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class LogoutControllerTest extends FreeSpec with MustMatchers with GuiceOneAppPerSuite with OptionValues {
+class LogoutControllerSpec extends FreeSpec with MustMatchers with GuiceOneAppPerSuite with OptionValues {
 
   "logout" - {
 
