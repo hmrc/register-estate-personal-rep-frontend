@@ -16,18 +16,24 @@
 
 package navigation
 
-import models._
-import pages._
+import javax.inject.Inject
+import models.{Mode, UserAnswers}
+import pages.Page
 import play.api.mvc.Call
 
-trait Navigator {
+class BusinessNavigator @Inject()() extends Navigator {
 
-  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call
+  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = routes(mode)(page)(userAnswers)
 
-  def yesNoNav(ua: UserAnswers, fromPage: QuestionPage[Boolean], yesCall: => Call, noCall: => Call): Call = {
-    ua.get(fromPage)
-      .map(if (_) yesCall else noCall)
-      .getOrElse(controllers.routes.SessionExpiredController.onPageLoad())
+  private def simpleNavigation(mode: Mode): PartialFunction[Page, Call] = {
+    ???
   }
 
+  private def yesNoNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
+    ???
+  }
+
+  private def routes(mode: Mode): PartialFunction[Page, UserAnswers => Call] =
+    simpleNavigation(mode) andThen (c => (_:UserAnswers) => c) orElse
+      yesNoNavigation(mode)
 }

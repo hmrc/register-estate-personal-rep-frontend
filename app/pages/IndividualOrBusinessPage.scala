@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-package navigation
+package pages
 
-import models._
-import pages._
-import play.api.mvc.Call
+import models.IndividualOrBusiness
+import play.api.libs.json.JsPath
 
-trait Navigator {
+object IndividualOrBusinessPage extends QuestionPage[IndividualOrBusiness] {
 
-  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call
+  override def path: JsPath = JsPath \ toString
 
-  def yesNoNav(ua: UserAnswers, fromPage: QuestionPage[Boolean], yesCall: => Call, noCall: => Call): Call = {
-    ua.get(fromPage)
-      .map(if (_) yesCall else noCall)
-      .getOrElse(controllers.routes.SessionExpiredController.onPageLoad())
-  }
-
+  override def toString: String = "individualOrBusiness"
 }
