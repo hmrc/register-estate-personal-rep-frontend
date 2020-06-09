@@ -40,7 +40,8 @@
             legendClass = Some("heading-large"),
             fieldSetClass = Some("inline"),
             inputs = IndividualOrBusiness.options.toSeq,
-            headingIsLegend = true
+            headingIsLegend = true,
+            hint = Some(messages("individualOrBusiness.hint"))
         )
 
         @components.submit_button()
