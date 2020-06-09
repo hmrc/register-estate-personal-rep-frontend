@@ -16,13 +16,27 @@
 
 package pages.individual
 
-import models.PassportOrIdCard
+import models.PassportOrIdCard._
+import models.{PassportOrIdCard, UserAnswers}
 import pages.QuestionPage
 import play.api.libs.json.JsPath
+
+import scala.util.Try
 
 case object PassportOrIdCardPage extends QuestionPage[PassportOrIdCard] {
 
   override def path: JsPath = basePath \ toString
 
   override def toString: String = "passportOrIdCard"
+
+  override def cleanup(value: Option[PassportOrIdCard], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value match {
+      case Some(Passport) =>
+        userAnswers.remove(IdCardPage)
+      case Some(IdCard) =>
+        userAnswers.remove(PassportPage)
+      case _ =>
+        super.cleanup(value, userAnswers)
+    }
+  }
 }

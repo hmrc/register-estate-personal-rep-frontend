@@ -16,12 +16,24 @@
 
 package pages
 
-import models.IndividualOrBusiness
+import models.IndividualOrBusiness._
+import models.{IndividualOrBusiness, UserAnswers}
 import play.api.libs.json.JsPath
+
+import scala.util.Try
 
 object IndividualOrBusinessPage extends QuestionPage[IndividualOrBusiness] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "individualOrBusiness"
+
+  override def cleanup(value: Option[IndividualOrBusiness], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value match {
+      case Some(Business) =>
+        userAnswers.deleteAtPath(pages.individual.basePath)
+      case _ =>
+        super.cleanup(value, userAnswers)
+    }
+  }
 }
