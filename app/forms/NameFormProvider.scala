@@ -24,7 +24,7 @@ import play.api.data.Forms._
 
 class NameFormProvider @Inject() extends Mappings {
 
-   def withPrefix(prefix: String): Form[Name] =   Form(
+  def withPrefix(prefix: String): Form[Name] = Form(
     mapping(
       "firstName" -> text(s"$prefix.error.firstName.required")
         .verifying(
@@ -50,5 +50,5 @@ class NameFormProvider @Inject() extends Mappings {
           )
         )
     )(Name.apply)(Name.unapply)
-   )
- }
+  )
+}
