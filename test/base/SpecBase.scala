@@ -19,6 +19,7 @@ package base
 import config.FrontendAppConfig
 import controllers.actions._
 import models.UserAnswers
+import navigation.FakeNavigator
 import org.scalatest.TryValues
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatestplus.play.PlaySpec
@@ -28,10 +29,13 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
+import repositories.SessionRepository
 
-trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience {
+trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with Mocked with TryValues with ScalaFutures with IntegrationPatience {
 
   val userAnswersId = "id"
+
+  val fakeNavigator = new FakeNavigator()
 
   def emptyUserAnswers = UserAnswers(userAnswersId, Json.obj())
 
@@ -50,6 +54,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues with Sca
       .overrides(
         bind[DataRequiredAction].to[DataRequiredActionImpl],
         bind[IdentifierAction].to[FakeIdentifierAction],
-        bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers))
+        bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers)),
+        bind[SessionRepository].toInstance(sessionRepository)
       )
 }

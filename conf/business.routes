@@ -1,0 +1,6 @@
+# microservice specific routes
+
+GET        /uk-registered                               controllers.business.UkRegisteredYesNoController.onPageLoad(mode: Mode = NormalMode)
+POST       /uk-registered                               controllers.business.UkRegisteredYesNoController.onSubmit(mode: Mode = NormalMode)
+GET        /change-uk-registered                        controllers.business.UkRegisteredYesNoController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-uk-registered                        controllers.business.UkRegisteredYesNoController.onSubmit(mode: Mode = CheckMode)

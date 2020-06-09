@@ -14,15 +14,10 @@
  * limitations under the License.
  */
 
-package navigation
+package pages
 
-import models.{Mode, NormalMode, UserAnswers}
-import pages._
-import play.api.mvc.Call
+import play.api.libs.json.JsPath
 
-class FakeNavigator(val desiredRoute: Call = Call("GET", "/foo"), mode: Mode = NormalMode) extends Navigator {
-
-  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
-    desiredRoute
-
+package object business {
+  val basePath: JsPath = JsPath \ 'business
 }

@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package navigation
+package forms
 
-import models.{Mode, NormalMode, UserAnswers}
-import pages._
-import play.api.mvc.Call
+import forms.mappings.Mappings
+import javax.inject.Inject
+import play.api.data.Form
 
-class FakeNavigator(val desiredRoute: Call = Call("GET", "/foo"), mode: Mode = NormalMode) extends Navigator {
+class YesNoFormProvider @Inject() extends Mappings {
 
-  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
-    desiredRoute
-
+  def withPrefix(prefix: String): Form[Boolean] =
+    Form(
+      "value" -> boolean(s"$prefix.error.required")
+    )
 }
