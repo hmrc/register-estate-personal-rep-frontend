@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package pages.individual
+package forms
 
-import models.CombinedPassportOrIdCard
-import pages.QuestionPage
-import play.api.libs.json.JsPath
+import forms.mappings.Mappings
+import javax.inject.Inject
+import models.PassportOrIdCard
+import play.api.data.Form
 
-case object IdCardPage extends QuestionPage[CombinedPassportOrIdCard] {
+class PassportOrIdCardFormProvider @Inject() extends Mappings {
 
-  override def path: JsPath = basePath \ toString
-
-  override def toString: String = "idCard"
+  def withPrefix(prefix: String): Form[PassportOrIdCard] =
+    Form(
+      "value" -> enumerable[PassportOrIdCard](s"$prefix.error.required")
+    )
 }

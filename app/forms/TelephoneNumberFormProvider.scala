@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package pages.individual
+package forms
 
-import models.CombinedPassportOrIdCard
-import pages.QuestionPage
-import play.api.libs.json.JsPath
+import forms.mappings.Mappings
+import javax.inject.Inject
+import play.api.data.Form
 
-case object IdCardPage extends QuestionPage[CombinedPassportOrIdCard] {
+class TelephoneNumberFormProvider @Inject() extends Mappings {
 
-  override def path: JsPath = basePath \ toString
-
-  override def toString: String = "idCard"
+  def withPrefix(prefix: String): Form[String] =
+    Form(
+      "value" -> text(s"$prefix.error.required")
+        .verifying(
+          firstError(
+            isNotEmpty("value", s"$prefix.error.required"),
+            regexp(Validation.telephoneRegex, s"$prefix.error.invalid")
+          ))
+    )
 }

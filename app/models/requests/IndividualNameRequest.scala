@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-package pages.individual
+package models.requests
 
-import models.CombinedPassportOrIdCard
-import pages.QuestionPage
-import play.api.libs.json.JsPath
+import models.UserAnswers
+import play.api.mvc.WrappedRequest
 
-case object IdCardPage extends QuestionPage[CombinedPassportOrIdCard] {
-
-  override def path: JsPath = basePath \ toString
-
-  override def toString: String = "idCard"
+case class IndividualNameRequest[T](request: DataRequest[T], name: String) extends WrappedRequest[T](request){
+  val userAnswers:UserAnswers = request.userAnswers
 }
