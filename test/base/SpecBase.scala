@@ -28,6 +28,7 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
+import play.api.mvc.Call
 import play.api.test.FakeRequest
 import repositories.SessionRepository
 
@@ -38,6 +39,8 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with Mocked with TryVal
   val fakeNavigator = new FakeNavigator()
 
   def emptyUserAnswers = UserAnswers(userAnswersId, Json.obj())
+
+  def onwardRoute = Call("GET", "/foo")
 
   def injector: Injector = app.injector
 

@@ -38,7 +38,7 @@ import scala.concurrent.Future
 
 class UkRegisteredYesNoControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  override def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new YesNoFormProvider()
   val form = formProvider.withPrefix("business.ukRegisteredYesNo")

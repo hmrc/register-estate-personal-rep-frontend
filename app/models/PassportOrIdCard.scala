@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package pages
+package models
 
-import models.IndividualOrBusiness._
-import models.{IndividualOrBusiness, UserAnswers}
-import play.api.libs.json.JsPath
+import viewmodels.RadioOption
 
-import scala.util.Try
+sealed trait PassportOrIdCard
 
-object IndividualOrBusinessPage extends QuestionPage[IndividualOrBusiness] {
+object PassportOrIdCard extends Enumerable.Implicits {
 
-  override def path: JsPath = JsPath \ toString
+  case object Passport extends WithName("passport") with PassportOrIdCard
+  case object IdCard extends WithName("id-card") with PassportOrIdCard
 
-  override def toString: String = "individualOrBusiness"
+  val values: Set[PassportOrIdCard] = Set(
+    Passport, IdCard
+  )
 
-  override def cleanup(value: Option[IndividualOrBusiness], userAnswers: UserAnswers): Try[UserAnswers] = {
-    value match {
-      case Some(Business) =>
-        userAnswers.deleteAtPath(pages.individual.basePath)
-      case _ =>
-        super.cleanup(value, userAnswers)
-    }
+  val options: Set[RadioOption] = values.map {
+    value =>
+      RadioOption("passportOrIdCard", value.toString)
   }
+
+  implicit val enumerable: Enumerable[PassportOrIdCard] =
+    Enumerable(values.toSeq.map(v => v.toString -> v): _*)
 }

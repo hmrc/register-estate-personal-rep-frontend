@@ -17,8 +17,10 @@
 package navigation
 
 import javax.inject.Inject
-import models.{Mode, UserAnswers}
+import models.PassportOrIdCard._
+import models.{Mode, PassportOrIdCard, UserAnswers}
 import pages.{Page, QuestionPage}
+import pages.individual._
 import play.api.mvc.Call
 
 class IndividualNavigator @Inject()() extends Navigator {
@@ -26,14 +28,31 @@ class IndividualNavigator @Inject()() extends Navigator {
   override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = routes(mode)(page)(userAnswers)
 
   private def simpleNavigation(mode: Mode): PartialFunction[Page, Call] = {
-    ???
+    case NamePage => ???
+    case DateOfBirthPage => ???
+    case NinoPage => ???
+    case PassportPage => ???
+    case IdCardPage => ???
+    case UkAddressPage => ???
+    case NonUkAddressPage => ???
+    case TelephoneNumberPage => ???
   }
 
-  private def yesNoNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
-    ???
+  private def conditionalNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
+    case NinoYesNoPage => ua => yesNoNav(ua, NinoYesNoPage, ???, ???)
+    case PassportOrIdCardPage => ua =>passportIdCardNav(ua, PassportOrIdCardPage)
+    case LivesInTheUkYesNoPage => ua => yesNoNav(ua, LivesInTheUkYesNoPage, ???, ???)
   }
 
   private def routes(mode: Mode): PartialFunction[Page, UserAnswers => Call] =
     simpleNavigation(mode) andThen (c => (_:UserAnswers) => c) orElse
-      yesNoNavigation(mode)
+      conditionalNavigation(mode)
+
+  def passportIdCardNav(ua: UserAnswers, fromPage: QuestionPage[PassportOrIdCard]): Call = {
+    ua.get(fromPage) match {
+      case Some(Passport) => ???
+      case Some(IdCard) => ???
+      case _ => controllers.routes.SessionExpiredController.onPageLoad()
+    }
+  }
 }
