@@ -18,8 +18,7 @@ package pages.individual
 
 import java.time.LocalDate
 
-import models.IndividualOrBusiness.Business
-import models.{IdCard, Name, NonUkAddress, Passport, PassportOrIdCard, UkAddress}
+import models.{CombinedPassportOrIdCard, PassportOrIdCard}
 import pages.behaviours.PageBehaviours
 
 class NinoYesNoPageSpec extends PageBehaviours {
@@ -38,8 +37,8 @@ class NinoYesNoPageSpec extends PageBehaviours {
 
       val userAnswers = emptyUserAnswers
         .set(PassportOrIdCardPage, PassportOrIdCard.Passport)
-        .flatMap(_.set(PassportPage, Passport("country", "number", date)))
-        .flatMap(_.set(IdCardPage, IdCard("country", "number", date)))
+        .flatMap(_.set(PassportPage, CombinedPassportOrIdCard("country", "number", date)))
+        .flatMap(_.set(IdCardPage, CombinedPassportOrIdCard("country", "number", date)))
         .flatMap(_.set(NinoYesNoPage, true))
 
       userAnswers.get.get(PassportOrIdCardPage) mustNot be(defined)
