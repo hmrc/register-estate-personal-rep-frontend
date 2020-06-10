@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-package navigation
+package models
 
-import play.api.mvc.Call
-import pages._
-import models.{Mode, NormalMode, UserAnswers}
+import viewmodels.RadioOption
 
-class FakeNavigator(val desiredRoute: Call = Call("GET", "/foo")) extends Navigator {
+sealed trait PassportOrIdCard
 
-  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
-    desiredRoute
+object PassportOrIdCard extends Enumerable.Implicits {
+
+  case object Passport extends WithName("passport") with PassportOrIdCard
+  case object IdCard extends WithName("id-card") with PassportOrIdCard
+
+  val values: Set[PassportOrIdCard] = Set(
+    Passport, IdCard
+  )
+
+  val options: Set[RadioOption] = values.map {
+    value =>
+      RadioOption("passportOrIdCard", value.toString)
+  }
+
+  implicit val enumerable: Enumerable[PassportOrIdCard] =
+    Enumerable(values.toSeq.map(v => v.toString -> v): _*)
 }

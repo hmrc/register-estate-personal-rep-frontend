@@ -13,3 +13,10 @@ GET        /check-your-answers                          controllers.CheckYourAns
 GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad
 
 GET        /logout                                      controllers.LogoutController.logout()
+
+GET        /feature-not-available                       controllers.FeatureNotAvailableController.onPageLoad()
+
+GET        /individual-or-business                      controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = NormalMode)
+POST       /individual-or-business                      controllers.IndividualOrBusinessController.onSubmit(mode: Mode = NormalMode)
+GET        /change-individual-or-business               controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-individual-or-business               controllers.IndividualOrBusinessController.onSubmit(mode: Mode = CheckMode)

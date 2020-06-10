@@ -16,12 +16,24 @@
 
 package navigation
 
+import javax.inject.Inject
+import models.{Mode, UserAnswers}
+import pages.Page
 import play.api.mvc.Call
-import pages._
-import models.{Mode, NormalMode, UserAnswers}
 
-class FakeNavigator(val desiredRoute: Call = Call("GET", "/foo")) extends Navigator {
+class BusinessNavigator @Inject()() extends Navigator {
 
-  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
-    desiredRoute
+  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = routes(mode)(page)(userAnswers)
+
+  private def simpleNavigation(mode: Mode): PartialFunction[Page, Call] = {
+    ???
+  }
+
+  private def yesNoNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
+    ???
+  }
+
+  private def routes(mode: Mode): PartialFunction[Page, UserAnswers => Call] =
+    simpleNavigation(mode) andThen (c => (_:UserAnswers) => c) orElse
+      yesNoNavigation(mode)
 }

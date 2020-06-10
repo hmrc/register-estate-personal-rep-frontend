@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package navigation
+package models
 
-import play.api.mvc.Call
-import pages._
-import models.{Mode, NormalMode, UserAnswers}
+import play.api.libs.json.{Format, Json}
 
-class FakeNavigator(val desiredRoute: Call = Call("GET", "/foo")) extends Navigator {
+case class Name(firstName: String, middleName: Option[String], lastName: String) {
+  lazy val displayName : String = firstName + " " + lastName
 
-  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
-    desiredRoute
+  private val middleNameFormatted = middleName.fold(" ")(m => s" $m ")
+  lazy val displayFullName : String = firstName + middleNameFormatted + lastName
+}
+
+object Name {
+  implicit lazy val formats: Format[Name] = Json.format[Name]
 }

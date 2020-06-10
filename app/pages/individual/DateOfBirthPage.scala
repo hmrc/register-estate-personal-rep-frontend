@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package navigation
+package pages.individual
 
-import play.api.mvc.Call
-import pages._
-import models.{Mode, NormalMode, UserAnswers}
+import java.time.LocalDate
 
-class FakeNavigator(val desiredRoute: Call = Call("GET", "/foo")) extends Navigator {
+import pages.QuestionPage
+import play.api.libs.json.JsPath
 
-  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
-    desiredRoute
+case object DateOfBirthPage extends QuestionPage[LocalDate] {
+
+  override def path: JsPath = basePath \ toString
+
+  override def toString: String = "dateOfBirth"
 }

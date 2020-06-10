@@ -16,6 +16,24 @@
 
 package pages
 
-import queries.{Gettable, Settable}
+import models.IndividualOrBusiness._
+import models.{IndividualOrBusiness, UserAnswers}
+import play.api.libs.json.JsPath
 
-trait QuestionPage[A] extends Page with Gettable[A] with Settable[A]
+import scala.util.Try
+
+object IndividualOrBusinessPage extends QuestionPage[IndividualOrBusiness] {
+
+  override def path: JsPath = JsPath \ toString
+
+  override def toString: String = "individualOrBusiness"
+
+  override def cleanup(value: Option[IndividualOrBusiness], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value match {
+      case Some(Business) =>
+        userAnswers.deleteAtPath(pages.individual.basePath)
+      case _ =>
+        super.cleanup(value, userAnswers)
+    }
+  }
+}
