@@ -39,3 +39,6 @@ GET        /telephone-number                            controllers.business.Tel
 POST       /telephone-number                            controllers.business.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /change-telephone-number                     controllers.business.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-telephone-number                     controllers.business.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /check-details                               controllers.business.CheckDetailsController.onPageLoad()
+POST       /check-details                               controllers.business.CheckDetailsController.onSubmit()
