@@ -34,3 +34,8 @@ GET        /non-uk-address                              controllers.business.Non
 POST       /non-uk-address                              controllers.business.NonUkAddressController.onSubmit(mode: Mode = NormalMode)
 GET        /change-non-uk-address                       controllers.business.NonUkAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-non-uk-address                       controllers.business.NonUkAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /telephone-number                            controllers.business.TelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /telephone-number                            controllers.business.TelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /change-telephone-number                     controllers.business.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-telephone-number                     controllers.business.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)

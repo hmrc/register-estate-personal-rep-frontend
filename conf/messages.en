@@ -274,6 +274,13 @@ busines.nonUkAddress.checkYourAnswersLabel = What is {0}’s address?
 busines.nonUkAddress.title = What is the personal representative’s address?
 busines.nonUkAddress.heading = What is {0}’s address?
 
+telephoneNumber.checkYourAnswersLabel = What is {0}’s telephone number?
+telephoneNumber.title = What is the personal representative’s telephone number?
+telephoneNumber.heading = What is {0}’s telephone number?
+telephoneNumber.hint = For international numbers include the country code
+telephoneNumber.error.required = Enter the personal representative’s telephone number
+telephoneNumber.error.invalid.characters = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
+
 business.nonUkCompany.name.checkYourAnswersLabel = What is the business’s name?
 business.nonUkCompany.name.title = What is the business’s name?
 business.nonUkCompany.name.heading = What is the business’s name?
