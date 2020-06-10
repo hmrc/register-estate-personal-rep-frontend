@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-package utils.countryOptions
+package pages.business
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
-import javax.inject.Singleton
-import play.api.Environment
-import utils.InputOption
+import models.NonUkAddress
+import pages.QuestionPage
+import play.api.libs.json.JsPath
 
-@Singleton
-class CountryOptionsNonUK @Inject()(
-                                     environment: Environment,
-                                     config: FrontendAppConfig
-                                   ) extends CountryOptions(environment, config) {
-  override def options: Seq[InputOption] = CountryOptions.getCountries(environment, config.locationCanonicalListNonUK)
+case object NonUkAddressPage extends QuestionPage[NonUkAddress] {
+
+  override def path: JsPath = basePath \ toString
+
+  override def toString: String = "nonUkAddress"
 }

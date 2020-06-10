@@ -22,24 +22,27 @@ import models.NormalMode
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
-import views.html.business.UkRegisteredYesNoView
+import views.html.business.AddressUkYesNoView
 
-class UkRegisteredYesNoViewSpec extends YesNoViewBehaviours {
+class AddressUkYesNoViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "business.ukRegisteredYesNo"
+  val messageKeyPrefix = "business.addressUkYesNo"
+  val name = "Name"
 
   val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)
 
-  "LiveInTheUkYesNo view" must {
+  "AddressUkYesNo view" must {
 
-    val view = viewFor[UkRegisteredYesNoView](Some(emptyUserAnswers))
+    val view = viewFor[AddressUkYesNoView](Some(emptyUserAnswers))
 
     def applyView(form: Form[_]): HtmlFormat.Appendable =
-      view.apply(form, NormalMode)(fakeRequest, messages)
+      view.apply(form, name, NormalMode)(fakeRequest, messages)
+
+    behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name)
 
     behave like pageWithBackLink(applyView(form))
 
-    behave like yesNoPage(form, applyView, messageKeyPrefix, None, routes.UkRegisteredYesNoController.onSubmit(NormalMode).url)
+    behave like yesNoPage(form, applyView, messageKeyPrefix, Some(name), routes.AddressUkYesNoController.onSubmit(NormalMode).url)
 
     behave like pageWithASubmitButton(applyView(form))
   }

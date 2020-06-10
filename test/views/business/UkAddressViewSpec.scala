@@ -17,29 +17,37 @@
 package views.business
 
 import controllers.business.routes
-import forms.YesNoFormProvider
-import models.NormalMode
+import forms.UkAddressFormProvider
+import models.{NormalMode, UkAddress}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.YesNoViewBehaviours
-import views.html.business.UkRegisteredYesNoView
+import views.behaviours.UkAddressViewBehaviours
+import views.html.business.UkAddressView
 
-class UkRegisteredYesNoViewSpec extends YesNoViewBehaviours {
+class UkAddressViewSpec extends UkAddressViewBehaviours {
 
-  val messageKeyPrefix = "business.ukRegisteredYesNo"
+  val messageKeyPrefix = "business.ukAddress"
+  val name = "Name"
 
-  val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)
+  override val form: Form[UkAddress] = new UkAddressFormProvider().apply()
 
-  "LiveInTheUkYesNo view" must {
+  "UkAddressView" must {
 
-    val view = viewFor[UkRegisteredYesNoView](Some(emptyUserAnswers))
+    val view = viewFor[UkAddressView](Some(emptyUserAnswers))
 
     def applyView(form: Form[_]): HtmlFormat.Appendable =
-      view.apply(form, NormalMode)(fakeRequest, messages)
+      view.apply(form, name, NormalMode)(fakeRequest, messages)
+
+    behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name)
 
     behave like pageWithBackLink(applyView(form))
 
-    behave like yesNoPage(form, applyView, messageKeyPrefix, None, routes.UkRegisteredYesNoController.onSubmit(NormalMode).url)
+    behave like ukAddressPage(
+      applyView,
+      Some(messageKeyPrefix),
+      routes.UkAddressController.onSubmit(NormalMode).url,
+      name
+    )
 
     behave like pageWithASubmitButton(applyView(form))
   }

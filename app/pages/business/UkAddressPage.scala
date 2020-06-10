@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package utils.countryOptions
+package pages.business
 
-import config.FrontendAppConfig
-import javax.inject.{Inject, Singleton}
-import play.api.Environment
+import models.UkAddress
+import pages.QuestionPage
+import play.api.libs.json.JsPath
 
-@Singleton
-class AllCountryOptions @Inject()(environment: Environment, config: FrontendAppConfig)
-  extends CountryOptions {
+case object UkAddressPage extends QuestionPage[UkAddress] {
 
-  override def options: Seq[InputOption] = getCountries(environment, config.locationCanonicalList)
+  override def path: JsPath = basePath \ toString
 
+  override def toString: String = "ukAddress"
 }
