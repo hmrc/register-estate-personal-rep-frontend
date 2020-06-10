@@ -23,7 +23,6 @@ import play.twirl.api.HtmlFormat
 
 trait UkAddressViewBehaviours extends ViewBehaviours {
 
-
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)

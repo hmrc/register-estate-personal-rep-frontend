@@ -46,26 +46,14 @@ class PassportViewSpec extends QuestionViewBehaviours[CombinedPassportOrIdCard] 
 
     behave like pageWithBackLink(applyView(form))
 
-    "date fields" must {
-
-      behave like pageWithDateFields(form, applyViewF,
-        prefix,
-        "expiryDate",
-        name.displayName
-      )
-    }
-
-    "text fields" must {
-
-      behave like pageWithTextFields(
-        form,
-        applyView,
-        prefix,
-        Some(name.displayName),
-        "country",
-        "number"
-      )
-    }
+    behave like pageWithPassportOrIDCardDetailsFields(
+      form,
+      applyView,
+      prefix,
+      Seq(("country", None), ("number", None)),
+      "expiryDate",
+      name.displayName
+    )
 
     behave like pageWithASubmitButton(applyView(form))
   }
