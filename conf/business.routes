@@ -4,3 +4,18 @@ GET        /uk-registered                               controllers.business.UkR
 POST       /uk-registered                               controllers.business.UkRegisteredYesNoController.onSubmit(mode: Mode = NormalMode)
 GET        /change-uk-registered                        controllers.business.UkRegisteredYesNoController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-uk-registered                        controllers.business.UkRegisteredYesNoController.onSubmit(mode: Mode = CheckMode)
+
+GET        /uk-company-name                             controllers.business.UkCompanyNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /uk-company-name                             controllers.business.UkCompanyNameController.onSubmit(mode: Mode = NormalMode)
+GET        /change-uk-company-name                      controllers.business.UkCompanyNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-uk-company-name                      controllers.business.UkCompanyNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /utr                                         controllers.business.UtrController.onPageLoad(mode: Mode = NormalMode)
+POST       /utr                                         controllers.business.UtrController.onSubmit(mode: Mode = NormalMode)
+GET        /change-utr                                  controllers.business.UtrController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-utr                                  controllers.business.UtrController.onSubmit(mode: Mode = CheckMode)
+
+GET        /non-uk-company-name                         controllers.business.NonUkCompanyNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /non-uk-company-name                         controllers.business.NonUkCompanyNameController.onSubmit(mode: Mode = NormalMode)
+GET        /change-non-uk-company-name                  controllers.business.NonUkCompanyNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-non-uk-company-name                  controllers.business.NonUkCompanyNameController.onSubmit(mode: Mode = CheckMode)

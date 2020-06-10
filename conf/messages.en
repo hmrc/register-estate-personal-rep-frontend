@@ -151,8 +151,6 @@ individual.livesInTheUkYesNo.error.required = Select yes if the personal represe
 individual.ukAddress.checkYourAnswersLabel = What is {0}’s address?
 individual.ukAddress.title = What is the personal representative’s address?
 individual.ukAddress.heading = What is {0}’s address?
-individual.ukAddress.title = What is the address?
-individual.ukAddress.heading = What is {0}’s address?
 individual.ukAddress.line1 = Address line 1
 individual.ukAddress.line2 = Address line 2
 individual.ukAddress.line3 = Address line 3 (optional)
@@ -175,8 +173,6 @@ individual.ukAddress.error.postcode.invalidCharacters = Enter a real postcode
 individual.nonUkAddress.checkYourAnswersLabel = What is {0}’s address?
 individual.nonUkAddress.title = What is the personal representative’s address?
 individual.nonUkAddress.heading = What is {0}’s address?
-individual.nonUkAddress.title = What is the address?
-individual.nonUkAddress.heading = What is {0}’s address?
 individual.nonUkAddress.line1 = Address line 1
 individual.nonUkAddress.line2 = Address line 2
 individual.nonUkAddress.line3 = Address line 3 (optional)
@@ -198,3 +194,36 @@ individual.telephoneNumber.heading = What is {0}’s telephone number?
 individual.telephoneNumber.hint = For international numbers include the country code
 individual.telephoneNumber.error.required = Enter the personal representative’s telephone number
 individual.telephoneNumber.error.invalid = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
+
+business.ukRegisteredYesNo.checkYourAnswersLabel = Is this personal representative a UK registered company?
+business.ukRegisteredYesNo.title = Is this personal representative a UK registered company?
+business.ukRegisteredYesNo.heading = Is this personal representative a UK registered company?
+business.ukRegisteredYesNo.error.required = Select yes if the personal representative is a UK registered company
+
+business.name.default = the business
+
+business.ukCompany.name.checkYourAnswersLabel = What is the company’s name?
+business.ukCompany.name.title = What is the company’s name?
+business.ukCompany.name.heading = What is the company’s name?
+business.ukCompany.name.hint = Enter the name as it appears on tax returns and other letters about Corporation Tax.
+business.ukCompany.name.error.required = Enter the company’s name
+business.ukCompany.name.error.length = Company’s name cannot be more than 53 characters
+business.ukCompany.name.error.invalidFormat = Company’s name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+
+business.utr.checkYourAnswersLabel = What is {0}’s Unique Taxpayer Reference (UTR)?
+business.utr.title = What is the personal representative’s Unique Taxpayer Reference (UTR)?
+business.utr.heading = What is {0}’s Unique Taxpayer Reference (UTR)?
+business.utr.hint = This is 10 numbers, for example 1234567890. It will be on tax returns and other letters about Self Assessment. It may be called ‘reference’, ‘UTR’ or ‘official use’.
+business.utr.hint.reader = This is 10 numbers, for example 1 2 3 4 5 6 7 8 9 0. It will be on tax returns and other letters about Self Assessment. It may be called ‘reference’, ‘UTR’ or ‘official use’.
+business.utr.p1 = You can
+business.utr.link = find a lost UTR number (opens in a new window or tab)
+business.utr.error.required = Enter the personal representative’s Unique Taxpayer Reference
+business.utr.error.length = Unique Taxpayer Reference must be a 10 digit number
+business.utr.error.invalid = Enter the Unique Taxpayer Reference in the correct format
+
+business.nonUkCompany.name.checkYourAnswersLabel = What is the business’s name?
+business.nonUkCompany.name.title = What is the business’s name?
+business.nonUkCompany.name.heading = What is the business’s name?
+business.nonUkCompany.name.error.required = Enter the business name
+business.nonUkCompany.name.error.length = Business name must be 53 characters or less
+business.nonUkCompany.name.error.invalidFormat = Business name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
