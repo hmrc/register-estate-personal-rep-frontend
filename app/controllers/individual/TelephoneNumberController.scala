@@ -29,7 +29,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import views.html.individual.DateOfBirthView
+import views.html.individual.TelephoneNumberView
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -37,7 +37,7 @@ class TelephoneNumberController @Inject()(
                                            val controllerComponents: MessagesControllerComponents,
                                            actions: Actions,
                                            formProvider: TelephoneNumberFormProvider,
-                                           view: DateOfBirthView,
+                                           view: TelephoneNumberView,
                                            nameAction: NameRequiredAction,
                                            repository: SessionRepository,
                                            @Individual navigator: Navigator

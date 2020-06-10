@@ -19,9 +19,9 @@ GET        /change-national-insurance-number         controllers.individual.Nino
 POST       /change-national-insurance-number         controllers.individual.NinoController.onSubmit(mode: Mode = CheckMode)
 
 GET        /passport-or-id-card                      controllers.individual.PassportOrIdCardController.onPageLoad(mode: Mode = NormalMode)
-GET        /passport-or-id-card                      controllers.individual.PassportOrIdCardController.onSubmit(mode: Mode = NormalMode)
+POST       /passport-or-id-card                      controllers.individual.PassportOrIdCardController.onSubmit(mode: Mode = NormalMode)
 GET        /change-passport-or-id-card               controllers.individual.PassportOrIdCardController.onPageLoad(mode: Mode = CheckMode)
-GET        /changepassport-or-id-card                controllers.individual.PassportOrIdCardController.onSubmit(mode: Mode = CheckMode)
+POST       /changepassport-or-id-card                controllers.individual.PassportOrIdCardController.onSubmit(mode: Mode = CheckMode)
 
 GET        /passport                                 controllers.individual.PassportController.onPageLoad(mode: Mode = NormalMode)
 POST       /passport                                 controllers.individual.PassportController.onSubmit(mode: Mode = NormalMode)

@@ -19,17 +19,17 @@ package controllers.individual
 import config.annotations.Individual
 import controllers.actions.Actions
 import controllers.actions.individual.NameRequiredAction
-import forms.{PassportOrIdCardDetailsFormProvider, UkAddressFormProvider}
+import forms.UkAddressFormProvider
 import javax.inject.Inject
-import models.{CombinedPassportOrIdCard, Mode, UkAddress}
+import models.{Mode, UkAddress}
 import navigation.Navigator
-import pages.individual.{PassportPage, UkAddressPage}
+import pages.individual.UkAddressPage
 import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import views.html.individual.DateOfBirthView
+import views.html.individual.UkAddressView
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -37,7 +37,7 @@ class UkAddressController @Inject()(
                                      val controllerComponents: MessagesControllerComponents,
                                      actions: Actions,
                                      formProvider: UkAddressFormProvider,
-                                     view: DateOfBirthView,
+                                     view: UkAddressView,
                                      nameAction: NameRequiredAction,
                                      repository: SessionRepository,
                                      @Individual navigator: Navigator

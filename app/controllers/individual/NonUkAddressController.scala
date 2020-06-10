@@ -19,17 +19,18 @@ package controllers.individual
 import config.annotations.Individual
 import controllers.actions.Actions
 import controllers.actions.individual.NameRequiredAction
-import forms.{NonUkAddressFormProvider, UkAddressFormProvider}
+import forms.NonUkAddressFormProvider
 import javax.inject.Inject
-import models.{Mode, NonUkAddress, UkAddress}
+import models.{Mode, NonUkAddress}
 import navigation.Navigator
-import pages.individual.{NonUkAddressPage, UkAddressPage}
+import pages.individual.NonUkAddressPage
 import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import views.html.individual.DateOfBirthView
+import utils.countryOptions.CountryOptionsNonUK
+import views.html.individual.NonUkAddressView
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -37,10 +38,11 @@ class NonUkAddressController @Inject()(
                                         val controllerComponents: MessagesControllerComponents,
                                         actions: Actions,
                                         formProvider: NonUkAddressFormProvider,
-                                        view: DateOfBirthView,
+                                        view: NonUkAddressView,
                                         nameAction: NameRequiredAction,
                                         repository: SessionRepository,
-                                        @Individual navigator: Navigator
+                                        @Individual navigator: Navigator,
+                                        countryOptions: CountryOptionsNonUK
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form: Form[NonUkAddress] = formProvider.withPrefix("individual.nonUkAddress")
@@ -53,7 +55,7 @@ class NonUkAddressController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, request.name))
+      Ok(view(preparedForm, mode, countryOptions.options, request.name))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
@@ -61,7 +63,7 @@ class NonUkAddressController @Inject()(
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, request.name))),
+          Future.successful(BadRequest(view(formWithErrors, mode, countryOptions.options, request.name))),
 
         value =>
           for {

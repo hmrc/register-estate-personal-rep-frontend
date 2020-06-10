@@ -29,19 +29,21 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import views.html.individual.DateOfBirthView
+import utils.countryOptions.AllCountryOptions
+import views.html.individual.PassportView
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class PassportController @Inject()(
-                                            val controllerComponents: MessagesControllerComponents,
-                                            actions: Actions,
-                                            formProvider: PassportOrIdCardDetailsFormProvider,
-                                            view: DateOfBirthView,
-                                            nameAction: NameRequiredAction,
-                                            repository: SessionRepository,
-                                            @Individual navigator: Navigator
-                                          )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                    val controllerComponents: MessagesControllerComponents,
+                                    actions: Actions,
+                                    formProvider: PassportOrIdCardDetailsFormProvider,
+                                    view: PassportView,
+                                    nameAction: NameRequiredAction,
+                                    repository: SessionRepository,
+                                    @Individual navigator: Navigator,
+                                    countryOptions: AllCountryOptions
+                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form: Form[CombinedPassportOrIdCard] = formProvider.withPrefix("individual.passport")
 
@@ -53,7 +55,7 @@ class PassportController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode, request.name))
+      Ok(view(preparedForm, mode, countryOptions.options, request.name))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
@@ -61,7 +63,7 @@ class PassportController @Inject()(
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, request.name))),
+          Future.successful(BadRequest(view(formWithErrors, mode, countryOptions.options, request.name))),
 
         value =>
           for {
