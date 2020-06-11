@@ -18,11 +18,10 @@ package controllers.actions.business
 
 import base.SpecBase
 import controllers.actions.BusinessNameRequest
+import models.NormalMode
 import models.requests.DataRequest
-import models.{Name, NormalMode}
 import org.scalatest.concurrent.ScalaFutures
 import pages.business.{NonUkCompanyNamePage, UkCompanyNamePage}
-import pages.individual.NamePage
 import play.api.mvc.Result
 import play.api.test.Helpers._
 
@@ -36,7 +35,7 @@ class NameRequiredActionSpec extends SpecBase with ScalaFutures {
     def callRefine[A](request: DataRequest[A]): Future[Either[Result, BusinessNameRequest[A]]] = refine(request)
   }
 
-  "Individual personal rep name required answer Action" when {
+  "Business personal rep name required answer Action" when {
 
     "there is no answer" must {
 
