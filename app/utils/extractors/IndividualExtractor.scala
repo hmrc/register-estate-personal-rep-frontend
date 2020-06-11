@@ -45,6 +45,8 @@ class IndividualExtractor {
           .flatMap(_.set(PassportOrIdCardPage, PassportOrIdCard.IdCard))
           .flatMap(_.set(IdCardPage, IdCard(countryOfIssue, number, expirationDate)))
       case CombinedPassportOrIdCard(countryOfIssue, number, expirationDate) =>
+        // TODO: field with path 'passport' is read as a CombinedPassportOrIdCard
+        // Need to think about how we can retrieve this information and know if it is a passport or ID card
         userAnswers.set(NinoYesNoPage, false)
     }
   }
