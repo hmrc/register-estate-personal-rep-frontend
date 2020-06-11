@@ -19,7 +19,9 @@ package utils.extractors
 import java.time.LocalDate
 
 import base.SpecBase
+import models.IndividualOrBusiness.Individual
 import models._
+import pages.IndividualOrBusinessPage
 import pages.individual._
 
 class IndividualExtractorSpec extends SpecBase {
@@ -51,6 +53,7 @@ class IndividualExtractorSpec extends SpecBase {
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
 
+      result.get(IndividualOrBusinessPage).get mustBe Individual
       result.get(NamePage).get mustBe name
       result.get(DateOfBirthPage).get mustBe date
       result.get(NinoYesNoPage).get mustBe true
@@ -76,6 +79,7 @@ class IndividualExtractorSpec extends SpecBase {
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
 
+      result.get(IndividualOrBusinessPage).get mustBe Individual
       result.get(NamePage).get mustBe name
       result.get(DateOfBirthPage).get mustBe date
       result.get(NinoYesNoPage).get mustBe false
@@ -101,6 +105,7 @@ class IndividualExtractorSpec extends SpecBase {
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
 
+      result.get(IndividualOrBusinessPage).get mustBe Individual
       result.get(NamePage).get mustBe name
       result.get(DateOfBirthPage).get mustBe date
       result.get(NinoYesNoPage).get mustBe false

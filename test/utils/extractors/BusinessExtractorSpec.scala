@@ -17,7 +17,9 @@
 package utils.extractors
 
 import base.SpecBase
+import models.IndividualOrBusiness.Business
 import models._
+import pages.IndividualOrBusinessPage
 import pages.business._
 
 class BusinessExtractorSpec extends SpecBase {
@@ -43,6 +45,7 @@ class BusinessExtractorSpec extends SpecBase {
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
 
+      result.get(IndividualOrBusinessPage).get mustBe Business
       result.get(UkRegisteredYesNoPage).get mustBe true
       result.get(UkCompanyNamePage).get mustBe name
       result.get(NonUkCompanyNamePage) mustNot be(defined)
@@ -64,6 +67,7 @@ class BusinessExtractorSpec extends SpecBase {
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
 
+      result.get(IndividualOrBusinessPage).get mustBe Business
       result.get(UkRegisteredYesNoPage).get mustBe false
       result.get(UkCompanyNamePage) mustNot be(defined)
       result.get(NonUkCompanyNamePage).get mustBe name

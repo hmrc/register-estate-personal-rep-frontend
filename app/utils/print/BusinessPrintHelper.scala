@@ -19,6 +19,7 @@ package utils.print
 import com.google.inject.Inject
 import controllers.business.{routes => rts}
 import models.{NormalMode, UserAnswers}
+import pages.IndividualOrBusinessPage
 import pages.business._
 import play.api.i18n.Messages
 import utils.countryOptions.CountryOptions
@@ -33,6 +34,12 @@ class BusinessPrintHelper @Inject()(countryOptions: CountryOptions) {
     AnswerSection(
       None,
       Seq(
+        converter.enumQuestion(
+          IndividualOrBusinessPage,
+          "individualOrBusiness",
+          controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode).url,
+          "individualOrBusiness"
+        ),
         converter.yesNoQuestion(AddressUkYesNoPage, "business.ukRegisteredYesNo", rts.UkRegisteredYesNoController.onPageLoad(NormalMode).url),
         converter.stringQuestion(UkCompanyNamePage, "business.ukCompany.name", rts.UkCompanyNameController.onPageLoad(NormalMode).url),
         converter.stringQuestion(NonUkCompanyNamePage, "business.nonUkCompany.name", rts.NonUkCompanyNameController.onPageLoad(NormalMode).url),

@@ -16,7 +16,9 @@
 
 package utils.extractors
 
+import models.IndividualOrBusiness.Business
 import models._
+import pages.IndividualOrBusinessPage
 import pages.business._
 
 import scala.util.Try
@@ -24,7 +26,8 @@ import scala.util.Try
 class BusinessExtractor {
 
   def apply(personalRep: BusinessPersonalRep, userAnswers: UserAnswers): Try[UserAnswers] = {
-    extractName(personalRep, userAnswers)
+    userAnswers.set(IndividualOrBusinessPage, Business)
+      .flatMap(answers => extractName(personalRep, answers))
       .flatMap(answers => extractAddress(personalRep.address, answers))
       .flatMap(_.set(TelephoneNumberPage, personalRep.phoneNumber))
   }
