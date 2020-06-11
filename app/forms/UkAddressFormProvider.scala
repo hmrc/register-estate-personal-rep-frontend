@@ -24,45 +24,45 @@ import play.api.data.{Form, Forms}
 
 class UkAddressFormProvider @Inject() extends Mappings {
 
-  def withPrefix(prefix: String): Form[UkAddress] = Form(
+  def apply(): Form[UkAddress] = Form(
     mapping(
       "line1" ->
-        text(s"$prefix.line1.error.required")
+        text("ukAddress.line1.error.required")
           .verifying(
             firstError(
-              nonEmptyString("line1", s"$prefix.line1.error.required"),
-              maxLength(35, s"$prefix.line1.error.length"),
-              regexp(Validation.addressLineRegex, s"$prefix.line1.error.invalid")
+              nonEmptyString("line1", "ukAddress.line1.error.required"),
+              maxLength(35, "ukAddress.line1.error.length"),
+              regexp(Validation.addressLineRegex, "ukAddress.line1.error.invalid")
             )),
       "line2" ->
-        text(s"$prefix.line2.error.required")
+        text("ukAddress.line2.error.required")
           .verifying(
             firstError(
-              nonEmptyString("line2", s"$prefix.line2.error.required"),
-              maxLength(35, s"$prefix.line2.error.length"),
-              regexp(Validation.addressLineRegex, s"$prefix.line2.error.invalid")
+              nonEmptyString("line2", "ukAddress.line2.error.required"),
+              maxLength(35, "ukAddress.line2.error.length"),
+              regexp(Validation.addressLineRegex, "ukAddress.line2.error.invalid")
             )),
       "line3" ->
         optional(Forms.text
           .verifying(
             firstError(
-              maxLength(35, s"$prefix.line3.error.length"),
-              regexp(Validation.addressLineRegex, s"$prefix.line3.error.invalid")
+              maxLength(35, "ukAddress.line3.error.length"),
+              regexp(Validation.addressLineRegex, "ukAddress.line3.error.invalid")
             ))),
       "line4" ->
         optional(Forms.text
           .verifying(
             firstError(
-              maxLength(35, s"$prefix.line4.error.length"),
-              regexp(Validation.addressLineRegex, s"$prefix.line4.error.invalid")
+              maxLength(35, "ukAddress.line4.error.length"),
+              regexp(Validation.addressLineRegex, "ukAddress.line4.error.invalid")
             ))),
 
       "postcode" ->
-        postcode(s"$prefix.postcode.error.required")
+        postcode("ukAddress.postcode.error.required")
           .verifying(
             firstError(
-              nonEmptyString("postcode", s"$prefix.postcode.error.required"),
-              regexp(Validation.postcodeRegex, s"$prefix.postcode.error.invalid")
+              nonEmptyString("postcode", "ukAddress.postcode.error.required"),
+              regexp(Validation.postcodeRegex, "ukAddress.postcode.error.invalid")
             ))
     )(UkAddress.apply)(UkAddress.unapply)
   )

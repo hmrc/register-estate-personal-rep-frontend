@@ -23,12 +23,12 @@ import models.{Name, NormalMode}
 import pages.IndividualOrBusinessPage
 import pages.individual.PassportOrIdCardPage
 import play.twirl.api.Html
-import utils.countryOptions.AllCountryOptions
+import utils.countryOptions.CountryOptions
 
 class AnswerRowConverterSpec extends SpecBase {
 
   val name: Name = Name("First", Some("Middle"), "Last")
-  val countryOptions: AllCountryOptions = injector.instanceOf[AllCountryOptions]
+  val countryOptions: CountryOptions = injector.instanceOf[CountryOptions]
 
   "Answer row converter" must {
 

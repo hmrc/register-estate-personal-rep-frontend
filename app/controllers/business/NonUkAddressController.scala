@@ -21,9 +21,10 @@ import controllers.actions.Actions
 import controllers.actions.business.NameRequiredAction
 import forms.NonUkAddressFormProvider
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, NonUkAddress}
 import navigation.Navigator
 import pages.business.NonUkAddressPage
+import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -45,7 +46,7 @@ class NonUkAddressController @Inject()(
                                         val countryOptions: CountryOptionsNonUK
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
+  val form: Form[NonUkAddress] = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
     implicit request =>

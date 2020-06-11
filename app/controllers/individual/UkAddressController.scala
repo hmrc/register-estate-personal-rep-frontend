@@ -43,7 +43,7 @@ class UkAddressController @Inject()(
                                      @Individual navigator: Navigator
                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form: Form[UkAddress] = formProvider.withPrefix("individual.ukAddress")
+  val form: Form[UkAddress] = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
     implicit request =>

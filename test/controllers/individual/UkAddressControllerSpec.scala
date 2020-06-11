@@ -33,7 +33,7 @@ class UkAddressControllerSpec extends SpecBase {
   lazy val ukAddressRoute: String = routes.UkAddressController.onPageLoad(NormalMode).url
 
   val formProvider = new UkAddressFormProvider()
-  val form: Form[UkAddress] = formProvider.withPrefix("individual.ukAddress")
+  val form: Form[UkAddress] = formProvider()
   val name: Name = Name("First", None, "Last")
 
   val validAnswer: UkAddress = UkAddress("Line 1", "Line 2", None, None, "AB1 1AB")

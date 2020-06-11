@@ -24,13 +24,13 @@ import pages.QuestionPage
 import play.api.i18n.Messages
 import play.api.libs.json.Reads
 import play.twirl.api.HtmlFormat
-import utils.countryOptions.AllCountryOptions
+import utils.countryOptions.CountryOptions
 import utils.print.CheckAnswersFormatters._
 import viewmodels.AnswerRow
 
 case class AnswerRowConverter @Inject()(userAnswers: UserAnswers,
                                         name: String,
-                                        countryOptions: AllCountryOptions
+                                        countryOptions: CountryOptions
                                        )(implicit messages: Messages) {
 
   def nameQuestion(query: QuestionPage[Name],

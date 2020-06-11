@@ -20,7 +20,8 @@ import forms.PassportOrIdCardDetailsFormProvider
 import models.{CombinedPassportOrIdCard, Name, NormalMode}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import utils.countryOptions.{AllCountryOptions, InputOption}
+import utils.InputOption
+import utils.countryOptions.CountryOptions
 import views.behaviours.QuestionViewBehaviours
 import views.html.individual.IdCardView
 
@@ -33,7 +34,7 @@ class IdCardViewSpec extends QuestionViewBehaviours[CombinedPassportOrIdCard] {
 
   val view: IdCardView = viewFor[IdCardView](Some(emptyUserAnswers))
 
-  val countryOptions: Seq[InputOption] = app.injector.instanceOf[AllCountryOptions].options
+  val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptions].options
 
   def applyView(form: Form[_]): HtmlFormat.Appendable =
     view.apply(form, NormalMode, countryOptions, name.displayName)(fakeRequest, messages)

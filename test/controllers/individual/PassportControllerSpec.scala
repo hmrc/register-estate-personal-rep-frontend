@@ -28,7 +28,8 @@ import play.api.data.Form
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import utils.countryOptions.{AllCountryOptions, InputOption}
+import utils.InputOption
+import utils.countryOptions.CountryOptions
 import views.html.individual.PassportView
 
 class PassportControllerSpec extends SpecBase {
@@ -45,7 +46,7 @@ class PassportControllerSpec extends SpecBase {
   val baseAnswers: UserAnswers = emptyUserAnswers
     .set(NamePage, name).success.value
 
-  val countryOptions: Seq[InputOption] = app.injector.instanceOf[AllCountryOptions].options
+  val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptions].options
 
   "Passport Controller" must {
 

@@ -31,7 +31,7 @@ class NonUkAddressViewSpec extends NonUkAddressViewBehaviours {
   val messageKeyPrefix = "business.nonUkAddress"
   val name = "Name"
 
-  override val form: Form[NonUkAddress] = new NonUkAddressFormProvider().apply()
+  override val form: Form[NonUkAddress] = new NonUkAddressFormProvider()()
 
   "NonUkAddressView" must {
 

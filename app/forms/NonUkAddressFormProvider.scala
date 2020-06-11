@@ -24,37 +24,37 @@ import play.api.data.{Form, Forms}
 
 class NonUkAddressFormProvider @Inject() extends Mappings {
 
-  def withPrefix(prefix: String): Form[NonUkAddress] = Form(
+  def apply(): Form[NonUkAddress] = Form(
     mapping(
       "line1" ->
-        text(s"$prefix.line1.error.required")
+        text("nonUkAddress.line1.error.required")
           .verifying(
             firstError(
-              nonEmptyString("line1", s"$prefix.line1.error.required"),
-              maxLength(35, s"$prefix.line1.error.length"),
-              regexp(Validation.addressLineRegex, s"$prefix.line1.error.invalid")
+              nonEmptyString("line1", "nonUkAddress.line1.error.required"),
+              maxLength(35, "nonUkAddress.line1.error.length"),
+              regexp(Validation.addressLineRegex, "nonUkAddress.line1.error.invalid")
             )),
       "line2" ->
-        text(s"$prefix.line2.error.required")
+        text("nonUkAddress.line2.error.required")
           .verifying(
             firstError(
-              nonEmptyString("line2", s"$prefix.line2.error.required"),
-              maxLength(35, s"$prefix.line2.error.length"),
-              regexp(Validation.addressLineRegex, s"$prefix.line2.error.invalid")
+              nonEmptyString("line2", "nonUkAddress.line2.error.required"),
+              maxLength(35, "nonUkAddress.line2.error.length"),
+              regexp(Validation.addressLineRegex, "nonUkAddress.line2.error.invalid")
             )),
       "line3" ->
         optional(Forms.text
           .verifying(
             firstError(
-              maxLength(35, s"$prefix.line3.error.length"),
-              regexp(Validation.addressLineRegex, s"$prefix.line3.error.invalid")
+              maxLength(35, "nonUkAddress.line3.error.length"),
+              regexp(Validation.addressLineRegex, "nonUkAddress.line3.error.invalid")
             ))),
       "country" ->
-        text(s"$prefix.country.error.required")
+        text("nonUkAddress.country.error.required")
           .verifying(
             firstError(
-              maxLength(35, s"$prefix.country.error.length"),
-              nonEmptyString("country", s"$prefix.country.error.required")
+              maxLength(35, "nonUkAddress.country.error.length"),
+              nonEmptyString("country", "nonUkAddress.country.error.required")
             ))
     )(NonUkAddress.apply)(NonUkAddress.unapply)
   )

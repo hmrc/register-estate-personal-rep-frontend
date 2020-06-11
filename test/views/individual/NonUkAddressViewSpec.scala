@@ -20,7 +20,8 @@ import forms.NonUkAddressFormProvider
 import models.{Name, NonUkAddress, NormalMode}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import utils.countryOptions.{CountryOptionsNonUK, InputOption}
+import utils.InputOption
+import utils.countryOptions.CountryOptionsNonUK
 import views.behaviours.NonUkAddressViewBehaviours
 import views.html.individual.NonUkAddressView
 
@@ -29,7 +30,7 @@ class NonUkAddressViewSpec extends NonUkAddressViewBehaviours {
   val prefix = "individual.nonUkAddress"
   val name: Name = Name("First", Some("Middle"), "Last")
 
-  override val form: Form[NonUkAddress] = new NonUkAddressFormProvider().withPrefix(prefix)
+  override val form: Form[NonUkAddress] = new NonUkAddressFormProvider()()
 
   val view: NonUkAddressView = viewFor[NonUkAddressView](Some(emptyUserAnswers))
 

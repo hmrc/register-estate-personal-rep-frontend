@@ -22,10 +22,10 @@ import models.{NormalMode, UserAnswers}
 import pages.IndividualOrBusinessPage
 import pages.individual._
 import play.api.i18n.Messages
-import utils.countryOptions.AllCountryOptions
+import utils.countryOptions.CountryOptions
 import viewmodels.{AnswerRow, AnswerSection}
 
-class IndividualPrintHelper @Inject()(countryOptions: AllCountryOptions) {
+class IndividualPrintHelper @Inject()(countryOptions: CountryOptions) {
 
   def apply(userAnswers: UserAnswers, name: String)(implicit messages: Messages): AnswerSection = {
 

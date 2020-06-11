@@ -45,7 +45,7 @@ class NonUkAddressController @Inject()(
                                         countryOptions: CountryOptionsNonUK
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form: Form[NonUkAddress] = formProvider.withPrefix("individual.nonUkAddress")
+  val form: Form[NonUkAddress] = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
     implicit request =>

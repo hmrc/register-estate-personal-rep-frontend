@@ -16,10 +16,8 @@
 
 package utils.print
 
-import java.time.LocalDate
-
 import base.SpecBase
-import models.{CheckMode, NonUkAddress, NormalMode, UkAddress}
+import models.{NonUkAddress, NormalMode, UkAddress}
 import pages.business._
 import play.twirl.api.Html
 import viewmodels.{AnswerRow, AnswerSection}

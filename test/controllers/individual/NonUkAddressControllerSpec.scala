@@ -26,7 +26,8 @@ import play.api.data.Form
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import utils.countryOptions.{CountryOptionsNonUK, InputOption}
+import utils.InputOption
+import utils.countryOptions.CountryOptionsNonUK
 import views.html.individual.NonUkAddressView
 
 class NonUkAddressControllerSpec extends SpecBase {
@@ -34,7 +35,7 @@ class NonUkAddressControllerSpec extends SpecBase {
   lazy val nonUkAddressRoute: String = routes.NonUkAddressController.onPageLoad(NormalMode).url
 
   val formProvider = new NonUkAddressFormProvider()
-  val form: Form[NonUkAddress] = formProvider.withPrefix("individual.nonUkAddress")
+  val form: Form[NonUkAddress] = formProvider()
   val name: Name = Name("First", None, "Last")
 
   val validAnswer: NonUkAddress =

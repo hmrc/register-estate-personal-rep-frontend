@@ -29,7 +29,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import utils.countryOptions.AllCountryOptions
+import utils.countryOptions.CountryOptions
 import views.html.individual.PassportView
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -42,7 +42,7 @@ class PassportController @Inject()(
                                     nameAction: NameRequiredAction,
                                     repository: SessionRepository,
                                     @Individual navigator: Navigator,
-                                    countryOptions: AllCountryOptions
+                                    countryOptions: CountryOptions
                                   )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form: Form[CombinedPassportOrIdCard] = formProvider.withPrefix("individual.passport")

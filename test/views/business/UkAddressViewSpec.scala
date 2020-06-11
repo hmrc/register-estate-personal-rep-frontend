@@ -29,7 +29,7 @@ class UkAddressViewSpec extends UkAddressViewBehaviours {
   val messageKeyPrefix = "business.ukAddress"
   val name = "Name"
 
-  override val form: Form[UkAddress] = new UkAddressFormProvider().apply()
+  override val form: Form[UkAddress] = new UkAddressFormProvider()()
 
   "UkAddressView" must {
 
