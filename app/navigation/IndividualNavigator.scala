@@ -33,7 +33,7 @@ class IndividualNavigator @Inject()() extends Navigator {
     case DateOfBirthPage => rts.NinoYesNoController.onPageLoad(mode)
     case NinoPage | PassportPage | IdCardPage => rts.LivesInTheUkYesNoController.onPageLoad(mode)
     case UkAddressPage | NonUkAddressPage => rts.TelephoneNumberController.onPageLoad(mode)
-    case TelephoneNumberPage => controllers.routes.FeatureNotAvailableController.onPageLoad()
+    case TelephoneNumberPage => rts.CheckDetailsController.onPageLoad(mode)
   }
 
   private def conditionalNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {

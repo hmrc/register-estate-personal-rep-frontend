@@ -73,6 +73,9 @@ individualOrBusiness.error.required = Select if the personal representative is a
 
 personalRep.name.default = the personal representative
 
+checkDetails.title = Check personal representative details
+checkDetails.heading = Check personal representative details
+
 individual.name.checkYourAnswersLabel = What is the personal representative’s name?
 individual.name.title = What is the personal representative’s name?
 individual.name.heading = What is the personal representative’s name?
@@ -115,7 +118,7 @@ individual.passportOrIdCard.checkYourAnswersLabel = Which of {0}’s details can
 individual.passportOrIdCard.title = Which of the personal representative’s details can you provide?
 individual.passportOrIdCard.heading = Which of {0}’s details can you provide?
 passportOrIdCard.passport = Passport
-passportOrIdCard.idCard = ID Card
+passportOrIdCard.idCard = ID card
 individual.passportOrIdCard.error.required = Select which of the personal representative’s details you can provide
 
 individual.passport.checkYourAnswersLabel = What are {0}’s passport details?
