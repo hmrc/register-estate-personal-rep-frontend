@@ -20,7 +20,7 @@ import controllers.actions.Actions
 import forms.IndividualOrBusinessFormProvider
 import javax.inject.Inject
 import models.IndividualOrBusiness._
-import models.{Enumerable, IndividualOrBusiness, Mode}
+import models.{Enumerable, IndividualOrBusiness, Mode, NormalMode}
 import pages.IndividualOrBusinessPage
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -69,7 +69,7 @@ class IndividualOrBusinessController @Inject()(
               case Individual =>
                 Redirect(controllers.routes.FeatureNotAvailableController.onPageLoad())
               case Business =>
-                Redirect(controllers.routes.FeatureNotAvailableController.onPageLoad())
+                Redirect(controllers.business.routes.UkRegisteredYesNoController.onPageLoad(NormalMode))
             }
           }
         }
