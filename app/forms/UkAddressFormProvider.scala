@@ -33,7 +33,8 @@ class UkAddressFormProvider @Inject() extends Mappings {
               nonEmptyString("line1", "ukAddress.line1.error.required"),
               maxLength(35, "ukAddress.line1.error.length"),
               regexp(Validation.addressLineRegex, "ukAddress.line1.error.invalid")
-            )),
+            )
+          ),
       "line2" ->
         text("ukAddress.line2.error.required")
           .verifying(
@@ -41,29 +42,34 @@ class UkAddressFormProvider @Inject() extends Mappings {
               nonEmptyString("line2", "ukAddress.line2.error.required"),
               maxLength(35, "ukAddress.line2.error.length"),
               regexp(Validation.addressLineRegex, "ukAddress.line2.error.invalid")
-            )),
+            )
+          ),
       "line3" ->
         optional(Forms.text
           .verifying(
             firstError(
               maxLength(35, "ukAddress.line3.error.length"),
               regexp(Validation.addressLineRegex, "ukAddress.line3.error.invalid")
-            ))),
+            )
+          )
+        ),
       "line4" ->
         optional(Forms.text
           .verifying(
             firstError(
               maxLength(35, "ukAddress.line4.error.length"),
               regexp(Validation.addressLineRegex, "ukAddress.line4.error.invalid")
-            ))),
-
+            )
+          )
+        ),
       "postcode" ->
-        postcode("ukAddress.postcode.error.required")
+        postcode("ukAddress.postcode.error.required", "ukAddress.postcode.error.invalid")
           .verifying(
             firstError(
               nonEmptyString("postcode", "ukAddress.postcode.error.required"),
               regexp(Validation.postcodeRegex, "ukAddress.postcode.error.invalid")
-            ))
+            )
+          )
     )(UkAddress.apply)(UkAddress.unapply)
   )
 }

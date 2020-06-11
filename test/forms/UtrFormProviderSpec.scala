@@ -16,24 +16,41 @@
 
 package forms
 
-import forms.behaviours.OptionFieldBehaviours
-import models.IndividualOrBusiness
+import forms.behaviours.StringFieldBehaviours
 import play.api.data.{Form, FormError}
 
-class IndividualOrBusinessFormProviderSpec extends OptionFieldBehaviours {
+class UtrFormProviderSpec extends StringFieldBehaviours {
 
-  val form: Form[IndividualOrBusiness] = new IndividualOrBusinessFormProvider()()
+  val prefix: String = "business.utr"
+
+  val requiredKey: String = s"$prefix.error.required"
+  val lengthKey: String = s"$prefix.error.length"
+  val maxLength: Int = 10
+
+  val form: Form[String] = new UtrFormProvider().withPrefix(prefix)
 
   ".value" must {
 
     val fieldName = "value"
-    val requiredKey = "individualOrBusiness.error.required"
 
-    behave like optionsField[IndividualOrBusiness](
+    behave like fieldThatBindsValidData(
       form,
       fieldName,
-      validValues  = IndividualOrBusiness.values,
-      invalidError = FormError(fieldName, "error.invalid")
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMinLength(
+      form,
+      fieldName,
+      minLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
     behave like mandatoryField(

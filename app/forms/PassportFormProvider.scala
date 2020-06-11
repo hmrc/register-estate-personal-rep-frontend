@@ -32,8 +32,6 @@
 
 package forms
 
-import java.time.LocalDate
-
 import config.FrontendAppConfig
 import forms.mappings.Mappings
 import javax.inject.Inject
@@ -70,7 +68,7 @@ class PassportFormProvider @Inject()(appConfig: FrontendAppConfig) extends Mappi
         requiredKey    = s"$prefix.expiryDate.error.required"
       ).verifying(firstError(
         maxDate(
-          LocalDate.of(2099, 12, 31),
+          appConfig.maxDate,
           s"$prefix.expiryDate.error.future", "day", "month", "year"
         ),
         minDate(

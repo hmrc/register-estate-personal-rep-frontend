@@ -33,7 +33,8 @@ class NonUkAddressFormProvider @Inject() extends Mappings {
               nonEmptyString("line1", "nonUkAddress.line1.error.required"),
               maxLength(35, "nonUkAddress.line1.error.length"),
               regexp(Validation.addressLineRegex, "nonUkAddress.line1.error.invalid")
-            )),
+            )
+          ),
       "line2" ->
         text("nonUkAddress.line2.error.required")
           .verifying(
@@ -41,21 +42,25 @@ class NonUkAddressFormProvider @Inject() extends Mappings {
               nonEmptyString("line2", "nonUkAddress.line2.error.required"),
               maxLength(35, "nonUkAddress.line2.error.length"),
               regexp(Validation.addressLineRegex, "nonUkAddress.line2.error.invalid")
-            )),
+            )
+          ),
       "line3" ->
         optional(Forms.text
           .verifying(
             firstError(
               maxLength(35, "nonUkAddress.line3.error.length"),
               regexp(Validation.addressLineRegex, "nonUkAddress.line3.error.invalid")
-            ))),
+            )
+          )
+        ),
       "country" ->
         text("nonUkAddress.country.error.required")
           .verifying(
             firstError(
               maxLength(35, "nonUkAddress.country.error.length"),
               nonEmptyString("country", "nonUkAddress.country.error.required")
-            ))
+            )
+          )
     )(NonUkAddress.apply)(NonUkAddress.unapply)
   )
 }

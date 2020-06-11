@@ -16,30 +16,44 @@
 
 package forms
 
-import forms.behaviours.OptionFieldBehaviours
-import models.IndividualOrBusiness
+import forms.behaviours.StringFieldBehaviours
 import play.api.data.{Form, FormError}
+import wolfendale.scalacheck.regexp.RegexpGen
 
-class IndividualOrBusinessFormProviderSpec extends OptionFieldBehaviours {
+class NinoFormProviderSpec extends StringFieldBehaviours {
 
-  val form: Form[IndividualOrBusiness] = new IndividualOrBusinessFormProvider()()
+  val prefix: String = "individual.nino"
+  val requiredKey: String = s"$prefix.error.required"
+  val invalidFormatKey: String = s"$prefix.error.invalidFormat"
+
+  val form: Form[String] = new NinoFormProvider().withPrefix(prefix)
 
   ".value" must {
 
     val fieldName = "value"
-    val requiredKey = "individualOrBusiness.error.required"
 
-    behave like optionsField[IndividualOrBusiness](
+    behave like fieldThatBindsValidData(
       form,
       fieldName,
-      validValues  = IndividualOrBusiness.values,
-      invalidError = FormError(fieldName, "error.invalid")
+      RegexpGen.from(Validation.ninoRegex)
     )
 
     behave like mandatoryField(
       form,
       fieldName,
       requiredError = FormError(fieldName, requiredKey)
+    )
+
+    behave like nonEmptyField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey, Seq(fieldName))
+    )
+
+    behave like ninoField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, invalidFormatKey, Seq(fieldName))
     )
   }
 }

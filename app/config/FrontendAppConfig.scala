@@ -61,8 +61,13 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   def routeToSwitchLanguage: String => Call =
     (lang: String) => routes.LanguageSwitchController.switchToLanguage(lang)
 
-  private val day: Int = configuration.get[Int]("dates.minimum.day")
-  private val month: Int = configuration.get[Int]("dates.minimum.month")
-  private val year: Int = configuration.get[Int]("dates.minimum.year")
-  lazy val minDate: LocalDate = LocalDate.of(year, month, day)
+  private val minDay: Int = configuration.get[Int]("dates.minimum.day")
+  private val minMonth: Int = configuration.get[Int]("dates.minimum.month")
+  private val minYear: Int = configuration.get[Int]("dates.minimum.year")
+  lazy val minDate: LocalDate = LocalDate.of(minYear, minMonth, minDay)
+
+  private val maxDay: Int = configuration.get[Int]("dates.maximum.day")
+  private val maxMonth: Int = configuration.get[Int]("dates.maximum.month")
+  private val maxYear: Int = configuration.get[Int]("dates.maximum.year")
+  lazy val maxDate: LocalDate = LocalDate.of(maxYear, maxMonth, maxDay)
 }

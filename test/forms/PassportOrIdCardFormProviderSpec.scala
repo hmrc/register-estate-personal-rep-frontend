@@ -17,22 +17,23 @@
 package forms
 
 import forms.behaviours.OptionFieldBehaviours
-import models.IndividualOrBusiness
+import models.PassportOrIdCard
 import play.api.data.{Form, FormError}
 
-class IndividualOrBusinessFormProviderSpec extends OptionFieldBehaviours {
+class PassportOrIdCardFormProviderSpec extends OptionFieldBehaviours {
 
-  val form: Form[IndividualOrBusiness] = new IndividualOrBusinessFormProvider()()
+  val prefix: String = "individual.passportOrIdCard"
+  val form: Form[PassportOrIdCard] = new PassportOrIdCardFormProvider().withPrefix(prefix)
 
   ".value" must {
 
     val fieldName = "value"
-    val requiredKey = "individualOrBusiness.error.required"
+    val requiredKey = s"$prefix.error.required"
 
-    behave like optionsField[IndividualOrBusiness](
+    behave like optionsField[PassportOrIdCard](
       form,
       fieldName,
-      validValues  = IndividualOrBusiness.values,
+      validValues  = PassportOrIdCard.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

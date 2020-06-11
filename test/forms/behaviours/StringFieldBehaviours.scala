@@ -16,7 +16,11 @@
 
 package forms.behaviours
 
+import forms.Validation
+import org.scalacheck.Gen
 import play.api.data.{Form, FormError}
+import uk.gov.hmrc.domain.Nino
+import wolfendale.scalacheck.regexp.RegexpGen
 
 trait StringFieldBehaviours extends FieldBehaviours with OptionalFieldBehaviours {
 
@@ -35,6 +39,24 @@ trait StringFieldBehaviours extends FieldBehaviours with OptionalFieldBehaviours
     }
   }
 
+  def fieldWithMinLength(form : Form[_],
+                         fieldName : String,
+                         minLength : Int,
+                         lengthError : FormError) : Unit = {
+
+    s"not bind strings shorter than $minLength characters" in {
+
+      val length = if (minLength > 0 && minLength < 2) minLength else minLength -1
+
+      forAll(stringsWithMaxLength(length) -> "shortString") {
+        string =>
+          val result = form.bind(Map(fieldName -> string)).apply(fieldName)
+          result.errors shouldEqual Seq(lengthError)
+      }
+    }
+
+  }
+
   def nonEmptyField(form: Form[_],
                     fieldName: String,
                     requiredError: FormError): Unit = {
@@ -43,6 +65,39 @@ trait StringFieldBehaviours extends FieldBehaviours with OptionalFieldBehaviours
 
       val result = form.bind(Map(fieldName -> "    ")).apply(fieldName)
       result.errors shouldBe Seq(requiredError)
+    }
+  }
+
+  def ninoField(form: Form[_],
+                fieldName: String,
+                requiredError: FormError): Unit = {
+
+    s"not bind strings which do not match valid nino format " in {
+      val generator = RegexpGen.from(Validation.validNinoFormat)
+      forAll(generator) {
+        string =>
+          whenever(!Nino.isValid(string)) {
+            val result = form.bind(Map(fieldName -> string)).apply(fieldName)
+            result.errors shouldEqual Seq(requiredError)
+          }
+      }
+    }
+  }
+
+  def fieldWithRegexpWithGenerator(form: Form[_],
+                                   fieldName: String,
+                                   regexp: String,
+                                   generator: Gen[String],
+                                   error: FormError): Unit = {
+
+    s"not bind strings which do not match $regexp" in {
+      forAll(generator) {
+        string =>
+          whenever(!string.matches(regexp) && string.nonEmpty) {
+            val result = form.bind(Map(fieldName -> string)).apply(fieldName)
+            result.errors shouldEqual Seq(error)
+          }
+      }
     }
   }
 }

@@ -27,14 +27,17 @@ class DateOfBirthFormProvider @Inject()(appConfig: FrontendAppConfig) extends Ma
 
   def withPrefix(prefix: String): Form[LocalDate] =
     Form(
-      "value" -> localDate(
-        invalidKey     = s"$prefix.error.invalid",
-        allRequiredKey = s"$prefix.error.required.all",
-        twoRequiredKey = s"$prefix.error.required.two",
-        requiredKey    = s"$prefix.error.required"
-      ).verifying(firstError(
-        maxDate(LocalDate.now, s"$prefix.error.future", "day", "month", "year"),
-        minDate(appConfig.minDate, s"$prefix.error.past", "day", "month", "year")
-      ))
+      "value" ->
+        localDate(
+          invalidKey     = s"$prefix.error.invalid",
+          allRequiredKey = s"$prefix.error.required.all",
+          twoRequiredKey = s"$prefix.error.required.two",
+          requiredKey    = s"$prefix.error.required"
+        ).verifying(
+          firstError(
+            maxDate(LocalDate.now, s"$prefix.error.future", "day", "month", "year"),
+            minDate(appConfig.minDate, s"$prefix.error.past", "day", "month", "year")
+          )
+        )
     )
 }

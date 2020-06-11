@@ -32,8 +32,6 @@
 
 package forms
 
-import java.time.LocalDate
-
 import config.FrontendAppConfig
 import forms.mappings.Mappings
 import javax.inject.Inject
@@ -63,22 +61,24 @@ class IdCardFormProvider @Inject()(appConfig: FrontendAppConfig) extends Mapping
             isNotEmpty("number", s"$prefix.number.error.required")
           )
         ),
-      "expiryDate" -> localDate(
-        invalidKey     = s"$prefix.expiryDate.error.invalid",
-        allRequiredKey = s"$prefix.expiryDate.error.required.all",
-        twoRequiredKey = s"$prefix.expiryDate.error.required.two",
-        requiredKey    = s"$prefix.expiryDate.error.required"
-      ).verifying(firstError(
-        maxDate(
-          LocalDate.of(2099, 12, 31),
-          s"$prefix.expiryDate.error.future", "day", "month", "year"
-        ),
-        minDate(
-          appConfig.minDate,
-          s"$prefix.expiryDate.error.past", "day", "month", "year"
+      "expiryDate" ->
+        localDate(
+          invalidKey = s"$prefix.expiryDate.error.invalid",
+          allRequiredKey = s"$prefix.expiryDate.error.required.all",
+          twoRequiredKey = s"$prefix.expiryDate.error.required.two",
+          requiredKey = s"$prefix.expiryDate.error.required"
+        ).verifying(
+          firstError(
+            maxDate(
+              appConfig.maxDate,
+              s"$prefix.expiryDate.error.future", "day", "month", "year"
+            ),
+            minDate(
+              appConfig.minDate,
+              s"$prefix.expiryDate.error.past", "day", "month", "year"
+            )
+          )
         )
-      ))
-
     )(IdCard.apply)(IdCard.unapply)
   )
 }
