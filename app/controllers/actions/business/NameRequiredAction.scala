@@ -38,7 +38,7 @@ class NameRequiredAction @Inject()(val executionContext: ExecutionContext, val m
     request.userAnswers.get(UkCompanyNamePage)
       .orElse(request.userAnswers.get(NonUkCompanyNamePage)) match {
       case Some(name) => name
-      case _ => request.messages(messagesApi)("business.name.default")
+      case _ => request.messages(messagesApi)("personalRep.name.default")
     }
   }
 }

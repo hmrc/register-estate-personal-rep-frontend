@@ -235,12 +235,12 @@ individual.telephoneNumber.hint = For international numbers include the country 
 individual.telephoneNumber.error.required = Enter the personal representative’s telephone number
 individual.telephoneNumber.error.invalid = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
 
+personalRep.name.default = the personal representative
+
 business.ukRegisteredYesNo.checkYourAnswersLabel = Is this personal representative a UK registered company?
 business.ukRegisteredYesNo.title = Is this personal representative a UK registered company?
 business.ukRegisteredYesNo.heading = Is this personal representative a UK registered company?
 business.ukRegisteredYesNo.error.required = Select yes if the personal representative is a UK registered company
-
-business.name.default = the business
 
 business.ukCompany.name.checkYourAnswersLabel = What is the company’s name?
 business.ukCompany.name.title = What is the company’s name?

@@ -39,7 +39,7 @@ final case class UserAnswers(
       case JsError(errors) => None
     }
   }
-  
+
   def set[A](page: QuestionPage[A], value: A)(implicit writes: Writes[A]): Try[UserAnswers] = {
 
     val updatedData = data.setObject(page.path, Json.toJson(value)) match {
