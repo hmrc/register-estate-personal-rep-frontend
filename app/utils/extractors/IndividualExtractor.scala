@@ -39,11 +39,11 @@ class IndividualExtractor {
       case Passport(countryOfIssue, number, expirationDate) =>
         userAnswers.set(NinoYesNoPage, false)
           .flatMap(_.set(PassportOrIdCardPage, PassportOrIdCard.Passport))
-          .flatMap(_.set(PassportPage, CombinedPassportOrIdCard(countryOfIssue, number, expirationDate)))
+          .flatMap(_.set(PassportPage, Passport(countryOfIssue, number, expirationDate)))
       case IdCard(countryOfIssue, number, expirationDate) =>
         userAnswers.set(NinoYesNoPage, false)
           .flatMap(_.set(PassportOrIdCardPage, PassportOrIdCard.IdCard))
-          .flatMap(_.set(IdCardPage, CombinedPassportOrIdCard(countryOfIssue, number, expirationDate)))
+          .flatMap(_.set(IdCardPage, IdCard(countryOfIssue, number, expirationDate)))
       case CombinedPassportOrIdCard(countryOfIssue, number, expirationDate) =>
         userAnswers.set(NinoYesNoPage, false)
     }

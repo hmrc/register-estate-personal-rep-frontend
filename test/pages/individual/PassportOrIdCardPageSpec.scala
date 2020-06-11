@@ -18,7 +18,7 @@ package pages.individual
 
 import java.time.LocalDate
 
-import models.{CombinedPassportOrIdCard, PassportOrIdCard}
+import models.{IdCard, Passport, PassportOrIdCard}
 import pages.behaviours.PageBehaviours
 
 class PassportOrIdCardPageSpec extends PageBehaviours {
@@ -30,7 +30,7 @@ class PassportOrIdCardPageSpec extends PageBehaviours {
     "implement cleanup logic when PASSPORT selected" in {
 
       val userAnswers = emptyUserAnswers
-        .set(IdCardPage, CombinedPassportOrIdCard("country", "number", date))
+        .set(IdCardPage, IdCard("country", "number", date))
         .flatMap(_.set(PassportOrIdCardPage, PassportOrIdCard.Passport))
 
       userAnswers.get.get(IdCardPage) mustNot be(defined)
@@ -39,7 +39,7 @@ class PassportOrIdCardPageSpec extends PageBehaviours {
     "implement cleanup logic when ID CARD selected" in {
 
       val userAnswers = emptyUserAnswers
-        .set(PassportPage, CombinedPassportOrIdCard("country", "number", date))
+        .set(PassportPage, Passport("country", "number", date))
         .flatMap(_.set(PassportOrIdCardPage, PassportOrIdCard.IdCard))
 
       userAnswers.get.get(PassportPage) mustNot be(defined)

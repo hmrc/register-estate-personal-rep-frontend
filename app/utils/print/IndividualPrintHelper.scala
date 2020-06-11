@@ -48,8 +48,8 @@ class IndividualPrintHelper @Inject()(countryOptions: CountryOptions) {
         PassportOrIdCardController.onPageLoad(NormalMode).url,
         "passportOrIdCard"
       ),
-      converter.passportOrIdCardDetailsQuestion(PassportPage, "individual.passport", PassportController.onPageLoad(NormalMode).url),
-      converter.passportOrIdCardDetailsQuestion(IdCardPage, "individual.idCard", IdCardController.onPageLoad(NormalMode).url),
+      converter.passportDetailsQuestion(PassportPage, "individual.passport", PassportController.onPageLoad(NormalMode).url),
+      converter.idCardDetailsQuestion(IdCardPage, "individual.idCard", IdCardController.onPageLoad(NormalMode).url),
       converter.yesNoQuestion(LivesInTheUkYesNoPage, "individual.livesInTheUkYesNo", LivesInTheUkYesNoController.onPageLoad(NormalMode).url),
       converter.addressQuestion(UkAddressPage, "individual.ukAddress", UkAddressController.onPageLoad(NormalMode).url),
       converter.addressQuestion(NonUkAddressPage, "individual.nonUkAddress", NonUkAddressController.onPageLoad(NormalMode).url),

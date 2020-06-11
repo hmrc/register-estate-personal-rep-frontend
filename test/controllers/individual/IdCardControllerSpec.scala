@@ -20,8 +20,8 @@ import java.time.LocalDate
 
 import base.SpecBase
 import config.annotations.Individual
-import forms.PassportOrIdCardDetailsFormProvider
-import models.{CombinedPassportOrIdCard, Name, NormalMode, UserAnswers}
+import forms.IdCardFormProvider
+import models.{IdCard, Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import pages.individual.{IdCardPage, NamePage}
 import play.api.data.Form
@@ -36,12 +36,11 @@ class IdCardControllerSpec extends SpecBase {
 
   lazy val idCardRoute: String = routes.IdCardController.onPageLoad(NormalMode).url
 
-  val formProvider = new PassportOrIdCardDetailsFormProvider(frontendAppConfig)
-  val form: Form[CombinedPassportOrIdCard] = formProvider.withPrefix("individual.idCard")
+  val formProvider = new IdCardFormProvider(frontendAppConfig)
+  val form: Form[IdCard] = formProvider.withPrefix("individual.idCard")
   val name: Name = Name("First", None, "Last")
 
-  val validAnswer: CombinedPassportOrIdCard =
-    CombinedPassportOrIdCard("country", "number", LocalDate.parse("2019-02-03"))
+  val validAnswer: IdCard = IdCard("country", "number", LocalDate.parse("2019-02-03"))
 
   val baseAnswers: UserAnswers = emptyUserAnswers
     .set(NamePage, name).success.value

@@ -50,14 +50,14 @@ class IndividualMapper {
   private def readIdentification: Reads[IndividualIdentification] = {
     NinoYesNoPage.path.read[Boolean].flatMap[IndividualIdentification] {
       case true => NinoPage.path.read[String].map(nino => NationalInsuranceNumber(nino)).widen[IndividualIdentification]
-      case false => readPassportOrIdCard.widen[IndividualIdentification]
+      case false => readPassportOrIdCard
     }
   }
 
-  private def readPassportOrIdCard: Reads[CombinedPassportOrIdCard] = {
-    PassportOrIdCardPage.path.read[PassportOrIdCard].flatMap[CombinedPassportOrIdCard] {
-      case PassportOrIdCard.Passport => PassportPage.path.read[CombinedPassportOrIdCard]
-      case PassportOrIdCard.IdCard => IdCardPage.path.read[CombinedPassportOrIdCard]
+  private def readPassportOrIdCard: Reads[IndividualIdentification] = {
+    PassportOrIdCardPage.path.read[PassportOrIdCard].flatMap[IndividualIdentification] {
+      case PassportOrIdCard.Passport => PassportPage.path.read[Passport].widen[IndividualIdentification]
+      case PassportOrIdCard.IdCard => IdCardPage.path.read[IdCard].widen[IndividualIdentification]
     }
   }
 

@@ -19,7 +19,7 @@ package utils.print
 import java.time.LocalDate
 
 import base.SpecBase
-import models.{CombinedPassportOrIdCard, IndividualOrBusiness, Name, NonUkAddress, NormalMode, PassportOrIdCard, UkAddress}
+import models.{CombinedPassportOrIdCard, IdCard, IndividualOrBusiness, Name, NonUkAddress, NormalMode, Passport, PassportOrIdCard, UkAddress}
 import pages.IndividualOrBusinessPage
 import pages.individual._
 import play.twirl.api.Html
@@ -32,7 +32,8 @@ class IndividualPrintHelperSpec extends SpecBase {
   val ukAddress: UkAddress = UkAddress("value 1", "value 2", None, None, "AB1 1AB")
   val nonUkAddress: NonUkAddress = NonUkAddress("value 1", "value 2", None, "DE")
   val date: LocalDate = LocalDate.parse("2019-02-03")
-  val passportOrIdCard: CombinedPassportOrIdCard = CombinedPassportOrIdCard("GB", "12345", date)
+  val passport: Passport = Passport("GB", "12345", date)
+  val idCard: IdCard = IdCard("GB", "12345", date)
 
   "Individual print helper" must {
 
@@ -45,8 +46,8 @@ class IndividualPrintHelperSpec extends SpecBase {
       .set(NinoYesNoPage, true).success.value
       .set(NinoPage, "AA000000A").success.value
       .set(PassportOrIdCardPage, PassportOrIdCard.Passport).success.value
-      .set(PassportPage, passportOrIdCard).success.value
-      .set(IdCardPage, passportOrIdCard).success.value
+      .set(PassportPage, passport).success.value
+      .set(IdCardPage, idCard).success.value
       .set(LivesInTheUkYesNoPage, true).success.value
       .set(UkAddressPage, ukAddress).success.value
       .set(NonUkAddressPage, nonUkAddress).success.value

@@ -19,7 +19,7 @@ package pages
 import java.time.LocalDate
 
 import models.IndividualOrBusiness.Business
-import models.{CombinedPassportOrIdCard, IdCard, Name, NonUkAddress, Passport, PassportOrIdCard, UkAddress}
+import models.{IdCard, Name, NonUkAddress, Passport, PassportOrIdCard, UkAddress}
 import pages.behaviours.PageBehaviours
 import pages.individual._
 
@@ -37,8 +37,8 @@ class IndividualOrBusinessPageSpec extends PageBehaviours {
         .flatMap(_.set(NinoYesNoPage, true))
         .flatMap(_.set(NinoPage, "nino"))
         .flatMap(_.set(PassportOrIdCardPage, PassportOrIdCard.Passport))
-        .flatMap(_.set(PassportPage, CombinedPassportOrIdCard("country", "number", date)))
-        .flatMap(_.set(IdCardPage, CombinedPassportOrIdCard("country", "number", date)))
+        .flatMap(_.set(PassportPage, Passport("country", "number", date)))
+        .flatMap(_.set(IdCardPage, IdCard("country", "number", date)))
         .flatMap(_.set(LivesInTheUkYesNoPage, true))
         .flatMap(_.set(UkAddressPage, UkAddress("Line 1", "Line 2", None, None, "postcode")))
         .flatMap(_.set(NonUkAddressPage, NonUkAddress("Line 1", "Line 2", None, "country")))

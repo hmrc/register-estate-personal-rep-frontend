@@ -19,9 +19,9 @@ package controllers.individual
 import config.annotations.Individual
 import controllers.actions.Actions
 import controllers.actions.individual.NameRequiredAction
-import forms.PassportOrIdCardDetailsFormProvider
+import forms.PassportFormProvider
 import javax.inject.Inject
-import models.{CombinedPassportOrIdCard, Mode}
+import models.{Mode, Passport}
 import navigation.Navigator
 import pages.individual.PassportPage
 import play.api.data.Form
@@ -37,7 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class PassportController @Inject()(
                                     val controllerComponents: MessagesControllerComponents,
                                     actions: Actions,
-                                    formProvider: PassportOrIdCardDetailsFormProvider,
+                                    formProvider: PassportFormProvider,
                                     view: PassportView,
                                     nameAction: NameRequiredAction,
                                     repository: SessionRepository,
@@ -45,7 +45,7 @@ class PassportController @Inject()(
                                     countryOptions: CountryOptions
                                   )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form: Form[CombinedPassportOrIdCard] = formProvider.withPrefix("individual.passport")
+  val form: Form[Passport] = formProvider.withPrefix("individual.passport")
 
   def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
     implicit request =>

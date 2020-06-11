@@ -32,7 +32,8 @@ class IndividualMapperSpec extends SpecBase {
   private val country: String = "country"
   private val number: String = "12345"
   private val nonUkAddress = NonUkAddress("line1", "line2", Some("line3"), country)
-  private val passportOrIdCard: CombinedPassportOrIdCard = CombinedPassportOrIdCard(country, number, date)
+  private val passport: Passport = Passport(country, number, date)
+  private val idCard: IdCard = IdCard(country, number, date)
 
   "Individual Mapper" when {
 
@@ -65,7 +66,7 @@ class IndividualMapperSpec extends SpecBase {
         .set(DateOfBirthPage, date).success.value
         .set(NinoYesNoPage, false).success.value
         .set(PassportOrIdCardPage, PassportOrIdCard.Passport).success.value
-        .set(PassportPage, passportOrIdCard).success.value
+        .set(PassportPage, passport).success.value
         .set(LivesInTheUkYesNoPage, true).success.value
         .set(UkAddressPage, ukAddress).success.value
         .set(TelephoneNumberPage, phone).success.value
@@ -74,7 +75,7 @@ class IndividualMapperSpec extends SpecBase {
 
       result.name mustBe name
       result.dateOfBirth mustBe date
-      result.identification mustBe CombinedPassportOrIdCard(country, number, date)
+      result.identification mustBe Passport(country, number, date)
       result.address mustBe ukAddress
       result.phoneNumber mustBe phone
     }
@@ -86,7 +87,7 @@ class IndividualMapperSpec extends SpecBase {
         .set(DateOfBirthPage, date).success.value
         .set(NinoYesNoPage, false).success.value
         .set(PassportOrIdCardPage, PassportOrIdCard.IdCard).success.value
-        .set(IdCardPage, passportOrIdCard).success.value
+        .set(IdCardPage, idCard).success.value
         .set(LivesInTheUkYesNoPage, false).success.value
         .set(NonUkAddressPage, nonUkAddress).success.value
         .set(TelephoneNumberPage, phone).success.value
@@ -95,7 +96,7 @@ class IndividualMapperSpec extends SpecBase {
 
       result.name mustBe name
       result.dateOfBirth mustBe date
-      result.identification mustBe CombinedPassportOrIdCard(country, number, date)
+      result.identification mustBe IdCard(country, number, date)
       result.address mustBe nonUkAddress
       result.phoneNumber mustBe phone
     }

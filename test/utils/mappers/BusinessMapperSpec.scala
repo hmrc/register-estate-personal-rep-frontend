@@ -28,7 +28,7 @@ class BusinessMapperSpec extends SpecBase {
   private val ukAddress = UkAddress("line1", "line2", Some("line3"), Some("line4"), "POSTCODE")
   private val nonUkAddress = NonUkAddress("line1", "line2", Some("line3"), "country")
 
-  "BusinessMapper" when {
+  "Business Mapper" when {
 
     val mapper = injector.instanceOf[BusinessMapper]
 
@@ -85,21 +85,21 @@ class BusinessMapperSpec extends SpecBase {
       result.address mustBe nonUkAddress
     }
 
-  "generate business personal rep model with non Uk Company name, non Uk address and no utr" in {
+    "generate business personal rep model with non Uk Company name, non Uk address and no utr" in {
 
-    val userAnswers = emptyUserAnswers
-      .set(UkRegisteredYesNoPage, false).success.value
-      .set(NonUkCompanyNamePage, name).success.value
-      .set(TelephoneNumberPage, phone).success.value
-      .set(AddressUkYesNoPage, false).success.value
-      .set(NonUkAddressPage, nonUkAddress).success.value
+      val userAnswers = emptyUserAnswers
+        .set(UkRegisteredYesNoPage, false).success.value
+        .set(NonUkCompanyNamePage, name).success.value
+        .set(TelephoneNumberPage, phone).success.value
+        .set(AddressUkYesNoPage, false).success.value
+        .set(NonUkAddressPage, nonUkAddress).success.value
 
-    val result = mapper(userAnswers).get
+      val result = mapper(userAnswers).get
 
-    result.name mustBe name
-    result.phoneNumber mustBe phone
-    result.utr mustBe None
-    result.address mustBe nonUkAddress
-  }
+      result.name mustBe name
+      result.phoneNumber mustBe phone
+      result.utr mustBe None
+      result.address mustBe nonUkAddress
+    }
   }
 }

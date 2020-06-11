@@ -37,16 +37,16 @@ import java.time.LocalDate
 import config.FrontendAppConfig
 import forms.mappings.Mappings
 import javax.inject.Inject
-import models.CombinedPassportOrIdCard
+import models.IdCard
 import play.api.data.Form
 import play.api.data.Forms._
 
-class PassportOrIdCardDetailsFormProvider @Inject()(appConfig: FrontendAppConfig) extends Mappings {
+class IdCardFormProvider @Inject()(appConfig: FrontendAppConfig) extends Mappings {
 
   val maxLengthCountyField = 100
   val maxLengthNumberField = 30
 
-  def withPrefix(prefix: String): Form[CombinedPassportOrIdCard] = Form(
+  def withPrefix(prefix: String): Form[IdCard] = Form(
     mapping(
       "country" -> text(s"$prefix.country.error.required")
         .verifying(
@@ -79,6 +79,6 @@ class PassportOrIdCardDetailsFormProvider @Inject()(appConfig: FrontendAppConfig
         )
       ))
 
-    )(CombinedPassportOrIdCard.apply)(CombinedPassportOrIdCard.unapply)
+    )(IdCard.apply)(IdCard.unapply)
   )
 }

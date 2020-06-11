@@ -16,8 +16,8 @@
 
 package views.individual
 
-import forms.PassportOrIdCardDetailsFormProvider
-import models.{CombinedPassportOrIdCard, Name, NormalMode}
+import forms.IdCardFormProvider
+import models.{IdCard, Name, NormalMode}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import utils.InputOption
@@ -25,12 +25,12 @@ import utils.countryOptions.CountryOptions
 import views.behaviours.QuestionViewBehaviours
 import views.html.individual.IdCardView
 
-class IdCardViewSpec extends QuestionViewBehaviours[CombinedPassportOrIdCard] {
+class IdCardViewSpec extends QuestionViewBehaviours[IdCard] {
 
   val prefix = "individual.idCard"
   val name: Name = Name("First", Some("Middle"), "Last")
 
-  override val form: Form[CombinedPassportOrIdCard] = new PassportOrIdCardDetailsFormProvider(frontendAppConfig).withPrefix(prefix)
+  override val form: Form[IdCard] = new IdCardFormProvider(frontendAppConfig).withPrefix(prefix)
 
   val view: IdCardView = viewFor[IdCardView](Some(emptyUserAnswers))
 
