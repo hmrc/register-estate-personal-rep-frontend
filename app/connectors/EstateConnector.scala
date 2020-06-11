@@ -27,16 +27,24 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class EstateConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
 
-  private val addBusinessPersonalRepUrl = s"${config.estatesUrl}/estates/personal-rep/organisation"
-
-  def addBusinessPersonalRep(personalRep: BusinessPersonalRep)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
-    http.POST[JsValue, HttpResponse](addBusinessPersonalRepUrl, Json.toJson(personalRep))
-  }
-
-  private val addIndividualPersonalRepUrl: String = s"${config.estatesUrl}/estates/personal-rep/individual"
+  private val individualPersonalRepUrl: String = s"${config.estatesUrl}/estates/personal-rep/individual"
 
   def addIndividualPersonalRep(personalRep: IndividualPersonalRep)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
-    http.POST[JsValue, HttpResponse](addIndividualPersonalRepUrl, Json.toJson(personalRep))
+    http.POST[JsValue, HttpResponse](individualPersonalRepUrl, Json.toJson(personalRep))
+  }
+
+  def getIndividualPersonalRep()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] = {
+    http.GET[JsValue](individualPersonalRepUrl)
+  }
+
+  private val businessPersonalRepUrl = s"${config.estatesUrl}/estates/personal-rep/organisation"
+
+  def addBusinessPersonalRep(personalRep: BusinessPersonalRep)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+    http.POST[JsValue, HttpResponse](businessPersonalRepUrl, Json.toJson(personalRep))
+  }
+
+  def getBusinessPersonalRep()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] = {
+    http.GET[JsValue](businessPersonalRepUrl)
   }
 
 }
