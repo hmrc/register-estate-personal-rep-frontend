@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
-package utils.countryOptions
+package pages.business
 
-case class InputOption(value: String, label: String, dataTarget: Option[String] = None)
+import pages.QuestionPage
+import play.api.libs.json.JsPath
+
+case object NonUkCompanyNamePage extends QuestionPage[String] {
+
+  override def path: JsPath = basePath \ toString
+
+  override def toString: String = "nonUkCompanyName"
+}
