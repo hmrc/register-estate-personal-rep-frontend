@@ -17,26 +17,33 @@
 package controllers.actions.individual
 
 import javax.inject.Inject
+import models.NormalMode
 import models.requests.{DataRequest, IndividualNameRequest}
 import pages.individual.NamePage
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.ActionTransformer
+import play.api.mvc.Results.Redirect
+import play.api.mvc.{ActionRefiner, Result}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class NameRequiredAction @Inject()(val executionContext: ExecutionContext, val messagesApi: MessagesApi)
-  extends ActionTransformer[DataRequest, IndividualNameRequest] with I18nSupport {
+class NameRequiredAction @Inject()(implicit val executionContext: ExecutionContext)
+  extends ActionRefiner[DataRequest, IndividualNameRequest] {
 
-  override protected def transform[A](request: DataRequest[A]): Future[IndividualNameRequest[A]] = {
-    Future.successful(IndividualNameRequest[A](request,
-      getName(request)
-    ))
-  }
+  override protected def refine[A](request: DataRequest[A]): Future[Either[Result, IndividualNameRequest[A]]] = {
 
-  private def getName[A](request: DataRequest[A]): String = {
-    request.userAnswers.get(NamePage) match {
-      case Some(name) => name.displayName
-      case _ => request.messages(messagesApi)("personalRep.name.default")
-    }
+    Future.successful(
+      request.userAnswers.get(NamePage) match {
+        case None =>
+          Left(
+            Redirect(controllers.individual.routes.NameController.onPageLoad(NormalMode))
+          )
+        case Some(name) =>
+          Right(
+            IndividualNameRequest(
+              request,
+              name.displayName
+            )
+          )
+      }
+    )
   }
 }

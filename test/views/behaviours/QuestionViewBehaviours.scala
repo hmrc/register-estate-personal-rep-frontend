@@ -76,7 +76,6 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
             val doc = asDocument(createView(form.withError(FormError(field, "error"))))
             val inputField = doc.getElementById(field)
             inputField.attr("aria-describedby").split(" ").foreach { idOfDescribedByTarget =>
-              println(idOfDescribedByTarget)
               doc.getElementById(idOfDescribedByTarget) mustNot be(null)
             }
 
