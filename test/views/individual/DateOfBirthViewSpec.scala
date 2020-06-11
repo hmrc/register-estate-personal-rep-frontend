@@ -30,7 +30,7 @@ class DateOfBirthViewSpec extends QuestionViewBehaviours[LocalDate] {
   val prefix = "individual.dateOfBirth"
   val name: Name = Name("First", Some("Middle"), "Last")
 
-  override val form: Form[LocalDate] = new DateOfBirthFormProvider().withPrefix(prefix)
+  override val form: Form[LocalDate] = new DateOfBirthFormProvider(frontendAppConfig).withPrefix(prefix)
 
   val view: DateOfBirthView = viewFor[DateOfBirthView](Some(emptyUserAnswers))
 

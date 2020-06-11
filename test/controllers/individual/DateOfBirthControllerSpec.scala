@@ -34,7 +34,7 @@ class DateOfBirthControllerSpec extends SpecBase {
 
   lazy val dateOfBirthRoute: String = routes.DateOfBirthController.onPageLoad(NormalMode).url
 
-  val formProvider = new DateOfBirthFormProvider()
+  val formProvider = new DateOfBirthFormProvider(frontendAppConfig)
   val form: Form[LocalDate] = formProvider.withPrefix("individual.dateOfBirth")
   val name: Name = Name("First", None, "Last")
 
