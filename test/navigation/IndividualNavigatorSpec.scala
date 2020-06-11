@@ -115,7 +115,7 @@ class IndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyChecks  {
 
       "Telephone number page -> Check details page" in {
         navigator.nextPage(TelephoneNumberPage, mode, emptyUserAnswers)
-          .mustBe(controllers.individual.routes.CheckDetailsController.onPageLoad(mode))
+          .mustBe(controllers.individual.routes.CheckDetailsController.onPageLoad())
       }
 
     }

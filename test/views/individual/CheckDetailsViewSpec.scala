@@ -16,7 +16,6 @@
 
 package views.individual
 
-import models.NormalMode
 import play.twirl.api.HtmlFormat
 import viewmodels.AnswerSection
 import views.behaviours.ViewBehaviours
@@ -31,7 +30,7 @@ class CheckDetailsViewSpec extends ViewBehaviours {
     val view = viewFor[CheckDetailsView](Some(emptyUserAnswers))
 
     def applyView(): HtmlFormat.Appendable =
-      view.apply(AnswerSection(None, Seq()), NormalMode)(fakeRequest, messages)
+      view.apply(AnswerSection(None, Seq()))(fakeRequest, messages)
 
     behave like normalPage(applyView(), messageKeyPrefix)
 

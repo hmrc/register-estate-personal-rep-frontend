@@ -18,7 +18,7 @@ package connectors
 
 import config.FrontendAppConfig
 import javax.inject.Inject
-import models.BusinessPersonalRep
+import models.{BusinessPersonalRep, IndividualPersonalRep}
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
@@ -27,10 +27,16 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class EstateConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
 
-  private def addBusinessPersonalRepUrl = s"${config.estatesUrl}/estates/personal-rep/organisation"
+  private val addBusinessPersonalRepUrl = s"${config.estatesUrl}/estates/personal-rep/organisation"
 
   def addBusinessPersonalRep(personalRep: BusinessPersonalRep)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
     http.POST[JsValue, HttpResponse](addBusinessPersonalRepUrl, Json.toJson(personalRep))
+  }
+
+  private val addIndividualPersonalRepUrl: String = s"${config.estatesUrl}/estates/personal-rep/individual"
+
+  def addIndividualPersonalRep(personalRep: IndividualPersonalRep)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+    http.POST[JsValue, HttpResponse](addIndividualPersonalRepUrl, Json.toJson(personalRep))
   }
 
 }

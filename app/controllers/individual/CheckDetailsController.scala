@@ -17,18 +17,19 @@
 package controllers.individual
 
 import config.FrontendAppConfig
+import connectors.{EstateConnector, EstatesStoreConnector}
 import controllers.actions.Actions
 import controllers.actions.individual.NameRequiredAction
 import javax.inject.Inject
-import models.Mode
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
+import utils.mappers.IndividualMapper
 import utils.print.IndividualPrintHelper
 import viewmodels.AnswerSection
 import views.html.individual.CheckDetailsView
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class CheckDetailsController @Inject()(
                                         override val messagesApi: MessagesApi,
@@ -37,19 +38,33 @@ class CheckDetailsController @Inject()(
                                         view: CheckDetailsView,
                                         val appConfig: FrontendAppConfig,
                                         printHelper: IndividualPrintHelper,
-                                        nameAction: NameRequiredAction
+                                        nameAction: NameRequiredAction,
+                                        mapper: IndividualMapper,
+                                        connector: EstateConnector,
+                                        estatesStoreConnector: EstatesStoreConnector
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onPageLoad(): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
     implicit request =>
 
       val section: AnswerSection = printHelper(request.userAnswers, request.name)
-      Ok(view(section, mode))
+      Ok(view(section))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onSubmit(): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
     implicit request =>
-      Redirect(controllers.routes.FeatureNotAvailableController.onPageLoad())
+
+      mapper(request.userAnswers) match {
+        case None =>
+          Future.successful(InternalServerError)
+        case Some(personalRep) =>
+          for {
+            _ <- connector.addIndividualPersonalRep(personalRep)
+            _ <- estatesStoreConnector.setTaskComplete()
+          } yield {
+            Redirect(appConfig.registerEstateHubOverview)
+          }
+      }
   }
 
 }

@@ -53,7 +53,5 @@ POST       /telephone-number                         controllers.individual.Tele
 GET        /change-telephone-number                  controllers.individual.TelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-telephone-number                  controllers.individual.TelephoneNumberController.onSubmit(mode: Mode = CheckMode)
 
-GET        /check-details                            controllers.individual.CheckDetailsController.onPageLoad(mode: Mode = NormalMode)
-POST       /check-details                            controllers.individual.CheckDetailsController.onSubmit(mode: Mode = NormalMode)
-GET        /change-check-details                     controllers.individual.CheckDetailsController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-check-details                     controllers.individual.CheckDetailsController.onSubmit(mode: Mode = CheckMode)
+GET        /check-details                            controllers.individual.CheckDetailsController.onPageLoad()
+POST       /check-details                            controllers.individual.CheckDetailsController.onSubmit()

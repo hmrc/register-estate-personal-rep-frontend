@@ -19,11 +19,9 @@ package connectors
 import java.time.LocalDate
 
 import base.SpecBase
-import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock._
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import generators.Generators
-import models.{BusinessPersonalRep, Name, UkAddress}
+import models.{BusinessPersonalRep, IndividualPersonalRep, Name, NationalInsuranceNumber, UkAddress}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Inside}
 import play.api.test.Helpers._
@@ -40,8 +38,71 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
   val index = 0
   val description = "description"
   val date: LocalDate = LocalDate.parse("2019-02-03")
+  val address: UkAddress = UkAddress("line 1", "line 2", None, None, "AB1 1AB")
 
   "estate connector" when {
+
+    "add individual personalRep" must {
+
+      val addIndividualPersonalRepUrl: String = "/estates/personal-rep/individual"
+
+      val personalRep = IndividualPersonalRep(
+        name = Name("First", None, "Last"),
+        dateOfBirth = date,
+        identification = NationalInsuranceNumber("AA000000A"),
+        address = address,
+        phoneNumber = "0987654321"
+      )
+
+      "Return OK when the request is successful" in {
+
+        val application = applicationBuilder()
+          .configure(
+            Seq(
+              "microservice.services.estates.port" -> server.port(),
+              "auditing.enabled" -> false
+            ): _*
+          ).build()
+
+        val connector = application.injector.instanceOf[EstateConnector]
+
+        server.stubFor(
+          post(urlEqualTo(addIndividualPersonalRepUrl))
+            .willReturn(ok)
+        )
+
+        val result = connector.addIndividualPersonalRep(personalRep)
+
+        result.futureValue.status mustBe OK
+
+        application.stop()
+      }
+
+      "return Bad Request when the request is unsuccessful" in {
+
+        val application = applicationBuilder()
+          .configure(
+            Seq(
+              "microservice.services.estates.port" -> server.port(),
+              "auditing.enabled" -> false
+            ): _*
+          ).build()
+
+        val connector = application.injector.instanceOf[EstateConnector]
+
+        server.stubFor(
+          post(urlEqualTo(addIndividualPersonalRepUrl))
+            .willReturn(badRequest)
+        )
+
+        val result = connector.addIndividualPersonalRep(personalRep)
+
+        result.map(response => response.status mustBe BAD_REQUEST)
+
+        application.stop()
+      }
+
+    }
 
     "add business personalRep" must {
 
@@ -51,7 +112,7 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
         name = "Name",
         phoneNumber = "0987654321",
         utr = Some("1234567890"),
-        address = Some(UkAddress("line 1", "line 2", None, None, "AB1 1AB"))
+        address = Some(address)
       )
 
       "Return OK when the request is successful" in {

@@ -19,20 +19,27 @@ package controllers.individual
 import java.time.LocalDate
 
 import base.SpecBase
-import models.{Name, NormalMode, UkAddress}
+import connectors.{EstateConnector, EstatesStoreConnector}
+import models.{Name, UkAddress}
+import org.mockito.Matchers.any
+import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual._
+import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.http.HttpResponse
 import utils.print.IndividualPrintHelper
 import views.html.individual.CheckDetailsView
 
+import scala.concurrent.Future
+
 class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
-  private lazy val checkDetailsRoute = routes.CheckDetailsController.onPageLoad(NormalMode).url
-  private lazy val submitDetailsRoute = routes.CheckDetailsController.onSubmit(NormalMode).url
-  private lazy val redirectRoute = controllers.routes.FeatureNotAvailableController.onPageLoad().url
+  private lazy val checkDetailsRoute = routes.CheckDetailsController.onPageLoad().url
+  private lazy val submitDetailsRoute = routes.CheckDetailsController.onSubmit().url
+  private lazy val redirectRoute = "http://localhost:8822/register-an-estate/registration-progress"
 
   private val name: Name = Name("First", None, "Last")
   private val dateOfBirth: LocalDate = LocalDate.parse("2010-02-03")
@@ -66,12 +73,22 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(answerSection, NormalMode)(fakeRequest, messages).toString
+        view(answerSection)(fakeRequest, messages).toString
     }
 
-    "redirect to feature unavailable when submitted" in {
+    "redirect to the hub when submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val mockEstateConnector = mock[EstateConnector]
+      val mockEstatesStoreConnector = mock[EstatesStoreConnector]
+
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(bind[EstateConnector].toInstance(mockEstateConnector))
+          .overrides(bind[EstatesStoreConnector].toInstance(mockEstatesStoreConnector))
+          .build()
+
+      when(mockEstateConnector.addIndividualPersonalRep(any())(any(), any())).thenReturn(Future.successful(HttpResponse(OK)))
+      when(mockEstatesStoreConnector.setTaskComplete()(any(), any())).thenReturn(Future.successful(HttpResponse(OK)))
 
       val request = FakeRequest(POST, submitDetailsRoute)
 
