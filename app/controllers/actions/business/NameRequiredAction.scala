@@ -18,27 +18,27 @@ package controllers.actions.business
 
 import controllers.actions.BusinessNameRequest
 import javax.inject.Inject
+import models.NormalMode
 import models.requests.DataRequest
 import pages.business.{NonUkCompanyNamePage, UkCompanyNamePage}
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.ActionTransformer
+import play.api.mvc.Results.Redirect
+import play.api.mvc.{ActionRefiner, Result}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class NameRequiredAction @Inject()(val executionContext: ExecutionContext, val messagesApi: MessagesApi)
-  extends ActionTransformer[DataRequest, BusinessNameRequest] with I18nSupport {
+class NameRequiredAction @Inject()(implicit val executionContext: ExecutionContext)
+  extends ActionRefiner[DataRequest, BusinessNameRequest] {
 
-  override protected def transform[A](request: DataRequest[A]): Future[BusinessNameRequest[A]] = {
-    Future.successful(BusinessNameRequest[A](request,
-      getName(request)
-    ))
-  }
+  override protected def refine[A](request: DataRequest[A]): Future[Either[Result, BusinessNameRequest[A]]] = {
 
-  private def getName[A](request: DataRequest[A]): String = {
-    request.userAnswers.get(UkCompanyNamePage)
-      .orElse(request.userAnswers.get(NonUkCompanyNamePage)) match {
-      case Some(name) => name
-      case _ => request.messages(messagesApi)("personalRep.name.default")
-    }
+    Future.successful(
+      request.userAnswers.get(UkCompanyNamePage)
+        .orElse(request.userAnswers.get(NonUkCompanyNamePage)) match {
+        case None =>
+          Left(Redirect(controllers.business.routes.UkRegisteredYesNoController.onPageLoad(NormalMode)))
+        case Some(name) =>
+          Right(BusinessNameRequest(request, name))
+      }
+    )
   }
 }
