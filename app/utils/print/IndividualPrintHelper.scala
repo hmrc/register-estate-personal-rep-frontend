@@ -25,37 +25,35 @@ import play.api.i18n.Messages
 import utils.countryOptions.AllCountryOptions
 import viewmodels.{AnswerRow, AnswerSection}
 
-class IndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverter,
-                                      countryOptions: AllCountryOptions
-                                     ) {
+class IndividualPrintHelper @Inject()(countryOptions: AllCountryOptions) {
 
   def apply(userAnswers: UserAnswers, name: String)(implicit messages: Messages): AnswerSection = {
 
-    val bound: answerRowConverter.Bound = answerRowConverter.bind(userAnswers, name, countryOptions)
+    val converter = AnswerRowConverter(userAnswers, name, countryOptions)
 
     val rows: Seq[AnswerRow] = Seq(
-      bound.enumQuestion(
+      converter.enumQuestion(
         IndividualOrBusinessPage,
         "individualOrBusiness",
         controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode).url,
         "individualOrBusiness"
       ),
-      bound.nameQuestion(NamePage, "individual.name", NameController.onPageLoad(NormalMode).url),
-      bound.dateQuestion(DateOfBirthPage, "individual.dateOfBirth", DateOfBirthController.onPageLoad(NormalMode).url),
-      bound.yesNoQuestion(NinoYesNoPage, "individual.ninoYesNo", NinoYesNoController.onPageLoad(NormalMode).url),
-      bound.ninoQuestion(NinoPage, "individual.nino", NinoController.onPageLoad(NormalMode).url),
-      bound.enumQuestion(
+      converter.nameQuestion(NamePage, "individual.name", NameController.onPageLoad(NormalMode).url),
+      converter.dateQuestion(DateOfBirthPage, "individual.dateOfBirth", DateOfBirthController.onPageLoad(NormalMode).url),
+      converter.yesNoQuestion(NinoYesNoPage, "individual.ninoYesNo", NinoYesNoController.onPageLoad(NormalMode).url),
+      converter.ninoQuestion(NinoPage, "individual.nino", NinoController.onPageLoad(NormalMode).url),
+      converter.enumQuestion(
         PassportOrIdCardPage,
         "individual.passportOrIdCard",
         PassportOrIdCardController.onPageLoad(NormalMode).url,
         "passportOrIdCard"
       ),
-      bound.passportOrIdCardDetailsQuestion(PassportPage, "individual.passport", PassportController.onPageLoad(NormalMode).url),
-      bound.passportOrIdCardDetailsQuestion(IdCardPage, "individual.idCard", IdCardController.onPageLoad(NormalMode).url),
-      bound.yesNoQuestion(LivesInTheUkYesNoPage, "individual.livesInTheUkYesNo", LivesInTheUkYesNoController.onPageLoad(NormalMode).url),
-      bound.addressQuestion(UkAddressPage, "individual.ukAddress", UkAddressController.onPageLoad(NormalMode).url),
-      bound.addressQuestion(NonUkAddressPage, "individual.nonUkAddress", NonUkAddressController.onPageLoad(NormalMode).url),
-      bound.stringQuestion(TelephoneNumberPage, "individual.telephoneNumber", TelephoneNumberController.onPageLoad(NormalMode).url)
+      converter.passportOrIdCardDetailsQuestion(PassportPage, "individual.passport", PassportController.onPageLoad(NormalMode).url),
+      converter.passportOrIdCardDetailsQuestion(IdCardPage, "individual.idCard", IdCardController.onPageLoad(NormalMode).url),
+      converter.yesNoQuestion(LivesInTheUkYesNoPage, "individual.livesInTheUkYesNo", LivesInTheUkYesNoController.onPageLoad(NormalMode).url),
+      converter.addressQuestion(UkAddressPage, "individual.ukAddress", UkAddressController.onPageLoad(NormalMode).url),
+      converter.addressQuestion(NonUkAddressPage, "individual.nonUkAddress", NonUkAddressController.onPageLoad(NormalMode).url),
+      converter.stringQuestion(TelephoneNumberPage, "individual.telephoneNumber", TelephoneNumberController.onPageLoad(NormalMode).url)
     ).flatten
 
     AnswerSection(

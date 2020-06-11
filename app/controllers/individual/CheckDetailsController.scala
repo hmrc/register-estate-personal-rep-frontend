@@ -49,7 +49,7 @@ class CheckDetailsController @Inject()(
 
   def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
     implicit request =>
-      ???
+      Redirect(controllers.routes.FeatureNotAvailableController.onPageLoad())
   }
 
 }
