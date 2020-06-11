@@ -49,6 +49,23 @@ trait Formatters {
       Map(key -> value)
   }
 
+  private[mappings] def postcodeFormatter(requiredKey: String, invalidKey : String): Formatter[String] = new Formatter[String] {
+
+    override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] =
+      data.get(key) match {
+        case None | Some("") => Left(Seq(FormError(key, requiredKey)))
+        case Some(s) =>
+          val trimmed = s.trim.toUpperCase
+          trimmed.matches(Validation.postcodeRegex) match {
+            case true => Right(trimmed)
+            case false => Left(Seq(FormError(key, invalidKey)))
+          }
+      }
+
+    override def unbind(key: String, value: String): Map[String, String] =
+      Map(key -> value)
+  }
+
   private[mappings] def booleanFormatter(requiredKey: String, invalidKey: String): Formatter[Boolean] =
     new Formatter[Boolean] {
 

@@ -69,7 +69,7 @@ class IndividualOrBusinessController @Inject()(
               case Individual =>
                 Redirect(controllers.individual.routes.NameController.onPageLoad(NormalMode))
               case Business =>
-                Redirect(controllers.routes.FeatureNotAvailableController.onPageLoad())
+                Redirect(controllers.business.routes.UkRegisteredYesNoController.onPageLoad(NormalMode))
             }
           }
         }
