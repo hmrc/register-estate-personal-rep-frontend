@@ -16,13 +16,13 @@
 
 package utils.print
 
-import controllers.business.{routes => rts}
 import com.google.inject.Inject
-import models.{CheckMode, NormalMode, UserAnswers}
+import controllers.business.{routes => rts}
+import models.{NormalMode, UserAnswers}
 import pages.business._
 import play.api.i18n.Messages
 import utils.countryOptions.CountryOptions
-import viewmodels.{AnswerRow, AnswerSection}
+import viewmodels.AnswerSection
 
 class BusinessPrintHelper @Inject()(answerRowConverter: AnswerRowConverter,
                                                countryOptions: CountryOptions
@@ -36,8 +36,8 @@ class BusinessPrintHelper @Inject()(answerRowConverter: AnswerRowConverter,
       None,
       Seq(
         bound.yesNoQuestion(AddressUkYesNoPage, "business.ukRegisteredYesNo", rts.UkRegisteredYesNoController.onPageLoad(NormalMode).url),
-        bound.stringQuestion(UkCompanyNamePage, "business.ukCompanyName", rts.UkCompanyNameController.onPageLoad(NormalMode).url),
-        bound.stringQuestion(UkCompanyNamePage, "business.nonUkCompanyName", rts.NonUkCompanyNameController.onPageLoad(NormalMode).url),
+        bound.stringQuestion(UkCompanyNamePage, "business.ukCompany.name", rts.UkCompanyNameController.onPageLoad(NormalMode).url),
+        bound.stringQuestion(NonUkCompanyNamePage, "business.nonUkCompany.name", rts.NonUkCompanyNameController.onPageLoad(NormalMode).url),
         bound.stringQuestion(UtrPage, "business.utr", rts.UtrController.onPageLoad(NormalMode).url),
         bound.yesNoQuestion(AddressUkYesNoPage, "business.addressUkYesNo", rts.AddressUkYesNoController.onPageLoad(NormalMode).url),
         bound.addressQuestion(UkAddressPage, "business.ukAddress", rts.UkAddressController.onPageLoad(NormalMode).url),

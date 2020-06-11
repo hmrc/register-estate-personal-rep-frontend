@@ -27,7 +27,7 @@ final case class BusinessPersonalRep(name: String,
 object BusinessPersonalRep {
 
   implicit val reads: Reads[BusinessPersonalRep] =
-    ((__ \ 'name).read[String] and
+    ((__ \ 'orgName).read[String] and
       (__ \ 'phoneNumber).read[String] and
       __.lazyRead(readNullableAtSubPath[String](__ \ 'identification \ 'utr)) and
       __.lazyRead(readNullableAtSubPath[Address](__ \ 'identification \ 'address))).tupled.map {
@@ -37,7 +37,7 @@ object BusinessPersonalRep {
     }
 
   implicit val writes: Writes[BusinessPersonalRep] =
-    ((__ \ 'name).write[String] and
+    ((__ \ 'orgName).write[String] and
       (__ \ 'phoneNumber).write[String] and
       (__ \ 'identification \ 'utr).writeNullable[String] and
       (__ \ 'identification \ 'address).writeNullable[Address]

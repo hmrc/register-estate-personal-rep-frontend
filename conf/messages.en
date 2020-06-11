@@ -264,20 +264,20 @@ business.addressUkYesNo.title = Is the personal representative’s address in th
 business.addressUkYesNo.heading = Is {0}’s address in the UK?
 business.addressUkYesNo.error.required = Select yes if the personal representative’s address is in the UK
 
-busines.ukAddress.checkYourAnswersLabel = What is {0}’s address?
-busines.ukAddress.title = What is the personal representative’s address?
-busines.ukAddress.heading = What is {0}’s address?
+business.ukAddress.checkYourAnswersLabel = What is {0}’s address?
+business.ukAddress.title = What is the personal representative’s address?
+business.ukAddress.heading = What is {0}’s address?
 
-busines.nonUkAddress.checkYourAnswersLabel = What is {0}’s address?
-busines.nonUkAddress.title = What is the personal representative’s address?
-busines.nonUkAddress.heading = What is {0}’s address?
+business.nonUkAddress.checkYourAnswersLabel = What is {0}’s address?
+business.nonUkAddress.title = What is the personal representative’s address?
+business.nonUkAddress.heading = What is {0}’s address?
 
-telephoneNumber.checkYourAnswersLabel = What is {0}’s telephone number?
-telephoneNumber.title = What is the personal representative’s telephone number?
-telephoneNumber.heading = What is {0}’s telephone number?
-telephoneNumber.hint = For international numbers include the country code
-telephoneNumber.error.required = Enter the personal representative’s telephone number
-telephoneNumber.error.invalid.characters = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
+business.telephoneNumber.checkYourAnswersLabel = What is {0}’s telephone number?
+business.telephoneNumber.title = What is the personal representative’s telephone number?
+business.telephoneNumber.heading = What is {0}’s telephone number?
+business.telephoneNumber.hint = For international numbers include the country code
+business.telephoneNumber.error.required = Enter the personal representative’s telephone number
+business.telephoneNumber.error.invalid.characters = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
 
 business.nonUkCompany.name.checkYourAnswersLabel = What is the business’s name?
 business.nonUkCompany.name.title = What is the business’s name?
