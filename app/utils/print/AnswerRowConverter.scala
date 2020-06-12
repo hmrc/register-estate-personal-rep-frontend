@@ -19,7 +19,7 @@ package utils.print
 import java.time.LocalDate
 
 import com.google.inject.Inject
-import models.{Address, CombinedPassportOrIdCard, IdCard, IndividualIdentification, Name, Passport, UserAnswers}
+import models.{Address, IdCard, Name, Passport, UserAnswers}
 import pages.QuestionPage
 import play.api.i18n.Messages
 import play.api.libs.json.Reads
