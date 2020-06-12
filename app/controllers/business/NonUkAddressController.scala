@@ -18,7 +18,6 @@ package controllers.business
 
 import config.annotations.Business
 import controllers.actions.Actions
-import controllers.actions.business.NameRequiredAction
 import forms.NonUkAddressFormProvider
 import javax.inject.Inject
 import models.{Mode, NonUkAddress}
@@ -39,7 +38,6 @@ class NonUkAddressController @Inject()(
                                         sessionRepository: SessionRepository,
                                         @Business navigator: Navigator,
                                         actions: Actions,
-                                        nameAction: NameRequiredAction,
                                         formProvider: NonUkAddressFormProvider,
                                         val controllerComponents: MessagesControllerComponents,
                                         view: NonUkAddressView,
@@ -48,7 +46,7 @@ class NonUkAddressController @Inject()(
 
   val form: Form[NonUkAddress] = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithBusinessName {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(NonUkAddressPage) match {
@@ -59,7 +57,7 @@ class NonUkAddressController @Inject()(
       Ok(view(preparedForm, countryOptions.options, request.businessName, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithBusinessName.async {
     implicit request =>
 
       form.bindFromRequest().fold(

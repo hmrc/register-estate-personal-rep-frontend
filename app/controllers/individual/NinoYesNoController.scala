@@ -18,7 +18,6 @@ package controllers.individual
 
 import config.annotations.Individual
 import controllers.actions.Actions
-import controllers.actions.individual.NameRequiredAction
 import forms.YesNoFormProvider
 import javax.inject.Inject
 import models.Mode
@@ -38,14 +37,13 @@ class NinoYesNoController @Inject()(
                                      actions: Actions,
                                      formProvider: YesNoFormProvider,
                                      view: NinoYesNoView,
-                                     nameAction: NameRequiredAction,
                                      repository: SessionRepository,
                                      @Individual navigator: Navigator
                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form: Form[Boolean] = formProvider.withPrefix("individual.ninoYesNo")
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithIndividualName {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(NinoYesNoPage) match {
@@ -56,7 +54,7 @@ class NinoYesNoController @Inject()(
       Ok(view(preparedForm, mode, request.name))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithIndividualName.async {
     implicit request =>
 
       form.bindFromRequest().fold(

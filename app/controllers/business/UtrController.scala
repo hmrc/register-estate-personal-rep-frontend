@@ -18,7 +18,6 @@ package controllers.business
 
 import config.annotations.Business
 import controllers.actions.Actions
-import controllers.actions.business.NameRequiredAction
 import forms.UtrFormProvider
 import javax.inject.Inject
 import models.Mode
@@ -36,7 +35,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class UtrController @Inject()(
                                val controllerComponents: MessagesControllerComponents,
                                actions: Actions,
-                               nameAction: NameRequiredAction,
                                formProvider: UtrFormProvider,
                                sessionRepository: SessionRepository,
                                view: UtrView,
@@ -45,7 +43,7 @@ class UtrController @Inject()(
 
   val form: Form[String] = formProvider.withPrefix("business.utr")
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithBusinessName {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(UtrPage) match {
@@ -56,7 +54,7 @@ class UtrController @Inject()(
       Ok(view(preparedForm, request.businessName, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithBusinessName.async {
     implicit request =>
       form.bindFromRequest().fold(
         (formWithErrors: Form[_]) =>

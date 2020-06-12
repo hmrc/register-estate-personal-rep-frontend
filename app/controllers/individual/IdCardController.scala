@@ -18,7 +18,6 @@ package controllers.individual
 
 import config.annotations.Individual
 import controllers.actions.Actions
-import controllers.actions.individual.NameRequiredAction
 import forms.IdCardFormProvider
 import javax.inject.Inject
 import models.{IdCard, Mode}
@@ -39,7 +38,6 @@ class IdCardController @Inject()(
                                   actions: Actions,
                                   formProvider: IdCardFormProvider,
                                   view: IdCardView,
-                                  nameAction: NameRequiredAction,
                                   repository: SessionRepository,
                                   @Individual navigator: Navigator,
                                   countryOptions: CountryOptions
@@ -47,7 +45,7 @@ class IdCardController @Inject()(
 
   val form: Form[IdCard] = formProvider.withPrefix("individual.idCard")
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithIndividualName {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(IdCardPage) match {
@@ -58,7 +56,7 @@ class IdCardController @Inject()(
       Ok(view(preparedForm, mode, countryOptions.options, request.name))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithIndividualName.async {
     implicit request =>
 
       form.bindFromRequest().fold(

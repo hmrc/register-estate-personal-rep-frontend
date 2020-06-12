@@ -18,7 +18,6 @@ package controllers.individual
 
 import config.annotations.Individual
 import controllers.actions.Actions
-import controllers.actions.individual.NameRequiredAction
 import forms.PassportFormProvider
 import javax.inject.Inject
 import models.{Mode, Passport}
@@ -39,7 +38,6 @@ class PassportController @Inject()(
                                     actions: Actions,
                                     formProvider: PassportFormProvider,
                                     view: PassportView,
-                                    nameAction: NameRequiredAction,
                                     repository: SessionRepository,
                                     @Individual navigator: Navigator,
                                     countryOptions: CountryOptions
@@ -47,7 +45,7 @@ class PassportController @Inject()(
 
   val form: Form[Passport] = formProvider.withPrefix("individual.passport")
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithIndividualName {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(PassportPage) match {
@@ -58,7 +56,7 @@ class PassportController @Inject()(
       Ok(view(preparedForm, mode, countryOptions.options, request.name))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithIndividualName.async {
     implicit request =>
 
       form.bindFromRequest().fold(
