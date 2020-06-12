@@ -17,9 +17,8 @@
 package controllers.actions.business
 
 import base.SpecBase
-import controllers.actions.BusinessNameRequest
 import models.NormalMode
-import models.requests.DataRequest
+import models.requests.{BusinessNameRequest, DataRequest}
 import org.scalatest.concurrent.ScalaFutures
 import pages.business.{NonUkCompanyNamePage, UkCompanyNamePage}
 import play.api.mvc.Result

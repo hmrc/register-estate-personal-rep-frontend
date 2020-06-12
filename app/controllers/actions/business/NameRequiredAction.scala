@@ -16,10 +16,9 @@
 
 package controllers.actions.business
 
-import controllers.actions.BusinessNameRequest
 import javax.inject.Inject
 import models.NormalMode
-import models.requests.DataRequest
+import models.requests.{BusinessNameRequest, DataRequest}
 import pages.business.{NonUkCompanyNamePage, UkCompanyNamePage}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}

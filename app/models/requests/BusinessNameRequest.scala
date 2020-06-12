@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package controllers.actions
+package models.requests
 
 import models.UserAnswers
-import models.requests.DataRequest
 import play.api.mvc.WrappedRequest
 
 case class BusinessNameRequest[T](request: DataRequest[T], businessName: String) extends WrappedRequest[T](request){
