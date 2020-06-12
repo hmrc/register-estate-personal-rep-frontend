@@ -24,7 +24,7 @@ final case class BusinessPersonalRep(name: String,
                                      utr: Option[String],
                                      address: Address)
 
-object BusinessPersonalRep {
+object BusinessPersonalRep extends PersonalRep {
 
   implicit val reads: Reads[BusinessPersonalRep] =
     ((__ \ 'orgName).read[String] and
@@ -43,15 +43,4 @@ object BusinessPersonalRep {
       (__ \ 'identification \ 'address).write[Address]
       ).apply(unlift(BusinessPersonalRep.unapply))
 
-  def readNullableAtSubPath[T:Reads](subPath : JsPath) : Reads[Option[T]] = Reads (
-    _.transform(subPath.json.pick)
-      .flatMap(_.validate[T])
-      .map(Some(_))
-      .recoverWith(_ => JsSuccess(None))
-  )
-
-  def readAtSubPath[T:Reads](subPath: JsPath): Reads[T] = Reads (
-    _.transform(subPath.json.pick)
-      .flatMap(_.validate[T])
-  )
 }

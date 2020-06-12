@@ -27,7 +27,7 @@ case class IndividualPersonalRep(name: Name,
                                  address: Address,
                                  phoneNumber: String)
 
-object IndividualPersonalRep {
+object IndividualPersonalRep extends PersonalRep {
 
   implicit val reads: Reads[IndividualPersonalRep] =
     ((__ \ 'name).read[Name] and
@@ -47,10 +47,5 @@ object IndividualPersonalRep {
       (__ \ 'identification \ 'address).write[Address] and
       (__ \ "phoneNumber").write[String]
       ).apply(unlift(IndividualPersonalRep.unapply))
-
-  def readAtSubPath[T:Reads](subPath: JsPath): Reads[T] = Reads (
-    _.transform(subPath.json.pick)
-      .flatMap(_.validate[T])
-  )
 
 }
