@@ -42,7 +42,7 @@ class UtrViewSpec extends StringViewBehaviours {
 
     behave like pageWithHint(form, applyView, messageKeyPrefix + ".hint")
 
-    behave like stringPage(form, applyView, messageKeyPrefix, Some(name), routes.UtrController.onSubmit(NormalMode).url)
+    behave like stringPage(form, applyView, messageKeyPrefix, Some(name))
 
     behave like pageWithBackLink(applyView(form))
   }

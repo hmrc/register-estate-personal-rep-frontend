@@ -17,13 +17,15 @@
 package controllers.actions
 
 import com.google.inject.Inject
-import models.requests.{DataRequest, OptionalDataRequest}
+import models.requests.{BusinessNameRequest, DataRequest, IndividualNameRequest, OptionalDataRequest}
 import play.api.mvc.{ActionBuilder, AnyContent}
 
 class Actions @Inject()(
                          identify: IdentifierAction,
                          getData: DataRetrievalAction,
-                         requireData: DataRequiredAction
+                         requireData: DataRequiredAction,
+                         requireIndividualName: individual.NameRequiredAction,
+                         requireBusinessName: business.NameRequiredAction
                        ) {
 
   def authWithSession: ActionBuilder[OptionalDataRequest, AnyContent] =
@@ -31,4 +33,10 @@ class Actions @Inject()(
 
   def authWithData: ActionBuilder[DataRequest, AnyContent] =
     authWithSession andThen requireData
+
+  def authWithIndividualName: ActionBuilder[IndividualNameRequest, AnyContent] =
+    authWithData andThen requireIndividualName
+
+  def authWithBusinessName: ActionBuilder[BusinessNameRequest, AnyContent] =
+    authWithData andThen requireBusinessName
 }

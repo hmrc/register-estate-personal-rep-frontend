@@ -16,10 +16,9 @@
 
 package utils.print
 
-import java.time.LocalDate
-
 import base.SpecBase
-import models.{CheckMode, NonUkAddress, NormalMode, UkAddress}
+import models.{IndividualOrBusiness, NonUkAddress, NormalMode, UkAddress}
+import pages.IndividualOrBusinessPage
 import pages.business._
 import play.twirl.api.Html
 import viewmodels.{AnswerRow, AnswerSection}
@@ -35,6 +34,7 @@ class BusinessPrintHelperSpec extends SpecBase {
   "BusinessProtectorPrintHelper" must {
 
     val userAnswers = emptyUserAnswers
+      .set(IndividualOrBusinessPage, IndividualOrBusiness.Business).success.value
       .set(UkRegisteredYesNoPage, true).success.value
       .set(UkCompanyNamePage, name).success.value
       .set(NonUkCompanyNamePage, name).success.value
@@ -55,6 +55,7 @@ class BusinessPrintHelperSpec extends SpecBase {
       result mustBe AnswerSection(
         headingKey = None,
         rows = Seq(
+          AnswerRow(label = Html(messages("individualOrBusiness.checkYourAnswersLabel")), answer = Html("Business"), changeUrl = controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode).url),
           AnswerRow(label = Html(messages("business.ukRegisteredYesNo.checkYourAnswersLabel")), answer = Html("Yes"), changeUrl = controllers.business.routes.UkRegisteredYesNoController.onPageLoad(mode).url),
           AnswerRow(label = Html(messages("business.ukCompany.name.checkYourAnswersLabel")), answer = Html("Name"), changeUrl = controllers.business.routes.UkCompanyNameController.onPageLoad(mode).url),
           AnswerRow(label = Html(messages("business.nonUkCompany.name.checkYourAnswersLabel")), answer = Html("Name"), changeUrl = controllers.business.routes.NonUkCompanyNameController.onPageLoad(mode).url),

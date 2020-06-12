@@ -19,6 +19,7 @@ package forms.mappings
 import java.time.LocalDate
 
 import play.api.data.validation.{Constraint, Invalid, Valid}
+import uk.gov.hmrc.domain.Nino
 
 trait Constraints {
 
@@ -94,6 +95,14 @@ trait Constraints {
         Invalid(errorKey, minimum)
     }
 
+  protected def isNotEmpty(value: String, errorKey: String): Constraint[String] =
+    Constraint {
+      case str if str.trim.nonEmpty =>
+        Valid
+      case _ =>
+        Invalid(errorKey, value)
+    }
+
   protected def maxDate(maximum: LocalDate, errorKey: String, args: Any*): Constraint[LocalDate] =
     Constraint {
       case date if date.isAfter(maximum) =>
@@ -121,6 +130,14 @@ trait Constraints {
   protected def nonEmptyString(value: String, errorKey: String): Constraint[String] =
     Constraint {
       case str if str.trim.nonEmpty =>
+        Valid
+      case _ =>
+        Invalid(errorKey, value)
+    }
+
+  protected def isNinoValid(value: String, errorKey: String): Constraint[String] =
+    Constraint {
+      case str if Nino.isValid(str)=>
         Valid
       case _ =>
         Invalid(errorKey, value)

@@ -18,12 +18,12 @@ package controllers.business
 
 import config.annotations.Business
 import controllers.actions.Actions
-import controllers.actions.business.NameRequiredAction
 import forms.UkAddressFormProvider
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, UkAddress}
 import navigation.Navigator
 import pages.business.UkAddressPage
+import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -37,15 +37,14 @@ class UkAddressController @Inject()(
                                      sessionRepository: SessionRepository,
                                      @Business navigator: Navigator,
                                      actions: Actions,
-                                     nameAction: NameRequiredAction,
                                      formProvider: UkAddressFormProvider,
                                      val controllerComponents: MessagesControllerComponents,
                                      view: UkAddressView
                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
+  val form: Form[UkAddress] = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithBusinessName {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(UkAddressPage) match {
@@ -56,7 +55,7 @@ class UkAddressController @Inject()(
       Ok(view(preparedForm, request.businessName, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithBusinessName.async {
     implicit request =>
 
       form.bindFromRequest().fold(

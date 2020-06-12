@@ -73,7 +73,7 @@ class IndividualOrBusinessControllerSpec extends SpecBase {
       application.stop()
     }
 
-    "redirect to feature unavailable when valid data is submitted" in {
+    "redirect to individual name controller when valid data is submitted" in {
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
@@ -86,7 +86,7 @@ class IndividualOrBusinessControllerSpec extends SpecBase {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustEqual FeatureNotAvailableController.onPageLoad().url
+      redirectLocation(result).value mustEqual controllers.individual.routes.NameController.onPageLoad(NormalMode).url
 
       application.stop()
     }

@@ -14,12 +14,22 @@
  * limitations under the License.
  */
 
-package controllers.actions
+package models
 
-import models.UserAnswers
-import models.requests.DataRequest
-import play.api.mvc.WrappedRequest
+import play.api.libs.json.{JsPath, JsSuccess, Reads}
 
-case class BusinessNameRequest[T](request: DataRequest[T], businessName: String) extends WrappedRequest[T](request){
-  val userAnswers:UserAnswers = request.userAnswers
+trait PersonalRep {
+
+  def readAtSubPath[T: Reads](subPath: JsPath): Reads[T] = Reads (
+    _.transform(subPath.json.pick)
+      .flatMap(_.validate[T])
+  )
+
+  def readNullableAtSubPath[T: Reads](subPath: JsPath): Reads[Option[T]] = Reads (
+    _.transform(subPath.json.pick)
+      .flatMap(_.validate[T])
+      .map(Some(_))
+      .recoverWith(_ => JsSuccess(None))
+  )
+
 }

@@ -16,32 +16,78 @@
 
 package controllers
 
+import connectors.EstateConnector
 import controllers.actions.Actions
 import javax.inject.Inject
-import models.{NormalMode, UserAnswers}
+import models.requests.OptionalDataRequest
+import models.{BusinessPersonalRep, IndividualPersonalRep, NormalMode, UserAnswers}
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.libs.json.{JsError, JsSuccess, JsValue}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
+import utils.extractors.{BusinessExtractor, IndividualExtractor}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class IndexController @Inject()(
                                  val controllerComponents: MessagesControllerComponents,
                                  actions: Actions,
-                                 repository: SessionRepository
+                                 repository: SessionRepository,
+                                 connector: EstateConnector,
+                                 individualExtractor: IndividualExtractor,
+                                 businessExtractor: BusinessExtractor
                                )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = actions.authWithSession.async {
     implicit request =>
-      request.userAnswers match {
-        case Some(_) =>
-          Future.successful(Redirect(controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode)))
-        case None =>
-          val userAnswers: UserAnswers = UserAnswers(request.internalId)
-          repository.set(userAnswers).map { _ =>
-            Redirect(controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode))
-          }
+
+      val userAnswers: UserAnswers = UserAnswers(request.internalId)
+
+      for {
+        _ <- repository.set(userAnswers)
+        ind <- connector.getIndividualPersonalRep()
+        bus <- connector.getBusinessPersonalRep()
+        redirect <- redirect(ind, bus, userAnswers)
+      } yield {
+        redirect
       }
+  }
+
+  private def redirect(ind: JsValue, bus: JsValue, userAnswers: UserAnswers)
+                      (implicit request: OptionalDataRequest[AnyContent]) : Future[Result] = {
+
+    (ind.validate[IndividualPersonalRep], bus.validate[BusinessPersonalRep]) match {
+      case (JsSuccess(personalRep, _), JsError(_)) =>
+        populateIndividualUserAnswers(personalRep, userAnswers)
+      case (JsError(_), JsSuccess(personalRep, _)) =>
+        populateBusinessUserAnswers(personalRep, userAnswers)
+      case _ =>
+        Future.successful(Redirect(controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode)))
+    }
+  }
+
+  private def populateIndividualUserAnswers(personalRep: IndividualPersonalRep,
+                                            userAnswers: UserAnswers
+                                           )(implicit request: OptionalDataRequest[AnyContent]): Future[Result] = {
+
+    for {
+      updatedAnswers <- Future.fromTry(individualExtractor(personalRep, userAnswers))
+      _ <- repository.set(updatedAnswers)
+    } yield {
+      Redirect(controllers.individual.routes.CheckDetailsController.onPageLoad())
+    }
+  }
+
+  private def populateBusinessUserAnswers(personalRep: BusinessPersonalRep,
+                                          userAnswers: UserAnswers
+                                         )(implicit request: OptionalDataRequest[AnyContent]): Future[Result] = {
+
+    for {
+      updatedAnswers <- Future.fromTry(businessExtractor(personalRep, userAnswers))
+      _ <- repository.set(updatedAnswers)
+    } yield {
+      Redirect(controllers.business.routes.CheckDetailsController.onPageLoad())
+    }
   }
 }

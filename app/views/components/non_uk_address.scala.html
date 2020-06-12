@@ -20,29 +20,30 @@
     form:Form[_], countryOptions: Seq[InputOption]
 )(implicit messages: Messages)
 
+
 @components.input_text(
-  field = form("line1"),
-  label = messages("site.address.nonUk.line1"),
-  inputClass = Some("form-control-3-4")
+    field = form("line1"),
+    label = messages("site.address.nonUk.line1"),
+    inputClass = Some("form-control-3-4")
 )
 
 @components.input_text(
-  field = form("line2"),
-  label = messages("site.address.nonUk.line2"),
-  inputClass = Some("form-control-3-4")
+    field = form("line2"),
+    label = messages("site.address.nonUk.line2"),
+    inputClass = Some("form-control-3-4")
 )
 
 @components.input_text(
-  field = form("line3"),
-  label = messages("site.address.nonUk.line3"),
-  inputClass = Some("form-control-1-2")
+    field = form("line3"),
+    label = messages("site.address.nonUk.line3"),
+    inputClass = Some("form-control-1-2")
 )
 
 @components.select(field = form("country"),
-  label = messages("site.address.nonUk.country"),
-  labelClasses = Set("bold"),
-  options = countryOptions,
-  placeholder = Some("address.country.select"),
-  formGroupClasses = Set("autocomplete-wrapper  form-control-2-1"),
-  selectAttribute = Set("data-non-uk-countries")
+    label = messages("site.address.nonUk.country"),
+    labelClasses = Set("bold"),
+    options = countryOptions,
+    placeholder = Some("site.address.nonUk.country.select"),
+    formGroupClasses = Set("autocomplete-wrapper  form-control-2-1"),
+    selectAttribute = Set("data-non-uk-countries")
 )

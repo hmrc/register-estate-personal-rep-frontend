@@ -22,15 +22,15 @@ import play.api.libs.json._
 final case class BusinessPersonalRep(name: String,
                                      phoneNumber: String,
                                      utr: Option[String],
-                                     address: Option[Address])
+                                     address: Address)
 
-object BusinessPersonalRep {
+object BusinessPersonalRep extends PersonalRep {
 
   implicit val reads: Reads[BusinessPersonalRep] =
     ((__ \ 'orgName).read[String] and
       (__ \ 'phoneNumber).read[String] and
       __.lazyRead(readNullableAtSubPath[String](__ \ 'identification \ 'utr)) and
-      __.lazyRead(readNullableAtSubPath[Address](__ \ 'identification \ 'address))).tupled.map {
+      __.lazyRead(readAtSubPath[Address](__ \ 'identification \ 'address))).tupled.map {
 
       case (name, phoneNumber, utr, address) =>
         BusinessPersonalRep(name, phoneNumber, utr, address)
@@ -40,13 +40,7 @@ object BusinessPersonalRep {
     ((__ \ 'orgName).write[String] and
       (__ \ 'phoneNumber).write[String] and
       (__ \ 'identification \ 'utr).writeNullable[String] and
-      (__ \ 'identification \ 'address).writeNullable[Address]
+      (__ \ 'identification \ 'address).write[Address]
       ).apply(unlift(BusinessPersonalRep.unapply))
 
-  def readNullableAtSubPath[T:Reads](subPath : JsPath) : Reads[Option[T]] = Reads (
-    _.transform(subPath.json.pick)
-      .flatMap(_.validate[T])
-      .map(Some(_))
-      .recoverWith(_ => JsSuccess(None))
-  )
 }

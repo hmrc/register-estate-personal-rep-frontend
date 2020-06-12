@@ -18,10 +18,11 @@ package pages
 
 import java.time.LocalDate
 
-import models.IndividualOrBusiness.Business
+import models.IndividualOrBusiness._
 import models.{IdCard, Name, NonUkAddress, Passport, PassportOrIdCard, UkAddress}
 import pages.behaviours.PageBehaviours
-import pages.individual._
+import pages.business.UtrPage
+import pages.{business => bus, individual => ind}
 
 class IndividualOrBusinessPageSpec extends PageBehaviours {
 
@@ -29,31 +30,52 @@ class IndividualOrBusinessPageSpec extends PageBehaviours {
 
   "IndividualOrBusiness page" must {
 
+    "implement cleanup logic when INDIVIDUAL selected" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(bus.UkRegisteredYesNoPage, true)
+        .flatMap(_.set(bus.UkCompanyNamePage, "name"))
+        .flatMap(_.set(bus.NonUkCompanyNamePage, "name"))
+        .flatMap(_.set(UtrPage, "utr"))
+        .flatMap(_.set(bus.AddressUkYesNoPage, true))
+        .flatMap(_.set(bus.UkAddressPage, UkAddress("Line 1", "Line 2", None, None, "postcode")))
+        .flatMap(_.set(bus.NonUkAddressPage, NonUkAddress("Line 1", "Line 2", None, "country")))
+        .flatMap(_.set(IndividualOrBusinessPage, Individual))
+
+      userAnswers.get.get(bus.UkRegisteredYesNoPage) mustNot be(defined)
+      userAnswers.get.get(bus.UkCompanyNamePage) mustNot be(defined)
+      userAnswers.get.get(bus.NonUkCompanyNamePage) mustNot be(defined)
+      userAnswers.get.get(bus.UtrPage) mustNot be(defined)
+      userAnswers.get.get(bus.AddressUkYesNoPage) mustNot be(defined)
+      userAnswers.get.get(bus.UkAddressPage) mustNot be(defined)
+      userAnswers.get.get(bus.NonUkAddressPage) mustNot be(defined)
+    }
+
     "implement cleanup logic when BUSINESS selected" in {
 
       val userAnswers = emptyUserAnswers
-        .set(NamePage, Name("First", None, "Last"))
-        .flatMap(_.set(DateOfBirthPage, date))
-        .flatMap(_.set(NinoYesNoPage, true))
-        .flatMap(_.set(NinoPage, "nino"))
-        .flatMap(_.set(PassportOrIdCardPage, PassportOrIdCard.Passport))
-        .flatMap(_.set(PassportPage, Passport("country", "number", date)))
-        .flatMap(_.set(IdCardPage, IdCard("country", "number", date)))
-        .flatMap(_.set(LivesInTheUkYesNoPage, true))
-        .flatMap(_.set(UkAddressPage, UkAddress("Line 1", "Line 2", None, None, "postcode")))
-        .flatMap(_.set(NonUkAddressPage, NonUkAddress("Line 1", "Line 2", None, "country")))
+        .set(ind.NamePage, Name("First", None, "Last"))
+        .flatMap(_.set(ind.DateOfBirthPage, date))
+        .flatMap(_.set(ind.NinoYesNoPage, true))
+        .flatMap(_.set(ind.NinoPage, "nino"))
+        .flatMap(_.set(ind.PassportOrIdCardPage, PassportOrIdCard.Passport))
+        .flatMap(_.set(ind.PassportPage, Passport("country", "number", date)))
+        .flatMap(_.set(ind.IdCardPage, IdCard("country", "number", date)))
+        .flatMap(_.set(ind.LivesInTheUkYesNoPage, true))
+        .flatMap(_.set(ind.UkAddressPage, UkAddress("Line 1", "Line 2", None, None, "postcode")))
+        .flatMap(_.set(ind.NonUkAddressPage, NonUkAddress("Line 1", "Line 2", None, "country")))
         .flatMap(_.set(IndividualOrBusinessPage, Business))
 
-      userAnswers.get.get(NamePage) mustNot be(defined)
-      userAnswers.get.get(DateOfBirthPage) mustNot be(defined)
-      userAnswers.get.get(NinoYesNoPage) mustNot be(defined)
-      userAnswers.get.get(NinoPage) mustNot be(defined)
-      userAnswers.get.get(PassportOrIdCardPage) mustNot be(defined)
-      userAnswers.get.get(PassportPage) mustNot be(defined)
-      userAnswers.get.get(IdCardPage) mustNot be(defined)
-      userAnswers.get.get(LivesInTheUkYesNoPage) mustNot be(defined)
-      userAnswers.get.get(UkAddressPage) mustNot be(defined)
-      userAnswers.get.get(NonUkAddressPage) mustNot be(defined)
+      userAnswers.get.get(ind.NamePage) mustNot be(defined)
+      userAnswers.get.get(ind.DateOfBirthPage) mustNot be(defined)
+      userAnswers.get.get(ind.NinoYesNoPage) mustNot be(defined)
+      userAnswers.get.get(ind.NinoPage) mustNot be(defined)
+      userAnswers.get.get(ind.PassportOrIdCardPage) mustNot be(defined)
+      userAnswers.get.get(ind.PassportPage) mustNot be(defined)
+      userAnswers.get.get(ind.IdCardPage) mustNot be(defined)
+      userAnswers.get.get(ind.LivesInTheUkYesNoPage) mustNot be(defined)
+      userAnswers.get.get(ind.UkAddressPage) mustNot be(defined)
+      userAnswers.get.get(ind.NonUkAddressPage) mustNot be(defined)
     }
   }
 }

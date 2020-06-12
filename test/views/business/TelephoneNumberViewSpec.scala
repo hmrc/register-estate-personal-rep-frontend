@@ -42,7 +42,7 @@ class TelephoneNumberViewSpec extends StringViewBehaviours {
 
     behave like pageWithHint(form, applyView, messageKeyPrefix + ".hint")
 
-    behave like stringPage(form, applyView, messageKeyPrefix, Some(name), routes.TelephoneNumberController.onSubmit(NormalMode).url)
+    behave like stringPage(form, applyView, messageKeyPrefix, Some(name))
 
     behave like pageWithBackLink(applyView(form))
   }

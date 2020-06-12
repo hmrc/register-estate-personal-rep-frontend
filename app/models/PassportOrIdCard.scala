@@ -23,7 +23,7 @@ sealed trait PassportOrIdCard
 object PassportOrIdCard extends Enumerable.Implicits {
 
   case object Passport extends WithName("passport") with PassportOrIdCard
-  case object IdCard extends WithName("id-card") with PassportOrIdCard
+  case object IdCard extends WithName("idCard") with PassportOrIdCard
 
   val values: Set[PassportOrIdCard] = Set(
     Passport, IdCard

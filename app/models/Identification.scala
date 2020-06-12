@@ -30,8 +30,8 @@ object IndividualIdentification {
   implicit val writes: Writes[IndividualIdentification] = Writes {
     case ni:NationalInsuranceNumber => Json.toJson(ni)(NationalInsuranceNumber.format)
     case p:Passport => Json.obj("passport" -> Json.toJson(p)(Passport.format))
-    case i:IdCard=> Json.obj("passport" -> Json.toJson(i)(IdCard.format))
-    case c:CombinedPassportOrIdCard=> Json.obj("passport" -> Json.toJson(c)(CombinedPassportOrIdCard.format))
+    case i:IdCard => Json.obj("passport" -> Json.toJson(i)(IdCard.format))
+    case c:CombinedPassportOrIdCard => Json.obj("passport" -> Json.toJson(c)(CombinedPassportOrIdCard.format))
   }
 }
 

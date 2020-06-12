@@ -18,8 +18,7 @@ package pages.individual
 
 import java.time.LocalDate
 
-import models.IndividualOrBusiness.Business
-import models.{IdCard, Name, NonUkAddress, Passport, PassportOrIdCard, UkAddress}
+import models.{IdCard, Passport, PassportOrIdCard}
 import pages.behaviours.PageBehaviours
 
 class NinoYesNoPageSpec extends PageBehaviours {

@@ -18,11 +18,11 @@ package forms
 
 import forms.behaviours.OptionFieldBehaviours
 import models.IndividualOrBusiness
-import play.api.data.FormError
+import play.api.data.{Form, FormError}
 
 class IndividualOrBusinessFormProviderSpec extends OptionFieldBehaviours {
 
-  val form = new IndividualOrBusinessFormProvider()()
+  val form: Form[IndividualOrBusiness] = new IndividualOrBusinessFormProvider()()
 
   ".value" must {
 

@@ -55,33 +55,11 @@ trait ViewBehaviours extends ViewSpecBase {
           for (key <- expectedGuidanceKeys) assertContainsText(doc, messages(s"$messageKeyPrefix.$key"))
         }
 
-        "not display language toggles" in {
+        "do not display language toggles" in {
 
           val doc = asDocument(view)
           assertNotRenderedById(doc, "cymraeg-switch")
         }
-      }
-    }
-  }
-
-  def pageWithBackLink(view: HtmlFormat.Appendable): Unit = {
-
-    "behave like a page with a back link" must {
-
-      "have a back link" in {
-
-        val doc = asDocument(view)
-        assertRenderedById(doc, "back-link")
-      }
-    }
-  }
-
-  def pageWithASubmitButton(view: HtmlFormat.Appendable) = {
-
-    "behave like a page with a submit button" must {
-      "have a submit button" in {
-        val doc = asDocument(view)
-        assertRenderedById(doc, "submit")
       }
     }
   }
@@ -141,4 +119,25 @@ trait ViewBehaviours extends ViewSpecBase {
     }
   }
 
+  def pageWithBackLink(view: HtmlFormat.Appendable): Unit = {
+
+    "behave like a page with a back link" must {
+
+      "have a back link" in {
+
+        val doc = asDocument(view)
+        assertRenderedById(doc, "back-link")
+      }
+    }
+  }
+
+  def pageWithASubmitButton(view: HtmlFormat.Appendable) = {
+
+    "behave like a page with a submit button" must {
+      "have a submit button" in {
+        val doc = asDocument(view)
+        assertRenderedById(doc, "submit")
+      }
+    }
+  }
 }

@@ -48,7 +48,6 @@ class NonUkCompanyNameViewSpec extends QuestionViewBehaviours[String] {
         applyView,
         messageKeyPrefix,
         None,
-        "",
         "value"
       )
     }

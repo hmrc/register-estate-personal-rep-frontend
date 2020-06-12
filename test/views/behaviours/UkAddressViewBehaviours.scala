@@ -23,7 +23,6 @@ import play.twirl.api.HtmlFormat
 
 trait UkAddressViewBehaviours extends ViewBehaviours {
 
-
   val errorKey = "value"
   val errorMessage = "error.number"
   val error = FormError(errorKey, errorMessage)
@@ -32,8 +31,7 @@ trait UkAddressViewBehaviours extends ViewBehaviours {
 
   def ukAddressPage(createView: Form[UkAddress] => HtmlFormat.Appendable,
                     messageKeyPrefix: Option[String],
-                    expectedFormAction: String,
-                    args : String*) = {
+                    args: String*) = {
 
     val prefix = messageKeyPrefix.getOrElse("site.address.uk")
 
