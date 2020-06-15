@@ -109,14 +109,14 @@ individual.name.heading = What is the personal representative’s name?
 individual.name.firstName = First name
 individual.name.middleName = Middle names (optional)
 individual.name.lastName = Last name
-individual.name.error.firstName.required = Enter the individual beneficiary’s first name
-individual.name.error.lastName.required = Enter the individual beneficiary’s last name
-individual.name.error.firstName.length = Individual beneficiary’s first name must be 35 characters or less
-individual.name.error.middleName.length = Individual beneficiary’s middle names must be 35 characters or less
-individual.name.error.lastName.length = Individual beneficiary’s last name must be 35 characters or less
-individual.name.error.firstName.invalid = Individual beneficiary’s first name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
-individual.name.error.middleName.invalid = Individual beneficiary’s middle name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
-individual.name.error.lastName.invalid = Individual beneficiary’s last name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+individual.name.error.firstName.required = Enter the personal representative’s first name
+individual.name.error.lastName.required = Enter the personal representative’s last name
+individual.name.error.firstName.length = Personal representative’s first name must be 35 characters or less
+individual.name.error.middleName.length = Personal representative’s middle names must be 35 characters or less
+individual.name.error.lastName.length = Personal representative’s last name must be 35 characters or less
+individual.name.error.firstName.invalid = Personal representative’s first name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+individual.name.error.middleName.invalid = Personal representative’s middle name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+individual.name.error.lastName.invalid = Personal representative’s last name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
 
 individual.dateOfBirth.checkYourAnswersLabel = What is {0}’s date of birth?
 individual.dateOfBirth.title = What is the personal representative’s date of birth?
@@ -129,10 +129,10 @@ individual.dateOfBirth.error.invalid = Enter a real date of birth
 individual.dateOfBirth.error.future = Date of birth must be today or in the past
 individual.dateOfBirth.error.past = Date of birth must be after 31 December 1499
 
-individual.ninoYesNo.checkYourAnswersLabel = Do you know {0}’s National Insurance number?
-individual.ninoYesNo.title = Do you know the personal representative’s National Insurance number?
-individual.ninoYesNo.heading = Do you know {0}’s National Insurance number?
-individual.ninoYesNo.error.required = Select yes if you know the personal representative’s National Insurance number
+individual.ninoYesNo.checkYourAnswersLabel = Does {0} have a National Insurance number?
+individual.ninoYesNo.title = Does the personal representative have a National Insurance number?
+individual.ninoYesNo.heading = Does {0} have a National Insurance number?
+individual.ninoYesNo.error.required = Select yes if the personal representative has a National Insurance number
 
 individual.nino.checkYourAnswersLabel = What is {0}’s National Insurance number?
 individual.nino.title = What is the personal representative’s National Insurance number?
