@@ -260,5 +260,4 @@ business.telephoneNumber.heading = What is {0}’s telephone number?
 business.telephoneNumber.hint = For international numbers include the country code
 business.telephoneNumber.error.required = Enter the personal representative’s telephone number
 business.telephoneNumber.error.invalid.characters = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
-
-business.checkDetails.heading = Check personal representative’s details
+        
