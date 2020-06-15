@@ -36,7 +36,7 @@ class BusinessMapperSpec extends SpecBase {
 
       val userAnswers = emptyUserAnswers
         .set(UkRegisteredYesNoPage, false).success.value
-        .set(NonUkCompanyNamePage, name).success.value
+        .set(CompanyNamePage, name).success.value
         .set(TelephoneNumberPage, phone).success.value
         .set(AddressUkYesNoPage, true).success.value
         .set(UkAddressPage, ukAddress).success.value
@@ -53,7 +53,7 @@ class BusinessMapperSpec extends SpecBase {
 
       val userAnswers = emptyUserAnswers
         .set(UkRegisteredYesNoPage, true).success.value
-        .set(UkCompanyNamePage, name).success.value
+        .set(CompanyNamePage, name).success.value
         .set(TelephoneNumberPage, phone).success.value
         .set(UtrPage, utr).success.value
         .set(AddressUkYesNoPage, true).success.value
@@ -71,7 +71,7 @@ class BusinessMapperSpec extends SpecBase {
 
       val userAnswers = emptyUserAnswers
         .set(UkRegisteredYesNoPage, true).success.value
-        .set(UkCompanyNamePage, name).success.value
+        .set(CompanyNamePage, name).success.value
         .set(TelephoneNumberPage, phone).success.value
         .set(UtrPage, utr).success.value
         .set(AddressUkYesNoPage, false).success.value
@@ -89,7 +89,7 @@ class BusinessMapperSpec extends SpecBase {
 
       val userAnswers = emptyUserAnswers
         .set(UkRegisteredYesNoPage, false).success.value
-        .set(NonUkCompanyNamePage, name).success.value
+        .set(CompanyNamePage, name).success.value
         .set(TelephoneNumberPage, phone).success.value
         .set(AddressUkYesNoPage, false).success.value
         .set(NonUkAddressPage, nonUkAddress).success.value

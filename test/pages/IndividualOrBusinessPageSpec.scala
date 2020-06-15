@@ -34,8 +34,7 @@ class IndividualOrBusinessPageSpec extends PageBehaviours {
 
       val userAnswers = emptyUserAnswers
         .set(bus.UkRegisteredYesNoPage, true)
-        .flatMap(_.set(bus.UkCompanyNamePage, "name"))
-        .flatMap(_.set(bus.NonUkCompanyNamePage, "name"))
+        .flatMap(_.set(bus.CompanyNamePage, "name"))
         .flatMap(_.set(UtrPage, "utr"))
         .flatMap(_.set(bus.AddressUkYesNoPage, true))
         .flatMap(_.set(bus.UkAddressPage, UkAddress("Line 1", "Line 2", None, None, "postcode")))
@@ -43,8 +42,7 @@ class IndividualOrBusinessPageSpec extends PageBehaviours {
         .flatMap(_.set(IndividualOrBusinessPage, Individual))
 
       userAnswers.get.get(bus.UkRegisteredYesNoPage) mustNot be(defined)
-      userAnswers.get.get(bus.UkCompanyNamePage) mustNot be(defined)
-      userAnswers.get.get(bus.NonUkCompanyNamePage) mustNot be(defined)
+      userAnswers.get.get(bus.CompanyNamePage) mustNot be(defined)
       userAnswers.get.get(bus.UtrPage) mustNot be(defined)
       userAnswers.get.get(bus.AddressUkYesNoPage) mustNot be(defined)
       userAnswers.get.get(bus.UkAddressPage) mustNot be(defined)

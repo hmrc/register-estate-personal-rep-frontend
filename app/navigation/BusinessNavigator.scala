@@ -28,9 +28,7 @@ class BusinessNavigator @Inject()() extends Navigator {
   override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = routes(mode)(page)(userAnswers)
 
   private def simpleNavigation(mode: Mode): PartialFunction[Page, Call] = {
-    case UkCompanyNamePage => rts.UtrController.onPageLoad(NormalMode)
     case UtrPage => rts.AddressUkYesNoController.onPageLoad(NormalMode)
-    case NonUkCompanyNamePage => rts.AddressUkYesNoController.onPageLoad(NormalMode)
     case UkAddressPage => rts.TelephoneNumberController.onPageLoad(NormalMode)
     case NonUkAddressPage => rts.TelephoneNumberController.onPageLoad(NormalMode)
     case TelephoneNumberPage => rts.CheckDetailsController.onPageLoad()
@@ -39,6 +37,7 @@ class BusinessNavigator @Inject()() extends Navigator {
 
   private def conditionalNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
     case UkRegisteredYesNoPage => ua => yesNoNav(ua, UkRegisteredYesNoPage, rts.UkCompanyNameController.onPageLoad(NormalMode), rts.NonUkCompanyNameController.onPageLoad(NormalMode))
+    case CompanyNamePage => ua => yesNoNav(ua, UkRegisteredYesNoPage, rts.UtrController.onPageLoad(NormalMode), rts.AddressUkYesNoController.onPageLoad(NormalMode))
     case AddressUkYesNoPage => ua => yesNoNav(ua, AddressUkYesNoPage, rts.UkAddressController.onPageLoad(NormalMode), rts.NonUkAddressController.onPageLoad(NormalMode))
   }
 

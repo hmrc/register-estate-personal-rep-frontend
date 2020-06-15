@@ -46,7 +46,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
 
   private val userAnswers = emptyUserAnswers
     .set(UkRegisteredYesNoPage, true).success.value
-    .set(UkCompanyNamePage, name).success.value
+    .set(CompanyNamePage, name).success.value
     .set(UtrPage, utr).success.value
     .set(AddressUkYesNoPage, true).success.value
     .set(UkAddressPage, address).success.value

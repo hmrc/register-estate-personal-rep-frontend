@@ -22,7 +22,7 @@ import forms.StringFormProvider
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.business.NonUkCompanyNamePage
+import pages.business.{CompanyNamePage}
 import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -46,7 +46,7 @@ class NonUkCompanyNameController @Inject()(
   def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(NonUkCompanyNamePage) match {
+      val preparedForm = request.userAnswers.get(CompanyNamePage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -61,9 +61,9 @@ class NonUkCompanyNameController @Inject()(
           Future.successful(BadRequest(view(formWithErrors, mode))),
         value => {
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(NonUkCompanyNamePage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(CompanyNamePage, value))
             _ <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(NonUkCompanyNamePage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(CompanyNamePage, mode, updatedAnswers))
         }
       )
   }

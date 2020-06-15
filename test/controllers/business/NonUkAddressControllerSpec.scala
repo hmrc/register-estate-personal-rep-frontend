@@ -24,7 +24,7 @@ import navigation.{FakeNavigator, Navigator}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.business.{NonUkAddressPage, UkCompanyNamePage}
+import pages.business.{NonUkAddressPage, CompanyNamePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -44,7 +44,7 @@ class NonUkAddressControllerSpec extends SpecBase with MockitoSugar {
   val name: String = "Name"
 
   override val emptyUserAnswers: UserAnswers = UserAnswers("id")
-    .set(UkCompanyNamePage, name).success.value
+    .set(CompanyNamePage, name).success.value
 
   val nonUkAddressRoute: String = routes.NonUkAddressController.onPageLoad(NormalMode).url
 

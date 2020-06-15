@@ -33,10 +33,10 @@ class UkRegisteredYesNoPageSpec extends PageBehaviours {
     "implement cleanup logic when NO selected" in {
       val userAnswers = UserAnswers("id")
         .set(UkRegisteredYesNoPage, true)
-        .flatMap(_.set(UkCompanyNamePage, "Uk Company Name"))
+        .flatMap(_.set(UtrPage, "1234567890"))
         .flatMap(_.set(UkRegisteredYesNoPage, false))
 
-      userAnswers.get.get(UkCompanyNamePage) mustNot be(defined)
+      userAnswers.get.get(UtrPage) mustNot be(defined)
     }
   }
 }

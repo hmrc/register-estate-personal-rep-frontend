@@ -24,7 +24,7 @@ import navigation.Navigator
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.business.{UkAddressPage, UkCompanyNamePage}
+import pages.business.{UkAddressPage, CompanyNamePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -43,7 +43,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
   val name = "Name"
 
   override val emptyUserAnswers = UserAnswers("id")
-    .set(UkCompanyNamePage, name).success.value
+    .set(CompanyNamePage, name).success.value
 
   val validAnswer = UkAddress("value 1", "value 2", None, None, "AB1 1AB")
 
@@ -53,7 +53,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
     "return OK and the correct view for a GET" in {
 
-      val userAnswers = emptyUserAnswers.set(UkCompanyNamePage, name).success.value
+      val userAnswers = emptyUserAnswers.set(CompanyNamePage, name).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -119,7 +119,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
     "return a Bad Request and errors when invalid data is submitted" in {
 
-      val userAnswers = emptyUserAnswers.set(UkCompanyNamePage, name).success.value
+      val userAnswers = emptyUserAnswers.set(CompanyNamePage, name).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 

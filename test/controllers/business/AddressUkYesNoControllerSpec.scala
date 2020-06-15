@@ -26,7 +26,7 @@ import navigation.Navigator
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.business.{AddressUkYesNoPage, UkCompanyNamePage}
+import pages.business.{AddressUkYesNoPage, CompanyNamePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -46,7 +46,7 @@ class AddressUkYesNoControllerSpec extends SpecBase with MockitoSugar {
 
 
   override val emptyUserAnswers = UserAnswers("id")
-    .set(UkCompanyNamePage, name).success.value
+    .set(CompanyNamePage, name).success.value
 
   lazy val addressUkYesNoControllerRoute = routes.AddressUkYesNoController.onPageLoad(NormalMode).url
 

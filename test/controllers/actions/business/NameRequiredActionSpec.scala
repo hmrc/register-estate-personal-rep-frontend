@@ -20,7 +20,7 @@ import base.SpecBase
 import models.NormalMode
 import models.requests.{BusinessNameRequest, DataRequest}
 import org.scalatest.concurrent.ScalaFutures
-import pages.business.{NonUkCompanyNamePage, UkCompanyNamePage}
+import pages.business.CompanyNamePage
 import play.api.mvc.Result
 import play.api.test.Helpers._
 
@@ -38,7 +38,7 @@ class NameRequiredActionSpec extends SpecBase with ScalaFutures {
 
     "there is no answer" must {
 
-      "redirect to What is the name" in {
+      "redirect to Uk Registered Yes No Page" in {
 
         val action = new Harness()
 
@@ -60,11 +60,11 @@ class NameRequiredActionSpec extends SpecBase with ScalaFutures {
 
     "there is an answer" must {
 
-      "add the answer to the request for a UK company" in {
+      "add the answer to the request" in {
 
         val action = new Harness()
 
-        val userAnswers = emptyUserAnswers.set(UkCompanyNamePage, "UK Company Name").success.value
+        val userAnswers = emptyUserAnswers.set(CompanyNamePage, "UK Company Name").success.value
 
         val futureResult = action.callRefine(
           DataRequest(
@@ -76,25 +76,6 @@ class NameRequiredActionSpec extends SpecBase with ScalaFutures {
 
         whenReady(futureResult) { result =>
           result.right.get.businessName mustEqual "UK Company Name"
-        }
-      }
-
-      "add the answer to the request for a non UK company" in {
-
-        val action = new Harness()
-
-        val userAnswers = emptyUserAnswers.set(NonUkCompanyNamePage, "Non UK Company Name").success.value
-
-        val futureResult = action.callRefine(
-          DataRequest(
-            fakeRequest,
-            "id",
-            userAnswers
-          )
-        )
-
-        whenReady(futureResult) { result =>
-          result.right.get.businessName mustEqual "Non UK Company Name"
         }
       }
     }
