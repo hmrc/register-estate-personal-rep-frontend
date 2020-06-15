@@ -16,10 +16,12 @@
 
 @import viewmodels.AnswerSection
 @import controllers.business.routes._
+@import config.FrontendAppConfig
 
 @this(
-    main_template: MainTemplate,
-    formHelper: FormWithCSRF
+        main_template: MainTemplate,
+        formHelper: FormWithCSRF,
+        appConfig: FrontendAppConfig
 )
 
 @(answerSection: AnswerSection)(implicit request: Request[_], messages: Messages)
@@ -37,5 +39,7 @@
         @components.answer_section(answerSection)
 
         @components.submit_button()
+
+        <p><a href="@appConfig.registerEstateHubOverview">@messages("site.returnToRegistrationProgress")</a></p>
     }
 }

@@ -15,11 +15,13 @@
  *@
 
 @import controllers.business.routes._
+@import config.FrontendAppConfig
 @import utils.InputOption
 
 @this(
         main_template: MainTemplate,
-        formHelper: FormWithCSRF
+        formHelper: FormWithCSRF,
+        appConfig: FrontendAppConfig
 )
 
 @(form: Form[_], countryOptions: Seq[InputOption], name: String, mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -39,5 +41,7 @@
         @components.non_uk_address(form, countryOptions)
 
         @components.submit_button()
+
+        <p><a href="@appConfig.registerEstateHubOverview">@messages("site.returnToRegistrationProgress")</a></p>
     }
 }

@@ -15,10 +15,12 @@
  *@
 
 @import controllers.business.routes._
+@import config.FrontendAppConfig
 
 @this(
         main_template: MainTemplate,
-        formHelper: FormWithCSRF
+        formHelper: FormWithCSRF,
+        appConfig: FrontendAppConfig
 )
 
 @(form: Form[_], name: String, mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -45,5 +47,7 @@
         <p>@messages("business.utr.p1") <a target="_blank" href="https://www.gov.uk/find-lost-utr-number">@messages("business.utr.link")</a>.</p>
 
         @components.submit_button()
+
+        <p><a href="@appConfig.registerEstateHubOverview">@messages("site.returnToRegistrationProgress")</a></p>
     }
 }
