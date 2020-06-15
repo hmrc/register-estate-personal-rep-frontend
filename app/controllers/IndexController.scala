@@ -42,7 +42,7 @@ class IndexController @Inject()(
   def onPageLoad: Action[AnyContent] = actions.authWithSession.async {
     implicit request =>
 
-      val userAnswers: UserAnswers = UserAnswers(request.internalId)
+      val userAnswers: UserAnswers = request.userAnswers.getOrElse(UserAnswers(request.internalId))
 
       for {
         _ <- repository.set(userAnswers)
