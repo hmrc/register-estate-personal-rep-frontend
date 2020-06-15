@@ -19,12 +19,12 @@ package utils.print
 import java.time.LocalDate
 
 import base.SpecBase
-import models.{CombinedPassportOrIdCard, IdCard, IndividualOrBusiness, Name, NonUkAddress, NormalMode, Passport, PassportOrIdCard, UkAddress}
+import controllers.individual.routes._
+import models.{IdCard, IndividualOrBusiness, Name, NonUkAddress, NormalMode, Passport, PassportOrIdCard, UkAddress}
 import pages.IndividualOrBusinessPage
 import pages.individual._
 import play.twirl.api.Html
 import viewmodels.{AnswerRow, AnswerSection}
-import controllers.individual.routes._
 
 class IndividualPrintHelperSpec extends SpecBase {
 
