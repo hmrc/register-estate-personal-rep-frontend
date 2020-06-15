@@ -16,8 +16,6 @@
 
 package controllers.business
 
-import java.time.LocalDate
-
 import base.SpecBase
 import connectors.{EstateConnector, EstatesStoreConnector}
 import models.UkAddress
@@ -29,7 +27,6 @@ import pages.business._
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.auth.core.AffinityGroup.Agent
 import uk.gov.hmrc.http.HttpResponse
 import utils.print.BusinessPrintHelper
 import views.html.business.CheckDetailsView
@@ -75,7 +72,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
         view(answerSection)(fakeRequest, messages).toString
     }
 
-    "redirect to the 'add a protector' page when submitted" in {
+    "redirect to the 'estate hub overview' page when submitted" in {
 
       val mockEstateConnector = mock[EstateConnector]
       val mockEstatesStoreConnector = mock[EstatesStoreConnector]

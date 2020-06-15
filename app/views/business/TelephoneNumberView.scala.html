@@ -15,11 +15,12 @@
  *@
 
 @import controllers.business.routes._
-@import models.Mode
+@import config.FrontendAppConfig
 
 @this(
-    main_template: MainTemplate,
-    formHelper: FormWithCSRF
+        main_template: MainTemplate,
+        formHelper: FormWithCSRF,
+        appConfig: FrontendAppConfig
 )
 
 @(form: Form[_], name: String, mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -42,6 +43,7 @@
             hint = Some(messages("business.telephoneNumber.hint"))
         )
 
-        @components.submit_button()
-    }
+        @components.submit_button(Some(messages("site.saveAndContinue"))
+
+        <p><a href="@appConfig.registerEstateHubOverview">@messages("site.returnToRegistrationProgress")</a></p>    }
 }
