@@ -40,7 +40,7 @@ class BusinessPrintHelper @Inject()(countryOptions: CountryOptions) {
           controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode).url,
           "individualOrBusiness"
         ),
-        converter.yesNoQuestion(AddressUkYesNoPage, "business.ukRegisteredYesNo", rts.UkRegisteredYesNoController.onPageLoad(NormalMode).url),
+        converter.yesNoQuestion(UkRegisteredYesNoPage, "business.ukRegisteredYesNo", rts.UkRegisteredYesNoController.onPageLoad(NormalMode).url),
         converter.stringQuestion(UkCompanyNamePage, "business.ukCompany.name", rts.UkCompanyNameController.onPageLoad(NormalMode).url),
         converter.stringQuestion(NonUkCompanyNamePage, "business.nonUkCompany.name", rts.NonUkCompanyNameController.onPageLoad(NormalMode).url),
         converter.stringQuestion(UtrPage, "business.utr", rts.UtrController.onPageLoad(NormalMode).url),

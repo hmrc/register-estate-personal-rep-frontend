@@ -34,6 +34,7 @@ case object UkRegisteredYesNoPage extends QuestionPage[Boolean] {
         userAnswers.remove(NonUkCompanyNamePage)
       case Some(false) =>
         userAnswers.remove(UkCompanyNamePage)
+          .flatMap(_.remove(UtrPage))
       case _ =>
         super.cleanup(value, userAnswers)
     }
