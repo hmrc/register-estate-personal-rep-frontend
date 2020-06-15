@@ -16,8 +16,6 @@
 
 package utils.mappers
 
-import java.time.LocalDate
-
 import base.SpecBase
 import models.{NonUkAddress, UkAddress}
 import pages.business._
@@ -27,11 +25,10 @@ class BusinessMapperSpec extends SpecBase {
   private val name = "Name"
   private val utr = "1234567890"
   private val phone = "0987654321"
-  private val startDate = LocalDate.parse("2019-03-09")
   private val ukAddress = UkAddress("line1", "line2", Some("line3"), Some("line4"), "POSTCODE")
   private val nonUkAddress = NonUkAddress("line1", "line2", Some("line3"), "country")
 
-  "BusinessMapper" when {
+  "Business Mapper" when {
 
     val mapper = injector.instanceOf[BusinessMapper]
 
@@ -49,7 +46,7 @@ class BusinessMapperSpec extends SpecBase {
       result.name mustBe name
       result.phoneNumber mustBe phone
       result.utr mustBe None
-      result.address mustBe Some(ukAddress)
+      result.address mustBe ukAddress
     }
 
     "generate business personal rep model with uk company name, Uk address and a utr" in {
@@ -67,7 +64,7 @@ class BusinessMapperSpec extends SpecBase {
       result.name mustBe name
       result.phoneNumber mustBe phone
       result.utr mustBe Some(utr)
-      result.address mustBe Some(ukAddress)
+      result.address mustBe ukAddress
     }
 
     "generate business personal rep model with uk company name, non Uk address and a utr" in {
@@ -85,24 +82,24 @@ class BusinessMapperSpec extends SpecBase {
       result.name mustBe name
       result.phoneNumber mustBe phone
       result.utr mustBe Some(utr)
-      result.address mustBe Some(nonUkAddress)
+      result.address mustBe nonUkAddress
     }
 
-  "generate business personal rep model with non Uk Company name, non Uk address and no utr" in {
+    "generate business personal rep model with non Uk Company name, non Uk address and no utr" in {
 
-    val userAnswers = emptyUserAnswers
-      .set(UkRegisteredYesNoPage, false).success.value
-      .set(NonUkCompanyNamePage, name).success.value
-      .set(TelephoneNumberPage, phone).success.value
-      .set(AddressUkYesNoPage, false).success.value
-      .set(NonUkAddressPage, nonUkAddress).success.value
+      val userAnswers = emptyUserAnswers
+        .set(UkRegisteredYesNoPage, false).success.value
+        .set(NonUkCompanyNamePage, name).success.value
+        .set(TelephoneNumberPage, phone).success.value
+        .set(AddressUkYesNoPage, false).success.value
+        .set(NonUkAddressPage, nonUkAddress).success.value
 
-    val result = mapper(userAnswers).get
+      val result = mapper(userAnswers).get
 
-    result.name mustBe name
-    result.phoneNumber mustBe phone
-    result.utr mustBe None
-    result.address mustBe Some(nonUkAddress)
-  }
+      result.name mustBe name
+      result.phoneNumber mustBe phone
+      result.utr mustBe None
+      result.address mustBe nonUkAddress
+    }
   }
 }

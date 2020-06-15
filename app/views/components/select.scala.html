@@ -15,6 +15,7 @@
  *@
 
 @import utils.InputOption
+
 @(
     field: Field,
     label: String,
@@ -49,7 +50,7 @@
             <option id="value-@{valueOption.value}"
                     value="@valueOption.value"
                     @if(field.value.contains(valueOption.value)){
-                    selected
+                        selected
                     }>@messages(valueOption.label)
             </option>
         }

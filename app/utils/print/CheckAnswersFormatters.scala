@@ -21,11 +21,12 @@ import java.time.format.DateTimeFormatter
 import models.{Address, IdCard, NonUkAddress, Passport, UkAddress}
 import play.api.i18n.Messages
 import play.twirl.api.{Html, HtmlFormat}
+import uk.gov.hmrc.domain.Nino
 import utils.countryOptions.CountryOptions
 
 object CheckAnswersFormatters {
 
-  val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
   def yesOrNo(answer: Boolean)(implicit messages: Messages): Html = {
     if (answer) {
@@ -34,6 +35,8 @@ object CheckAnswersFormatters {
       HtmlFormat.escape(messages("site.no"))
     }
   }
+
+  def formatNino(nino: String): Html = HtmlFormat.escape(Nino(nino).formatted)
 
   def formatAddress(address: Address, countryOptions: CountryOptions): Html = {
     address match {
@@ -81,12 +84,12 @@ object CheckAnswersFormatters {
     Html(lines.mkString("<br />"))
   }
 
-  def formatIdCardDetails(idCard: IdCard, countryOptions: CountryOptions): Html = {
+  def formatIdCardDetails(id: IdCard, countryOptions: CountryOptions): Html = {
     val lines =
       Seq(
-        Some(country(idCard.countryOfIssue, countryOptions)),
-        Some(HtmlFormat.escape(idCard.number)),
-        Some(HtmlFormat.escape(idCard.expirationDate.format(dateFormatter)))
+        Some(country(id.countryOfIssue, countryOptions)),
+        Some(HtmlFormat.escape(id.number)),
+        Some(HtmlFormat.escape(id.expirationDate.format(dateFormatter)))
       ).flatten
 
     Html(lines.mkString("<br />"))

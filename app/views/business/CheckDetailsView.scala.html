@@ -26,18 +26,18 @@
 @(answerSection: AnswerSection)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("business.checkDetails.title")
+    title = messages("checkDetails.title")
     ) {
 
     @formHelper(action = CheckDetailsController.onSubmit(), 'autoComplete -> "off") {
 
         @components.back_link()
 
-        @components.heading("business.checkDetails.heading")
+        @components.heading("checkDetails.heading")
 
         @components.answer_section(answerSection)
 
-        @components.submit_button(Some(messages("site.saveAndContinue"))
+        @components.submit_button()
 
         <p><a href="@appConfig.registerEstateHubOverview">@messages("site.returnToRegistrationProgress")</a></p>
     }

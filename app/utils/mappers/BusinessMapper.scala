@@ -32,7 +32,7 @@ class BusinessMapper {
         readName and
           TelephoneNumberPage.path.read[String] and
           UtrPage.path.readNullable[String] and
-          readUkOrNonUkAddress
+          readAddress
       ) (BusinessPersonalRep.apply _)
 
     answers.data.validate[BusinessPersonalRep](readFromUserAnswers) match {
@@ -51,10 +51,10 @@ class BusinessMapper {
     }
   }
 
-  private def readUkOrNonUkAddress: Reads[Option[Address]] = {
-    AddressUkYesNoPage.path.read[Boolean].flatMap[Option[Address]] {
-      case true => UkAddressPage.path.read[UkAddress].map(Some(_))
-      case false => NonUkAddressPage.path.read[NonUkAddress].map(Some(_))
+  private def readAddress: Reads[Address] = {
+    AddressUkYesNoPage.path.read[Boolean].flatMap[Address] {
+      case true => UkAddressPage.path.read[UkAddress].widen[Address]
+      case false => NonUkAddressPage.path.read[NonUkAddress].widen[Address]
     }
   }
 

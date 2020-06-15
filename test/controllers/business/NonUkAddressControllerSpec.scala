@@ -38,7 +38,7 @@ import scala.concurrent.Future
 
 class NonUkAddressControllerSpec extends SpecBase with MockitoSugar {
 
-  val form = new NonUkAddressFormProvider().apply()
+  val form = new NonUkAddressFormProvider()()
 
   override def onwardRoute = Call("GET", "/foo")
   val name: String = "Name"

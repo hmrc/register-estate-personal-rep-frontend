@@ -30,6 +30,8 @@ object IndividualOrBusinessPage extends QuestionPage[IndividualOrBusiness] {
 
   override def cleanup(value: Option[IndividualOrBusiness], userAnswers: UserAnswers): Try[UserAnswers] = {
     value match {
+      case Some(Individual) =>
+        userAnswers.deleteAtPath(pages.business.basePath)
       case Some(Business) =>
         userAnswers.deleteAtPath(pages.individual.basePath)
       case _ =>

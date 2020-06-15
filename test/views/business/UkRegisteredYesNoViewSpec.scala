@@ -39,7 +39,7 @@ class UkRegisteredYesNoViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(applyView(form))
 
-    behave like yesNoPage(form, applyView, messageKeyPrefix, None, routes.UkRegisteredYesNoController.onSubmit(NormalMode).url)
+    behave like yesNoPage(form, applyView, messageKeyPrefix, None)
 
     behave like pageWithASubmitButton(applyView(form))
   }

@@ -19,7 +19,6 @@ package controllers.business
 import config.FrontendAppConfig
 import connectors.{EstateConnector, EstatesStoreConnector}
 import controllers.actions.Actions
-import controllers.actions.business.NameRequiredAction
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -36,7 +35,6 @@ class CheckDetailsController @Inject()(
                                         val controllerComponents: MessagesControllerComponents,
                                         val appConfig: FrontendAppConfig,
                                         actions: Actions,
-                                        nameAction: NameRequiredAction,
                                         connector: EstateConnector,
                                         estatesStoreConnector: EstatesStoreConnector,
                                         printHelper: BusinessPrintHelper,
@@ -44,14 +42,14 @@ class CheckDetailsController @Inject()(
                                         view: CheckDetailsView
 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onPageLoad(): Action[AnyContent] = actions.authWithBusinessName {
     implicit request =>
 
       val section: AnswerSection = printHelper(request.userAnswers, request.businessName)
       Ok(view(section))
   }
 
-  def onSubmit(): Action[AnyContent] = actions.authWithData.async {
+  def onSubmit(): Action[AnyContent] = actions.authWithBusinessName.async {
     implicit request =>
 
       mapper(request.userAnswers) match {

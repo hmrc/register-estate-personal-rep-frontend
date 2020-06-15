@@ -27,35 +27,40 @@ class NonUkAddressFormProvider @Inject() extends Mappings {
   def apply(): Form[NonUkAddress] = Form(
     mapping(
       "line1" ->
-        text("nonUkAddress.error.line1.required")
+        text("nonUkAddress.line1.error.required")
           .verifying(
             firstError(
-              nonEmptyString("line1", "nonUkAddress.error.line1.required"),
-              maxLength(35, "nonUkAddress.error.line1.length"),
-              regexp(Validation.addressLineRegex, "nonUkAddress.error.line1.invalidCharacters")
-            )),
+              nonEmptyString("line1", "nonUkAddress.line1.error.required"),
+              maxLength(35, "nonUkAddress.line1.error.length"),
+              regexp(Validation.addressLineRegex, "nonUkAddress.line1.error.invalid")
+            )
+          ),
       "line2" ->
-        text("nonUkAddress.error.line2.required")
+        text("nonUkAddress.line2.error.required")
           .verifying(
             firstError(
-              nonEmptyString("line2", "nonUkAddress.error.line2.required"),
-              maxLength(35, "nonUkAddress.error.line2.length"),
-              regexp(Validation.addressLineRegex, "nonUkAddress.error.line2.invalidCharacters")
-            )),
+              nonEmptyString("line2", "nonUkAddress.line2.error.required"),
+              maxLength(35, "nonUkAddress.line2.error.length"),
+              regexp(Validation.addressLineRegex, "nonUkAddress.line2.error.invalid")
+            )
+          ),
       "line3" ->
         optional(Forms.text
           .verifying(
             firstError(
-              maxLength(35, "nonUkAddress.error.line3.length"),
-              regexp(Validation.addressLineRegex, "nonUkAddress.error.line3.invalidCharacters")
-            ))),
+              maxLength(35, "nonUkAddress.line3.error.length"),
+              regexp(Validation.addressLineRegex, "nonUkAddress.line3.error.invalid")
+            )
+          )
+        ),
       "country" ->
-        text("nonUkAddress.error.country.required")
+        text("nonUkAddress.country.error.required")
           .verifying(
             firstError(
-              maxLength(35, "nonUkAddress.error.country.length"),
-              nonEmptyString("country", "nonUkAddress.error.country.required")
-            ))
+              maxLength(35, "nonUkAddress.country.error.length"),
+              nonEmptyString("country", "nonUkAddress.country.error.required")
+            )
+          )
     )(NonUkAddress.apply)(NonUkAddress.unapply)
   )
 }

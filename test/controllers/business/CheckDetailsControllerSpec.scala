@@ -72,7 +72,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
         view(answerSection)(fakeRequest, messages).toString
     }
 
-    "redirect to the 'estate hub overview' page when submitted" in {
+    "redirect to the hub when submitted" in {
 
       val mockEstateConnector = mock[EstateConnector]
       val mockEstatesStoreConnector = mock[EstatesStoreConnector]

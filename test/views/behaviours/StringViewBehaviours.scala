@@ -27,7 +27,6 @@ trait StringViewBehaviours extends QuestionViewBehaviours[String] {
                  createView: Form[String] => HtmlFormat.Appendable,
                  messageKeyPrefix: String,
                  messageKeyParam: Option[String],
-                 expectedFormAction: String,
                  expectedHintKey: Option[String] = None) = {
 
     "behave like a page with a string value field" when {

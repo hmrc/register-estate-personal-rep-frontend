@@ -18,12 +18,12 @@ package controllers.business
 
 import config.annotations.Business
 import controllers.actions.Actions
-import controllers.actions.business.NameRequiredAction
 import forms.NonUkAddressFormProvider
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, NonUkAddress}
 import navigation.Navigator
 import pages.business.NonUkAddressPage
+import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -38,16 +38,15 @@ class NonUkAddressController @Inject()(
                                         sessionRepository: SessionRepository,
                                         @Business navigator: Navigator,
                                         actions: Actions,
-                                        nameAction: NameRequiredAction,
                                         formProvider: NonUkAddressFormProvider,
                                         val controllerComponents: MessagesControllerComponents,
                                         view: NonUkAddressView,
                                         val countryOptions: CountryOptionsNonUK
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
+  val form: Form[NonUkAddress] = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithBusinessName {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(NonUkAddressPage) match {
@@ -58,7 +57,7 @@ class NonUkAddressController @Inject()(
       Ok(view(preparedForm, countryOptions.options, request.businessName, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.andThen(nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithBusinessName.async {
     implicit request =>
 
       form.bindFromRequest().fold(

@@ -19,30 +19,35 @@ package utils.print
 import com.google.inject.Inject
 import controllers.business.{routes => rts}
 import models.{NormalMode, UserAnswers}
+import pages.IndividualOrBusinessPage
 import pages.business._
 import play.api.i18n.Messages
 import utils.countryOptions.CountryOptions
 import viewmodels.AnswerSection
 
-class BusinessPrintHelper @Inject()(answerRowConverter: AnswerRowConverter,
-                                               countryOptions: CountryOptions
-                                          ) {
+class BusinessPrintHelper @Inject()(countryOptions: CountryOptions) {
 
   def apply(userAnswers: UserAnswers, businessName: String)(implicit messages: Messages): AnswerSection = {
 
-    val bound = answerRowConverter.bind(userAnswers, businessName, countryOptions)
+    val converter = AnswerRowConverter(userAnswers, businessName, countryOptions)
 
     AnswerSection(
       None,
       Seq(
-        bound.yesNoQuestion(AddressUkYesNoPage, "business.ukRegisteredYesNo", rts.UkRegisteredYesNoController.onPageLoad(NormalMode).url),
-        bound.stringQuestion(UkCompanyNamePage, "business.ukCompany.name", rts.UkCompanyNameController.onPageLoad(NormalMode).url),
-        bound.stringQuestion(NonUkCompanyNamePage, "business.nonUkCompany.name", rts.NonUkCompanyNameController.onPageLoad(NormalMode).url),
-        bound.stringQuestion(UtrPage, "business.utr", rts.UtrController.onPageLoad(NormalMode).url),
-        bound.yesNoQuestion(AddressUkYesNoPage, "business.addressUkYesNo", rts.AddressUkYesNoController.onPageLoad(NormalMode).url),
-        bound.addressQuestion(UkAddressPage, "business.ukAddress", rts.UkAddressController.onPageLoad(NormalMode).url),
-        bound.addressQuestion(NonUkAddressPage, "business.nonUkAddress", rts.NonUkAddressController.onPageLoad(NormalMode).url),
-        bound.stringQuestion(TelephoneNumberPage, "business.telephoneNumber", rts.TelephoneNumberController.onPageLoad(NormalMode).url)
+        converter.enumQuestion(
+          IndividualOrBusinessPage,
+          "individualOrBusiness",
+          controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode).url,
+          "individualOrBusiness"
+        ),
+        converter.yesNoQuestion(AddressUkYesNoPage, "business.ukRegisteredYesNo", rts.UkRegisteredYesNoController.onPageLoad(NormalMode).url),
+        converter.stringQuestion(UkCompanyNamePage, "business.ukCompany.name", rts.UkCompanyNameController.onPageLoad(NormalMode).url),
+        converter.stringQuestion(NonUkCompanyNamePage, "business.nonUkCompany.name", rts.NonUkCompanyNameController.onPageLoad(NormalMode).url),
+        converter.stringQuestion(UtrPage, "business.utr", rts.UtrController.onPageLoad(NormalMode).url),
+        converter.yesNoQuestion(AddressUkYesNoPage, "business.addressUkYesNo", rts.AddressUkYesNoController.onPageLoad(NormalMode).url),
+        converter.addressQuestion(UkAddressPage, "business.ukAddress", rts.UkAddressController.onPageLoad(NormalMode).url),
+        converter.addressQuestion(NonUkAddressPage, "business.nonUkAddress", rts.NonUkAddressController.onPageLoad(NormalMode).url),
+        converter.stringQuestion(TelephoneNumberPage, "business.telephoneNumber", rts.TelephoneNumberController.onPageLoad(NormalMode).url)
       ).flatten
     )
   }

@@ -39,7 +39,7 @@ import views.html.business.CheckDetailsView
 
 class CheckDetailsViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "business.checkDetails"
+  val messageKeyPrefix = "checkDetails"
 
   "CheckDetails view" must {
 
