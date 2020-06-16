@@ -19,7 +19,7 @@ package controllers.actions.business
 import javax.inject.Inject
 import models.NormalMode
 import models.requests.{BusinessNameRequest, DataRequest}
-import pages.business.{NonUkCompanyNamePage, UkCompanyNamePage}
+import pages.business.CompanyNamePage
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}
 
@@ -31,8 +31,7 @@ class NameRequiredAction @Inject()(implicit val executionContext: ExecutionConte
   override protected def refine[A](request: DataRequest[A]): Future[Either[Result, BusinessNameRequest[A]]] = {
 
     Future.successful(
-      request.userAnswers.get(UkCompanyNamePage)
-        .orElse(request.userAnswers.get(NonUkCompanyNamePage)) match {
+      request.userAnswers.get(CompanyNamePage) match {
         case None =>
           Left(Redirect(controllers.business.routes.UkRegisteredYesNoController.onPageLoad(NormalMode)))
         case Some(name) =>

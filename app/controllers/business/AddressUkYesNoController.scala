@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class AddressUkYesNoController @Inject()(
                                           override val messagesApi: MessagesApi,
-                                          playbackRepository: SessionRepository,
+                                          sessionRepository: SessionRepository,
                                           @Business navigator: Navigator,
                                           actions: Actions,
                                           formProvider: YesNoFormProvider,
@@ -64,7 +64,7 @@ class AddressUkYesNoController @Inject()(
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AddressUkYesNoPage, value))
-            _              <- playbackRepository.set(updatedAnswers)
+            _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(AddressUkYesNoPage, mode, updatedAnswers))
       )
   }

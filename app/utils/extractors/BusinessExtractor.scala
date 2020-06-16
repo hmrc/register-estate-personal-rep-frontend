@@ -36,11 +36,11 @@ class BusinessExtractor {
     personalRep.utr match {
       case Some(utr) =>
         userAnswers.set(UkRegisteredYesNoPage, true)
-        .flatMap(_.set(UkCompanyNamePage, personalRep.name))
+        .flatMap(_.set(CompanyNamePage, personalRep.name))
         .flatMap(_.set(UtrPage, utr))
       case None =>
         userAnswers.set(UkRegisteredYesNoPage, false)
-        .flatMap(_.set(NonUkCompanyNamePage, personalRep.name))
+        .flatMap(_.set(CompanyNamePage, personalRep.name))
     }
   }
 

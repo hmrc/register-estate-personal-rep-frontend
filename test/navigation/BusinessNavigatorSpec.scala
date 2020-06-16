@@ -48,12 +48,18 @@ class BusinessNavigatorSpec extends SpecBase with ScalaCheckPropertyChecks  {
       }
 
       "Uk Company Name page -> UTR page" in {
-        navigator.nextPage(UkCompanyNamePage, mode, emptyUserAnswers)
+        val answers = emptyUserAnswers
+          .set(UkRegisteredYesNoPage, true).success.value
+
+        navigator.nextPage(CompanyNamePage, mode, answers)
           .mustBe(controllers.business.routes.UtrController.onPageLoad(mode))
       }
 
       "Non Uk Company Name page -> Is address in UK page" in {
-        navigator.nextPage(NonUkCompanyNamePage, mode, emptyUserAnswers)
+        val answers = emptyUserAnswers
+          .set(UkRegisteredYesNoPage, false).success.value
+
+        navigator.nextPage(CompanyNamePage, mode, answers)
           .mustBe(controllers.business.routes.AddressUkYesNoController.onPageLoad(mode))
       }
 

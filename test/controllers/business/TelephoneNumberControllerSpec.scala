@@ -24,7 +24,7 @@ import navigation.{FakeNavigator, Navigator}
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
-import pages.business.{UkCompanyNamePage, TelephoneNumberPage}
+import pages.business.{CompanyNamePage, TelephoneNumberPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -45,7 +45,7 @@ class TelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
   val validAnswer = "1234567890"
 
   override val emptyUserAnswers = UserAnswers("id")
-    .set(UkCompanyNamePage, name).success.value
+    .set(CompanyNamePage, name).success.value
 
   lazy val telephoneNumberRoute = routes.TelephoneNumberController.onPageLoad(NormalMode).url
 

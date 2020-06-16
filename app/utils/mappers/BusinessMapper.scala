@@ -29,7 +29,7 @@ class BusinessMapper {
   def apply(answers: UserAnswers): Option[BusinessPersonalRep] = {
     val readFromUserAnswers: Reads[BusinessPersonalRep] =
       (
-        readName and
+        CompanyNamePage.path.read[String] and
           TelephoneNumberPage.path.read[String] and
           UtrPage.path.readNullable[String] and
           readAddress
@@ -41,13 +41,6 @@ class BusinessMapper {
       case JsError(errors) =>
         logger.error(s"Failed to rehydrate Business from UserAnswers due to $errors")
         None
-    }
-  }
-
-  private def readName: Reads[String] = {
-    UkRegisteredYesNoPage.path.read[Boolean].flatMap {
-      case true => UkCompanyNamePage.path.read[String]
-      case false => NonUkCompanyNamePage.path.read[String]
     }
   }
 

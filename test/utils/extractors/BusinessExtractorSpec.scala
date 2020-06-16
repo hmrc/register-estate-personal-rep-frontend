@@ -47,8 +47,7 @@ class BusinessExtractorSpec extends SpecBase {
 
       result.get(IndividualOrBusinessPage).get mustBe Business
       result.get(UkRegisteredYesNoPage).get mustBe true
-      result.get(UkCompanyNamePage).get mustBe name
-      result.get(NonUkCompanyNamePage) mustNot be(defined)
+      result.get(CompanyNamePage).get mustBe name
       result.get(UtrPage).get mustBe utr
       result.get(AddressUkYesNoPage).get mustBe true
       result.get(UkAddressPage).get mustBe ukAddress
@@ -69,8 +68,7 @@ class BusinessExtractorSpec extends SpecBase {
 
       result.get(IndividualOrBusinessPage).get mustBe Business
       result.get(UkRegisteredYesNoPage).get mustBe false
-      result.get(UkCompanyNamePage) mustNot be(defined)
-      result.get(NonUkCompanyNamePage).get mustBe name
+      result.get(CompanyNamePage).get mustBe name
       result.get(UtrPage) mustNot be(defined)
       result.get(AddressUkYesNoPage).get mustBe false
       result.get(UkAddressPage) mustNot be(defined)
