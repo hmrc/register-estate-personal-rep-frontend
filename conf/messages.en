@@ -37,7 +37,6 @@ site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
 site.continue = Continue
-site.save.continue = Save and continue
 site.returnToRegistrationProgress = Return to registration progress
 site.service_name = Register and Maintain an Estate
 site.textarea.char_limit = (Limit is {0} characters)
