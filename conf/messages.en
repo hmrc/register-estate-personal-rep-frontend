@@ -99,8 +99,8 @@ individualOrBusiness.individual = Individual
 individualOrBusiness.business = Business
 individualOrBusiness.error.required = Select if the personal representative is an individual or business
 
-checkDetails.title = Check personal representative details
-checkDetails.heading = Check personal representative details
+checkDetails.title = Check personal representative’s details
+checkDetails.heading = Check personal representative’s details
 
 individual.name.checkYourAnswersLabel = What is the personal representative’s name?
 individual.name.title = What is the personal representative’s name?
