@@ -85,12 +85,6 @@ nonUkAddress.line3.error.invalid = Address line 3 must only include letters a to
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
-featureNotAvailable.title = This part of the online service is not available yet
-featureNotAvailable.heading = This part of the online service is not available yet
-featureNotAvailable.p1 = If you need to make any changes to the trust you can
-featureNotAvailable.link = contact our trusts helpline (opens in a new window or tab)
-featureNotAvailable.p2 = You will be able to update these details online in the future.
-
 individualOrBusiness.checkYourAnswersLabel = Is the personal representative an individual or a business?
 individualOrBusiness.title = Is the personal representative an individual or a business?
 individualOrBusiness.heading = Is the personal representative an individual or a business?
