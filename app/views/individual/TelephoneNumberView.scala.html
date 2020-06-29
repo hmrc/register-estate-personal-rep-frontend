@@ -40,7 +40,8 @@
             label = messages("individual.telephoneNumber.heading", name),
             labelClass = Some("heading-large"),
             headingIsLabel = true,
-            hint = Some(messages("individual.telephoneNumber.hint"))
+            hint = Some(messages("individual.telephoneNumber.hint")),
+            inputMode = Some("numeric")
         )
 
         @components.submit_button()

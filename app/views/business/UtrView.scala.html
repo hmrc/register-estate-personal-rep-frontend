@@ -41,7 +41,8 @@
             headingIsLabel = true,
             hint = Some(messages("business.utr.hint")),
             readerHint = Some(messages("business.utr.hint.reader")),
-            labelClass=Some("heading-large")
+            labelClass=Some("heading-large"),
+            inputMode = Some("numeric")
         )
 
         <p>@messages("business.utr.p1") <a target="_blank" href="https://www.gov.uk/find-lost-utr-number">@messages("business.utr.link")</a>.</p>
