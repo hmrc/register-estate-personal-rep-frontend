@@ -41,7 +41,7 @@ class TelephoneNumberViewSpec extends StringViewBehaviours {
     behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name, "hint")
 
     behave like pageWithHint(form, applyView, messageKeyPrefix + ".hint")
-    
+
     behave like pageWithTextFields(form, applyView,
       messageKeyPrefix,
       Some(name),

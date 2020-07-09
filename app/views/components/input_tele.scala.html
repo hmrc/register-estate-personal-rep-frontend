@@ -22,8 +22,7 @@
     hint: Option[String] = None,
     readerHint: Option[String] = None,
     labelClass: Option[String] = None,
-    optionalHtmlContent: Option[Html] = None,
-    inputMode: String = "numeric"
+    optionalHtmlContent: Option[Html] = None
 )(implicit messages: Messages)
 
 <div class="form-group @if(field.hasErrors){form-group-error}">
@@ -50,9 +49,6 @@
         id="@{field.id}"
         name="@{field.name}"
         value="@{field.value}"
-        @if(inputMode.nonEmpty) {
-            inputmode="@inputMode"
-        }
         @if(hint.nonEmpty) {
             aria-describedby="@{field.id}_hint"
         }
