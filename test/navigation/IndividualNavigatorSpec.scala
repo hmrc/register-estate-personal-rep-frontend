@@ -113,7 +113,7 @@ class IndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyChecks  {
           .mustBe(controllers.individual.routes.EmailAddressYesNoController.onPageLoad(mode))
       }
 
-      "Email address yes no page -> YES -> Email page" in {
+      "Email address yes no page -> YES -> Email address page" in {
         val userAnswers: UserAnswers = emptyUserAnswers
           .set(EmailAddressYesNoPage, true).success.value
 
@@ -126,6 +126,11 @@ class IndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyChecks  {
           .set(EmailAddressYesNoPage, false).success.value
 
         navigator.nextPage(EmailAddressYesNoPage, mode, userAnswers)
+          .mustBe(controllers.individual.routes.TelephoneNumberController.onPageLoad(mode))
+      }
+
+      "Email address page -> Telephone number page" in {
+        navigator.nextPage(EmailAddressPage, mode, emptyUserAnswers)
           .mustBe(controllers.individual.routes.TelephoneNumberController.onPageLoad(mode))
       }
 
