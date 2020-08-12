@@ -55,6 +55,8 @@ class BusinessPrintHelper @Inject()(countryOptions: CountryOptions) {
         converter.yesNoQuestion(AddressUkYesNoPage, "business.addressUkYesNo", rts.AddressUkYesNoController.onPageLoad(NormalMode).url),
         converter.addressQuestion(UkAddressPage, "business.ukAddress", rts.UkAddressController.onPageLoad(NormalMode).url),
         converter.addressQuestion(NonUkAddressPage, "business.nonUkAddress", rts.NonUkAddressController.onPageLoad(NormalMode).url),
+        converter.yesNoQuestion(EmailAddressYesNoPage, "business.emailYesNo", rts.EmailAddressYesNoController.onPageLoad(NormalMode).url),
+        converter.stringQuestion(EmailAddressPage, "business.email", rts.EmailAddressController.onPageLoad(NormalMode).url),
         converter.stringQuestion(TelephoneNumberPage, "business.telephoneNumber", rts.TelephoneNumberController.onPageLoad(NormalMode).url)
       ).flatten
     )

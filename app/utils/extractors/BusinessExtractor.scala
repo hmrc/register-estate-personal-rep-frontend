@@ -29,6 +29,7 @@ class BusinessExtractor {
     userAnswers.set(IndividualOrBusinessPage, Business)
       .flatMap(answers => extractName(personalRep, answers))
       .flatMap(answers => extractAddress(personalRep.address, answers))
+      .flatMap(answers => extractEmailAddress(personalRep.email, answers))
       .flatMap(_.set(TelephoneNumberPage, personalRep.phoneNumber))
   }
 
@@ -52,6 +53,16 @@ class BusinessExtractor {
       case nonUkAddress: NonUkAddress =>
         userAnswers.set(AddressUkYesNoPage, false)
           .flatMap(_.set(NonUkAddressPage, nonUkAddress))
+    }
+  }
+
+  private def extractEmailAddress(emailAddress: Option[String], userAnswers: UserAnswers): Try[UserAnswers] = {
+    emailAddress match {
+      case Some(email) =>
+        userAnswers.set(EmailAddressYesNoPage, true)
+          .flatMap(_.set(EmailAddressPage, email))
+      case None =>
+        userAnswers.set(EmailAddressYesNoPage, false)
     }
   }
 

@@ -203,7 +203,8 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
         name = "Name",
         phoneNumber = phoneNumber,
         utr = Some("1234567890"),
-        address = address
+        address = address,
+        email = Some(email)
       )
 
       "posting" must {
@@ -274,7 +275,8 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
               |         "country": "GB"
               |      }
               |   },
-              |   "phoneNumber": "0987654321"
+              |   "phoneNumber": "0987654321",
+              |   "email": "email@example.com"
               |}
               |""".stripMargin
 
