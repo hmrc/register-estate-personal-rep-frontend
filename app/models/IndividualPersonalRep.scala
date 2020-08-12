@@ -25,7 +25,8 @@ case class IndividualPersonalRep(name: Name,
                                  dateOfBirth: LocalDate,
                                  identification: IndividualIdentification,
                                  address: Address,
-                                 phoneNumber: String)
+                                 phoneNumber: String,
+                                 email: Option[String])
 
 object IndividualPersonalRep extends PersonalRep {
 
@@ -34,10 +35,11 @@ object IndividualPersonalRep extends PersonalRep {
       (__ \ 'dateOfBirth).read[LocalDate] and
       __.lazyRead(readAtSubPath[IndividualIdentification](__ \ 'identification)) and
       __.lazyRead(readAtSubPath[Address](__ \ 'identification \ 'address)) and
-      (__ \ 'phoneNumber).read[String]).tupled.map{
+      (__ \ 'phoneNumber).read[String] and
+      (__ \ 'email).readNullable[String]).tupled.map{
 
-      case (name, dob, identification, address, phoneNumber) =>
-        IndividualPersonalRep(name, dob, identification, address, phoneNumber)
+      case (name, dob, identification, address, phoneNumber, email) =>
+        IndividualPersonalRep(name, dob, identification, address, phoneNumber, email)
     }
 
   implicit val writes: Writes[IndividualPersonalRep] =
@@ -45,7 +47,8 @@ object IndividualPersonalRep extends PersonalRep {
       (__ \ 'dateOfBirth).write[LocalDate] and
       (__ \ 'identification).write[IndividualIdentification] and
       (__ \ 'identification \ 'address).write[Address] and
-      (__ \ "phoneNumber").write[String]
+      (__ \ "phoneNumber").write[String] and
+      (__ \ "email").writeNullable[String]
       ).apply(unlift(IndividualPersonalRep.unapply))
 
 }

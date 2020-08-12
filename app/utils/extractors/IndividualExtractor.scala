@@ -31,6 +31,7 @@ class IndividualExtractor {
       .flatMap(_.set(DateOfBirthPage, personalRep.dateOfBirth))
       .flatMap(answers => extractIdentification(personalRep.identification, answers))
       .flatMap(answers => extractAddress(personalRep.address, answers))
+      .flatMap(answers => extractEmailAddress(personalRep.email, answers))
       .flatMap(_.set(TelephoneNumberPage, personalRep.phoneNumber))
   }
 
@@ -58,6 +59,16 @@ class IndividualExtractor {
       case nonUkAddress: NonUkAddress =>
         userAnswers.set(LivesInTheUkYesNoPage, false)
           .flatMap(_.set(NonUkAddressPage, nonUkAddress))
+    }
+  }
+
+  private def extractEmailAddress(emailAddress: Option[String], userAnswers: UserAnswers): Try[UserAnswers] = {
+    emailAddress match {
+      case Some(email) =>
+        userAnswers.set(EmailAddressYesNoPage, true)
+          .flatMap(_.set(EmailAddressPage, email))
+      case None =>
+        userAnswers.set(EmailAddressYesNoPage, false)
     }
   }
 
