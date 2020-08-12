@@ -54,6 +54,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
     .set(NinoPage, nino).success.value
     .set(LivesInTheUkYesNoPage, true).success.value
     .set(UkAddressPage, address).success.value
+    .set(EmailAddressYesNoPage, false).success.value
     .set(TelephoneNumberPage, telephoneNumber).success.value
 
   "CheckDetails Controller" must {

@@ -34,12 +34,13 @@ class IndividualMapperSpec extends SpecBase {
   private val nonUkAddress = NonUkAddress("line1", "line2", Some("line3"), country)
   private val passport: Passport = Passport(country, number, date)
   private val idCard: IdCard = IdCard(country, number, date)
+  private val email: String = "email@example.com"
 
   "Individual Mapper" when {
 
     val mapper = injector.instanceOf[IndividualMapper]
 
-    "generate individual personal rep model with NINO and UK address" in {
+    "generate individual personal rep model with NINO, UK address and email" in {
 
       val userAnswers = emptyUserAnswers
         .set(NamePage, name).success.value
@@ -48,6 +49,8 @@ class IndividualMapperSpec extends SpecBase {
         .set(NinoPage, nino).success.value
         .set(LivesInTheUkYesNoPage, true).success.value
         .set(UkAddressPage, ukAddress).success.value
+        .set(EmailAddressYesNoPage, true).success.value
+        .set(EmailAddressPage, email).success.value
         .set(TelephoneNumberPage, phone).success.value
 
       val result = mapper(userAnswers).get
@@ -57,6 +60,7 @@ class IndividualMapperSpec extends SpecBase {
       result.identification mustBe NationalInsuranceNumber(nino)
       result.address mustBe ukAddress
       result.phoneNumber mustBe phone
+      result.email mustBe Some(email)
     }
 
     "generate individual personal rep model with Passport and UK address" in {
@@ -69,6 +73,7 @@ class IndividualMapperSpec extends SpecBase {
         .set(PassportPage, passport).success.value
         .set(LivesInTheUkYesNoPage, true).success.value
         .set(UkAddressPage, ukAddress).success.value
+        .set(EmailAddressYesNoPage, false).success.value
         .set(TelephoneNumberPage, phone).success.value
 
       val result = mapper(userAnswers).get
@@ -78,6 +83,7 @@ class IndividualMapperSpec extends SpecBase {
       result.identification mustBe Passport(country, number, date)
       result.address mustBe ukAddress
       result.phoneNumber mustBe phone
+      result.email mustBe None
     }
 
     "generate individual personal rep model with ID card and non-UK address" in {
@@ -90,6 +96,7 @@ class IndividualMapperSpec extends SpecBase {
         .set(IdCardPage, idCard).success.value
         .set(LivesInTheUkYesNoPage, false).success.value
         .set(NonUkAddressPage, nonUkAddress).success.value
+        .set(EmailAddressYesNoPage, false).success.value
         .set(TelephoneNumberPage, phone).success.value
 
       val result = mapper(userAnswers).get
@@ -99,6 +106,7 @@ class IndividualMapperSpec extends SpecBase {
       result.identification mustBe IdCard(country, number, date)
       result.address mustBe nonUkAddress
       result.phoneNumber mustBe phone
+      result.email mustBe None
     }
   }
 }

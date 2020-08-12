@@ -29,18 +29,20 @@ class BusinessExtractorSpec extends SpecBase {
   private val phone = "0987654321"
   private val ukAddress = UkAddress("line1", "line2", Some("line3"), Some("line4"), "POSTCODE")
   private val nonUkAddress = NonUkAddress("line1", "line2", Some("line3"), "country")
+  private val email: String = "email@example.com"
 
   "Business Extractor" when {
 
     val extractor = injector.instanceOf[BusinessExtractor]
 
-    "extract answers for personal rep with UTR and UK address" in {
+    "extract answers for personal rep with UTR, UK address and email" in {
 
       val personalRep = BusinessPersonalRep(
         name = name,
         phoneNumber = phone,
         utr = Some(utr),
-        address = ukAddress
+        address = ukAddress,
+        email = Some(email)
       )
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
@@ -52,6 +54,8 @@ class BusinessExtractorSpec extends SpecBase {
       result.get(AddressUkYesNoPage).get mustBe true
       result.get(UkAddressPage).get mustBe ukAddress
       result.get(NonUkAddressPage) mustNot be(defined)
+      result.get(EmailAddressYesNoPage).get mustBe true
+      result.get(EmailAddressPage).get mustBe email
       result.get(TelephoneNumberPage).get mustBe phone
     }
 
@@ -61,7 +65,8 @@ class BusinessExtractorSpec extends SpecBase {
         name = name,
         phoneNumber = phone,
         utr = None,
-        address = nonUkAddress
+        address = nonUkAddress,
+        email = None
       )
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
@@ -73,6 +78,8 @@ class BusinessExtractorSpec extends SpecBase {
       result.get(AddressUkYesNoPage).get mustBe false
       result.get(UkAddressPage) mustNot be(defined)
       result.get(NonUkAddressPage).get mustBe nonUkAddress
+      result.get(EmailAddressYesNoPage).get mustBe false
+      result.get(EmailAddressPage) mustNot be(defined)
       result.get(TelephoneNumberPage).get mustBe phone
     }
   }

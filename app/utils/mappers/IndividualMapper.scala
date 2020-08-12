@@ -35,7 +35,8 @@ class IndividualMapper {
           DateOfBirthPage.path.read[LocalDate] and
           readIdentification and
           readAddress and
-          TelephoneNumberPage.path.read[String]
+          TelephoneNumberPage.path.read[String] and
+          readEmailAddress
       ) (IndividualPersonalRep.apply _)
 
     answers.data.validate[IndividualPersonalRep](readFromUserAnswers) match {
@@ -65,6 +66,13 @@ class IndividualMapper {
     LivesInTheUkYesNoPage.path.read[Boolean].flatMap[Address] {
       case true => UkAddressPage.path.read[UkAddress].widen[Address]
       case false => NonUkAddressPage.path.read[NonUkAddress].widen[Address]
+    }
+  }
+
+  private def readEmailAddress: Reads[Option[String]] = {
+    EmailAddressYesNoPage.path.read[Boolean].flatMap[Option[String]] {
+      case true => EmailAddressPage.path.read[String].map(Some(_))
+      case false => Reads(_ => JsSuccess(None))
     }
   }
 

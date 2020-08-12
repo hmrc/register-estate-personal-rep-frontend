@@ -34,6 +34,7 @@ class IndividualPrintHelperSpec extends SpecBase {
   val date: LocalDate = LocalDate.parse("2019-02-03")
   val passport: Passport = Passport("GB", "12345", date)
   val idCard: IdCard = IdCard("GB", "12345", date)
+  val email: String = "email@example.com"
 
   "Individual print helper" must {
 
@@ -51,6 +52,8 @@ class IndividualPrintHelperSpec extends SpecBase {
       .set(LivesInTheUkYesNoPage, true).success.value
       .set(UkAddressPage, ukAddress).success.value
       .set(NonUkAddressPage, nonUkAddress).success.value
+      .set(EmailAddressYesNoPage, true).success.value
+      .set(EmailAddressPage, email).success.value
       .set(TelephoneNumberPage, "0123456789").success.value
 
     "generate answer section" in {
@@ -70,6 +73,8 @@ class IndividualPrintHelperSpec extends SpecBase {
           AnswerRow(label = Html(messages("individual.livesInTheUkYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = LivesInTheUkYesNoController.onPageLoad(NormalMode).url),
           AnswerRow(label = Html(messages("individual.ukAddress.checkYourAnswersLabel", name.displayName)), answer = Html("value 1<br />value 2<br />AB1 1AB"), changeUrl = UkAddressController.onPageLoad(NormalMode).url),
           AnswerRow(label = Html(messages("individual.nonUkAddress.checkYourAnswersLabel", name.displayName)), answer = Html("value 1<br />value 2<br />Germany"), changeUrl = NonUkAddressController.onPageLoad(NormalMode).url),
+          AnswerRow(label = Html(messages("individual.emailYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = EmailAddressYesNoController.onPageLoad(NormalMode).url),
+          AnswerRow(label = Html(messages("individual.email.checkYourAnswersLabel", name.displayName)), answer = Html("email@example.com"), changeUrl = EmailAddressController.onPageLoad(NormalMode).url),
           AnswerRow(label = Html(messages("individual.telephoneNumber.checkYourAnswersLabel", name.displayName)), answer = Html("0123456789"), changeUrl = TelephoneNumberController.onPageLoad(NormalMode).url)
         )
       )

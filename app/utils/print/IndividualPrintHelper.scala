@@ -53,6 +53,8 @@ class IndividualPrintHelper @Inject()(countryOptions: CountryOptions) {
       converter.yesNoQuestion(LivesInTheUkYesNoPage, "individual.livesInTheUkYesNo", LivesInTheUkYesNoController.onPageLoad(NormalMode).url),
       converter.addressQuestion(UkAddressPage, "individual.ukAddress", UkAddressController.onPageLoad(NormalMode).url),
       converter.addressQuestion(NonUkAddressPage, "individual.nonUkAddress", NonUkAddressController.onPageLoad(NormalMode).url),
+      converter.yesNoQuestion(EmailAddressYesNoPage, "individual.emailYesNo", EmailAddressYesNoController.onPageLoad(NormalMode).url),
+      converter.stringQuestion(EmailAddressPage, "individual.email", EmailAddressController.onPageLoad(NormalMode).url),
       converter.stringQuestion(TelephoneNumberPage, "individual.telephoneNumber", TelephoneNumberController.onPageLoad(NormalMode).url)
     ).flatten
 

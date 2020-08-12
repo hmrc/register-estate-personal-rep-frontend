@@ -41,6 +41,7 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
   val date: LocalDate = LocalDate.parse("2019-02-03")
   val address: UkAddress = UkAddress("Line 1", "Line 2", None, None, "AB1 1AB")
   val phoneNumber: String = "0987654321"
+  val email: String = "email@example.com"
 
   "estate connector" when {
 
@@ -53,7 +54,8 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
         dateOfBirth = date,
         identification = NationalInsuranceNumber("AA000000A"),
         address = address,
-        phoneNumber = phoneNumber
+        phoneNumber = phoneNumber,
+        email = Some(email)
       )
 
       "posting" must {
@@ -128,7 +130,8 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
               |         "country": "GB"
               |      }
               |   },
-              |   "phoneNumber": "0987654321"
+              |   "phoneNumber": "0987654321",
+              |   "email": "email@example.com"
               |}
               |""".stripMargin
 
@@ -200,7 +203,8 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
         name = "Name",
         phoneNumber = phoneNumber,
         utr = Some("1234567890"),
-        address = address
+        address = address,
+        email = Some(email)
       )
 
       "posting" must {
@@ -271,7 +275,8 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
               |         "country": "GB"
               |      }
               |   },
-              |   "phoneNumber": "0987654321"
+              |   "phoneNumber": "0987654321",
+              |   "email": "email@example.com"
               |}
               |""".stripMargin
 

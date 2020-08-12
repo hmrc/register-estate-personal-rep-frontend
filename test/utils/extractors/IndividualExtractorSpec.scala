@@ -36,19 +36,21 @@ class IndividualExtractorSpec extends SpecBase {
   private val nonUkAddress = NonUkAddress("line1", "line2", Some("line3"), country)
   private val passport: Passport = Passport(country, number, date)
   private val idCard: IdCard = IdCard(country, number, date)
+  private val email: String = "email@example.com"
 
   "Individual Extractor" when {
 
     val extractor = injector.instanceOf[IndividualExtractor]
 
-    "extract answers for personal rep with NINO and UK address" in {
+    "extract answers for personal rep with NINO, UK address and email" in {
 
       val personalRep = IndividualPersonalRep(
         name = name,
         dateOfBirth = date,
         identification = NationalInsuranceNumber(nino),
         address = ukAddress,
-        phoneNumber = phone
+        phoneNumber = phone,
+        email = Some(email)
       )
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
@@ -64,6 +66,8 @@ class IndividualExtractorSpec extends SpecBase {
       result.get(LivesInTheUkYesNoPage).get mustBe true
       result.get(UkAddressPage).get mustBe ukAddress
       result.get(NonUkAddressPage) mustNot be(defined)
+      result.get(EmailAddressYesNoPage).get mustBe true
+      result.get(EmailAddressPage).get mustBe email
       result.get(TelephoneNumberPage).get mustBe phone
     }
 
@@ -74,7 +78,8 @@ class IndividualExtractorSpec extends SpecBase {
         dateOfBirth = date,
         identification = passport,
         address = ukAddress,
-        phoneNumber = phone
+        phoneNumber = phone,
+        email = None
       )
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
@@ -90,6 +95,8 @@ class IndividualExtractorSpec extends SpecBase {
       result.get(LivesInTheUkYesNoPage).get mustBe true
       result.get(UkAddressPage).get mustBe ukAddress
       result.get(NonUkAddressPage) mustNot be(defined)
+      result.get(EmailAddressYesNoPage).get mustBe false
+      result.get(EmailAddressPage) mustNot be(defined)
       result.get(TelephoneNumberPage).get mustBe phone
     }
 
@@ -100,7 +107,8 @@ class IndividualExtractorSpec extends SpecBase {
         dateOfBirth = date,
         identification = idCard,
         address = nonUkAddress,
-        phoneNumber = phone
+        phoneNumber = phone,
+        email = None
       )
 
       val result = extractor(personalRep, emptyUserAnswers).success.value
@@ -116,6 +124,8 @@ class IndividualExtractorSpec extends SpecBase {
       result.get(LivesInTheUkYesNoPage).get mustBe false
       result.get(UkAddressPage) mustNot be(defined)
       result.get(NonUkAddressPage).get mustBe nonUkAddress
+      result.get(EmailAddressYesNoPage).get mustBe false
+      result.get(EmailAddressPage) mustNot be(defined)
       result.get(TelephoneNumberPage).get mustBe phone
     }
   }
