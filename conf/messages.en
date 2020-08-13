@@ -206,7 +206,7 @@ individual.email.checkYourAnswersLabel = What is {0}’s email address?
 individual.email.title = What is the personal representative’s email address?
 individual.email.heading = What is {0}’s email address?
 individual.email.error.required = Enter the personal representative’s email address
-individual.email.invalid = Enter a valid email address with no spaces, like name@example.com
+individual.email.error.invalid = Enter a valid email address with no spaces, like name@example.com
 
 individual.telephoneNumber.checkYourAnswersLabel = What is {0}’s telephone number?
 individual.telephoneNumber.title = What is the personal representative’s telephone number?
@@ -268,11 +268,11 @@ business.email.checkYourAnswersLabel = What is {0}’s email address?
 business.email.title = What is the personal representative’s email address?
 business.email.heading = What is {0}’s email address?
 business.email.error.required = Enter the personal representative’s email address
-business.email.invalid = Enter a valid email address with no spaces, like name@example.com
+business.email.error.invalid = Enter a valid email address with no spaces, like name@example.com
 
 business.telephoneNumber.checkYourAnswersLabel = What is {0}’s telephone number?
 business.telephoneNumber.title = What is the company’s telephone number?
 business.telephoneNumber.heading = What is {0}’s telephone number?
 business.telephoneNumber.hint = For international numbers include the country code
 business.telephoneNumber.error.required = Enter the company’s telephone number
-business.telephoneNumber.error.invalid.characters = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
+business.telephoneNumber.error.invalid = Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192
