@@ -26,7 +26,7 @@ import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Inside}
 import play.api.libs.json.JsSuccess
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
 import utils.WireMockHelper
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -103,7 +103,11 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
 
           val result = connector.addIndividualPersonalRep(personalRep)
 
-          result.map(response => response.status mustBe BAD_REQUEST)
+          whenReady(result.failed) {
+            case UpstreamErrorResponse.Upstream4xxResponse(upstream) =>
+              upstream.statusCode mustBe BAD_REQUEST
+            case _ => fail()
+          }
 
           application.stop()
         }
