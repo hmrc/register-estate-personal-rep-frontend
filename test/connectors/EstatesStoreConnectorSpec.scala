@@ -91,6 +91,7 @@ class EstatesStoreConnectorSpec extends SpecBase
       whenReady(futureResult.failed) {
         case UpstreamErrorResponse.Upstream5xxResponse(upstream) =>
           upstream.statusCode mustBe 500
+        case _ => fail()
       }
 
       application.stop()

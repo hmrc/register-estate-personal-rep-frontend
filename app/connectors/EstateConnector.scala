@@ -20,13 +20,17 @@ import config.FrontendAppConfig
 import javax.inject.Inject
 import models.{BusinessPersonalRep, IndividualPersonalRep}
 import play.api.libs.json.{JsValue, Json}
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.http.HttpReads.Implicits
+import uk.gov.hmrc.http.HttpReads.Implicits.{throwOnFailure, readEitherOf}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
-import uk.gov.hmrc.http.HttpReads.Implicits._
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class EstateConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
+
+  implicit def httpResponse: HttpReads[HttpResponse] =
+    throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
 
   private val individualPersonalRepUrl: String = s"${config.estatesUrl}/estates/personal-rep/individual"
 
