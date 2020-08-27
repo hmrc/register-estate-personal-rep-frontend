@@ -81,6 +81,15 @@
 @footerTop = {}
 @footerLinks = {}
 
+@banner = {
+    @betaBanner(
+        userLoggedIn = true,
+        betaFeedbackUrl = appConfig.betaFeedbackUrl,
+        betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
+        showFeedbackLinkInBetaBanner = true
+    )
+}
+
 @serviceInfoBlock = {
     @serviceInfo(
       betaBanner = HtmlFormat.empty,
