@@ -48,7 +48,7 @@ class IndividualOrBusinessControllerSpec extends SpecBase {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form, NormalMode)(fakeRequest, messages).toString
+        view(form, NormalMode)(request, messages).toString
 
       application.stop()
     }
@@ -68,7 +68,7 @@ class IndividualOrBusinessControllerSpec extends SpecBase {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form.fill(IndividualOrBusiness.values.head), NormalMode)(fakeRequest, messages).toString
+        view(form.fill(IndividualOrBusiness.values.head), NormalMode)(request, messages).toString
 
       application.stop()
     }
@@ -108,7 +108,7 @@ class IndividualOrBusinessControllerSpec extends SpecBase {
       status(result) mustEqual BAD_REQUEST
 
       contentAsString(result) mustEqual
-        view(boundForm, NormalMode)(fakeRequest, messages).toString
+        view(boundForm, NormalMode)(request, messages).toString
 
       application.stop()
     }
