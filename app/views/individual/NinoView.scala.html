@@ -26,7 +26,7 @@
 @(form: Form[_], mode: Mode, trusteeName: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = s"${errorPrefix(form)} ${messages("individual.nino.title")}"
+    title = s"${errorPrefix(form)}${messages("individual.nino.title")}"
 ) {
 
     @formHelper(action = NinoController.onSubmit(mode), 'autoComplete -> "off") {
