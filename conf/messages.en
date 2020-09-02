@@ -41,6 +41,7 @@ site.yes = Yes
 site.continue = Continue
 site.returnToRegistrationProgress = Return to registration progress
 site.service_name = Register and Maintain an Estate
+site.service_section = Personal representative
 site.textarea.char_limit = (Limit is {0} characters)
 site.sign_out = Sign out
 site.error = Error:
