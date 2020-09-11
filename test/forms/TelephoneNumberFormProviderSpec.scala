@@ -17,7 +17,6 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
-import org.scalacheck.Arbitrary.arbitrary
 import play.api.data.{Form, FormError}
 import wolfendale.scalacheck.regexp.RegexpGen
 
@@ -25,9 +24,8 @@ class TelephoneNumberFormProviderSpec extends StringFieldBehaviours {
 
   val prefix: String = "individual.telephoneNumber"
   val requiredKey: String = s"$prefix.error.required"
-  val lengthKey: String = s"$prefix.error.length"
   val invalidKey: String = s"$prefix.error.invalid"
-  val maxLength: Int = 100
+  val minLength: Int = 6
 
   val form: Form[String] = new TelephoneNumberFormProvider().withPrefix(prefix)
 
@@ -57,8 +55,15 @@ class TelephoneNumberFormProviderSpec extends StringFieldBehaviours {
       form,
       fieldName,
       regexp = Validation.telephoneRegex,
-      generator = arbitrary[String],
+      generator = stringsLongerThan(minLength),
       error = FormError(fieldName, invalidKey, Seq(Validation.telephoneRegex))
+    )
+
+    behave like fieldWithMinLength(
+      form = form,
+      fieldName = fieldName,
+      minLength = minLength,
+      lengthError = FormError(fieldName, invalidKey, Seq(minLength))
     )
   }
 }
