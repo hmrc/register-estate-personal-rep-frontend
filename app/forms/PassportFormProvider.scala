@@ -50,7 +50,7 @@ class PassportFormProvider @Inject()(appConfig: FrontendAppConfig) extends Mappi
         .verifying(
           firstError(
             maxLength(maxLengthCountyField, s"$prefix.country.error.length"),
-            isNotEmpty("country", s"$prefix.country.error.required")
+            nonEmptyString("country", s"$prefix.country.error.required")
           )
         ),
       "number" -> text(s"$prefix.number.error.required")
@@ -58,7 +58,7 @@ class PassportFormProvider @Inject()(appConfig: FrontendAppConfig) extends Mappi
           firstError(
             maxLength(maxLengthNumberField, s"$prefix.number.error.length"),
             regexp(Validation.passportOrIdCardNumberRegEx, s"$prefix.number.error.invalid"),
-            isNotEmpty("number", s"$prefix.number.error.required")
+            nonEmptyString("number", s"$prefix.number.error.required")
           )
         ),
       "expiryDate" -> localDate(
