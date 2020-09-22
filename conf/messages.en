@@ -215,6 +215,7 @@ individual.email.title = What is the personal representative’s email address?
 individual.email.heading = What is {0}’s email address?
 individual.email.error.required = Enter the personal representative’s email address
 individual.email.error.invalid = Enter a valid email address with no spaces, like name@example.com
+individual.email.error.length = Email address must be 256 characters or less
 
 individual.telephoneNumber.checkYourAnswersLabel = What is {0}’s telephone number?
 individual.telephoneNumber.title = What is the personal representative’s telephone number?
@@ -277,6 +278,7 @@ business.email.title = What is the company’s email address?
 business.email.heading = What is {0}’s email address?
 business.email.error.required = Enter the company’s email address
 business.email.error.invalid = Enter a valid email address with no spaces, like name@example.com
+business.email.error.length = Email address must be 256 characters or less
 
 business.telephoneNumber.checkYourAnswersLabel = What is {0}’s telephone number?
 business.telephoneNumber.title = What is the company’s telephone number?
