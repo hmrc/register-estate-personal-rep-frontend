@@ -21,7 +21,7 @@ import controllers.actions.Actions
 import forms.YesNoFormProvider
 import javax.inject.Inject
 import models.Mode
-import navigation.{BusinessNavigator, Navigator}
+import navigation.Navigator
 import pages.business.UkRegisteredYesNoPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

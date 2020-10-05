@@ -21,7 +21,7 @@ import javax.inject.Inject
 import models.{BusinessPersonalRep, IndividualPersonalRep}
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HttpReads.Implicits
-import uk.gov.hmrc.http.HttpReads.Implicits.{throwOnFailure, readEitherOf}
+import uk.gov.hmrc.http.HttpReads.Implicits.{throwOnFailure, readEitherOf, readFromJson}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
