@@ -17,15 +17,14 @@
 package controllers
 
 import base.SpecBase
-import connectors.{EstateConnector, EstatesStoreConnector}
+import connectors.EstateConnector
 import models.NormalMode
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import play.api.inject.bind
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.HttpResponse
 
 import scala.concurrent.Future
 

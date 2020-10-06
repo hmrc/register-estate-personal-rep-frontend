@@ -84,8 +84,8 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
           .overrides(bind[EstatesStoreConnector].toInstance(mockEstatesStoreConnector))
           .build()
 
-      when(mockEstateConnector.addBusinessPersonalRep(any())(any(), any())).thenReturn(Future.successful(HttpResponse(OK)))
-      when(mockEstatesStoreConnector.setTaskComplete()(any(), any())).thenReturn(Future.successful(HttpResponse(OK)))
+      when(mockEstateConnector.addBusinessPersonalRep(any())(any(), any())).thenReturn(Future.successful(HttpResponse(OK, "")))
+      when(mockEstatesStoreConnector.setTaskComplete()(any(), any())).thenReturn(Future.successful(HttpResponse(OK, "")))
 
       val request = FakeRequest(POST, submitDetailsRoute)
 

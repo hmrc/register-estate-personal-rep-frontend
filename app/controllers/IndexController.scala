@@ -19,7 +19,6 @@ package controllers
 import connectors.EstateConnector
 import controllers.actions.Actions
 import javax.inject.Inject
-import models.requests.OptionalDataRequest
 import models.{BusinessPersonalRep, IndividualPersonalRep, NormalMode, UserAnswers}
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{JsError, JsSuccess, JsValue}
@@ -54,8 +53,7 @@ class IndexController @Inject()(
       }
   }
 
-  private def redirect(ind: JsValue, bus: JsValue, userAnswers: UserAnswers)
-                      (implicit request: OptionalDataRequest[AnyContent]) : Future[Result] = {
+  private def redirect(ind: JsValue, bus: JsValue, userAnswers: UserAnswers): Future[Result] = {
 
     (ind.validate[IndividualPersonalRep], bus.validate[BusinessPersonalRep]) match {
       case (JsSuccess(personalRep, _), JsError(_)) =>
@@ -69,7 +67,7 @@ class IndexController @Inject()(
 
   private def populateIndividualUserAnswers(personalRep: IndividualPersonalRep,
                                             userAnswers: UserAnswers
-                                           )(implicit request: OptionalDataRequest[AnyContent]): Future[Result] = {
+                                           ): Future[Result] = {
 
     for {
       updatedAnswers <- Future.fromTry(individualExtractor(personalRep, userAnswers))
@@ -81,7 +79,7 @@ class IndexController @Inject()(
 
   private def populateBusinessUserAnswers(personalRep: BusinessPersonalRep,
                                           userAnswers: UserAnswers
-                                         )(implicit request: OptionalDataRequest[AnyContent]): Future[Result] = {
+                                         ): Future[Result] = {
 
     for {
       updatedAnswers <- Future.fromTry(businessExtractor(personalRep, userAnswers))
