@@ -20,9 +20,11 @@ import config.FrontendAppConfig
 import connectors.{EstateConnector, EstatesStoreConnector}
 import controllers.actions.Actions
 import javax.inject.Inject
+import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
+import utils.Session
 import utils.mappers.IndividualMapper
 import utils.print.IndividualPrintHelper
 import viewmodels.AnswerSection
@@ -42,6 +44,8 @@ class CheckDetailsController @Inject()(
                                         estatesStoreConnector: EstatesStoreConnector
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
+  private val logger: Logger = Logger(getClass)
+
   def onPageLoad(): Action[AnyContent] = actions.authWithIndividualName {
     implicit request =>
 
@@ -54,6 +58,8 @@ class CheckDetailsController @Inject()(
 
       mapper(request.userAnswers) match {
         case None =>
+          logger.error(s"[Session ID: ${Session.id(hc)}]" +
+            s" unable to build Individual Personal Rep from user answers, cannot continue with submitting transform")
           Future.successful(InternalServerError)
         case Some(personalRep) =>
           for {

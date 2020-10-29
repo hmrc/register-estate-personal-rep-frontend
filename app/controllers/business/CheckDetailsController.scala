@@ -20,6 +20,7 @@ import config.FrontendAppConfig
 import connectors.{EstateConnector, EstatesStoreConnector}
 import controllers.actions.Actions
 import javax.inject.Inject
+import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
@@ -27,6 +28,7 @@ import utils.mappers.BusinessMapper
 import utils.print.BusinessPrintHelper
 import viewmodels.AnswerSection
 import views.html.business.CheckDetailsView
+import utils.Session
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -42,6 +44,8 @@ class CheckDetailsController @Inject()(
                                         view: CheckDetailsView
 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
+  private val logger: Logger = Logger(getClass)
+
   def onPageLoad(): Action[AnyContent] = actions.authWithBusinessName {
     implicit request =>
 
@@ -54,6 +58,9 @@ class CheckDetailsController @Inject()(
 
       mapper(request.userAnswers) match {
         case None =>
+          logger.error(s"[Session ID: ${Session.id(hc)}]" +
+            s" unable to build Business Personal Rep from user answers, cannot continue with submitting transform")
+          Future.successful(InternalServerError)
           Future.successful(InternalServerError)
         case Some(personalRep) =>
           for {
