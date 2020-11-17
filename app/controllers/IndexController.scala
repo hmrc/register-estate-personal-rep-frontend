@@ -20,7 +20,7 @@ import connectors.EstateConnector
 import controllers.actions.Actions
 import javax.inject.Inject
 import models.{BusinessPersonalRep, IndividualPersonalRep, NormalMode, UserAnswers}
-import play.api.Logger
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{JsError, JsSuccess, JsValue}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
@@ -38,9 +38,7 @@ class IndexController @Inject()(
                                  connector: EstateConnector,
                                  individualExtractor: IndividualExtractor,
                                  businessExtractor: BusinessExtractor
-                               )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
-
-  private val logger: Logger = Logger(getClass)
+                               )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with Logging {
 
   def onPageLoad: Action[AnyContent] = actions.authWithSession.async {
     implicit request =>
