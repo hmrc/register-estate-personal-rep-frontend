@@ -34,6 +34,9 @@ import repositories.SessionRepository
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with Mocked with TryValues with ScalaFutures with IntegrationPatience {
 
+  final val ENGLISH = "en"
+  final val WELSH = "cy"
+
   val userAnswersId = "id"
 
   val fakeNavigator = new FakeNavigator()
