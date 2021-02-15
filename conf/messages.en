@@ -27,9 +27,11 @@ index.title = register-estate-personal-rep-frontend
 index.heading = register-estate-personal-rep-frontend
 index.guidance = Welcome to your new frontend. Please see the README file for a guide to getting started.
 
-session_expired.title = For your security, this service has been reset
-session_expired.heading = For your security, this service has been reset
-session_expired.guidance = The details you have given have been deleted because you did not continue the service for 15 minutes.
+# Session expired page
+session_expired.title = For your security, we signed you out
+session_expired.heading = For your security, we signed you out
+session_expired.guidance = This is because you have been inactive on the service for 15 minutes.
+session_expired.guidance.2 = You will need to sign in to continue registering the estate.
 
 site.back = Back
 site.delete = Remove
@@ -44,6 +46,7 @@ site.service_name = Register and Maintain an Estate
 site.service_section = Personal representative
 site.textarea.char_limit = (Limit is {0} characters)
 site.sign_out = Sign out
+site.sign_in = Sign in
 site.error = Error:
 
 #timeout dialog
