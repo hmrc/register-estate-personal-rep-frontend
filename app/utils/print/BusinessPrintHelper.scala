@@ -22,14 +22,13 @@ import models.{NormalMode, UserAnswers}
 import pages.IndividualOrBusinessPage
 import pages.business._
 import play.api.i18n.Messages
-import utils.countryOptions.CountryOptions
 import viewmodels.AnswerSection
 
-class BusinessPrintHelper @Inject()(countryOptions: CountryOptions) {
+class BusinessPrintHelper @Inject()(checkAnswersFormatters: CheckAnswersFormatters) {
 
   def apply(userAnswers: UserAnswers, businessName: String)(implicit messages: Messages): AnswerSection = {
 
-    val converter = AnswerRowConverter(userAnswers, businessName, countryOptions)
+    val converter = AnswerRowConverter(userAnswers, businessName)(checkAnswersFormatters)
 
     val ukRegPrefix = userAnswers.get(UkRegisteredYesNoPage).map(if (_) {"uk"} else {"nonUk"}).getOrElse("uk")
 

@@ -16,22 +16,19 @@
 
 package utils.print
 
-import java.time.LocalDate
-
 import com.google.inject.Inject
 import models.{Address, IdCard, Name, Passport, UserAnswers}
 import pages.QuestionPage
 import play.api.i18n.Messages
 import play.api.libs.json.Reads
 import play.twirl.api.HtmlFormat
-import utils.countryOptions.CountryOptions
-import utils.print.CheckAnswersFormatters._
 import viewmodels.AnswerRow
 
-case class AnswerRowConverter @Inject()(userAnswers: UserAnswers,
-                                        name: String,
-                                        countryOptions: CountryOptions
-                                       )(implicit messages: Messages) {
+import java.time.LocalDate
+
+case class AnswerRowConverter @Inject()(userAnswers: UserAnswers, name: String)
+                                       (checkAnswersFormatters: CheckAnswersFormatters)
+                                       (implicit messages: Messages) {
 
   def nameQuestion(query: QuestionPage[Name],
                    labelKey: String,
@@ -63,7 +60,7 @@ case class AnswerRowConverter @Inject()(userAnswers: UserAnswers,
     userAnswers.get(query) map {x =>
       AnswerRow(
         HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-        yesOrNo(x),
+        checkAnswersFormatters.yesOrNo(x),
         changeUrl
       )
     }
@@ -75,7 +72,7 @@ case class AnswerRowConverter @Inject()(userAnswers: UserAnswers,
     userAnswers.get(query) map {x =>
       AnswerRow(
         HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-        HtmlFormat.escape(x.format(dateFormatter)),
+        HtmlFormat.escape(checkAnswersFormatters.formatDate(x)),
         changeUrl
       )
     }
@@ -87,7 +84,7 @@ case class AnswerRowConverter @Inject()(userAnswers: UserAnswers,
     userAnswers.get(query) map {x =>
       AnswerRow(
         HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-        formatNino(x),
+        checkAnswersFormatters.formatNino(x),
         changeUrl
       )
     }
@@ -100,7 +97,7 @@ case class AnswerRowConverter @Inject()(userAnswers: UserAnswers,
     userAnswers.get(query) map { x =>
       AnswerRow(
         HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-        formatAddress(x, countryOptions),
+        checkAnswersFormatters.formatAddress(x),
         changeUrl
       )
     }
@@ -112,7 +109,7 @@ case class AnswerRowConverter @Inject()(userAnswers: UserAnswers,
     userAnswers.get(query) map {x =>
       AnswerRow(
         HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-        formatPassportDetails(x, countryOptions),
+        checkAnswersFormatters.formatPassportDetails(x),
         changeUrl
       )
     }
@@ -124,7 +121,7 @@ case class AnswerRowConverter @Inject()(userAnswers: UserAnswers,
     userAnswers.get(query) map {x =>
       AnswerRow(
         HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-        formatIdCardDetails(x, countryOptions),
+        checkAnswersFormatters.formatIdCardDetails(x),
         changeUrl
       )
     }
