@@ -22,14 +22,13 @@ import models.{NormalMode, UserAnswers}
 import pages.IndividualOrBusinessPage
 import pages.individual._
 import play.api.i18n.Messages
-import utils.countryOptions.CountryOptions
 import viewmodels.{AnswerRow, AnswerSection}
 
-class IndividualPrintHelper @Inject()(countryOptions: CountryOptions) {
+class IndividualPrintHelper @Inject()(checkAnswersFormatters: CheckAnswersFormatters) {
 
   def apply(userAnswers: UserAnswers, name: String)(implicit messages: Messages): AnswerSection = {
 
-    val converter = AnswerRowConverter(userAnswers, name, countryOptions)
+    val converter = AnswerRowConverter(userAnswers, name)(checkAnswersFormatters)
 
     val rows: Seq[AnswerRow] = Seq(
       converter.enumQuestion(

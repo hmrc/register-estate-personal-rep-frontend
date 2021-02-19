@@ -23,12 +23,11 @@ import models.{Name, NormalMode}
 import pages.IndividualOrBusinessPage
 import pages.individual.PassportOrIdCardPage
 import play.twirl.api.Html
-import utils.countryOptions.CountryOptions
 
 class AnswerRowConverterSpec extends SpecBase {
 
   val name: Name = Name("First", Some("Middle"), "Last")
-  val countryOptions: CountryOptions = injector.instanceOf[CountryOptions]
+  val checkAnswersFormatters: CheckAnswersFormatters = injector.instanceOf[CheckAnswersFormatters]
 
   "Answer row converter" must {
 
@@ -38,7 +37,7 @@ class AnswerRowConverterSpec extends SpecBase {
 
         val userAnswers = emptyUserAnswers.set(IndividualOrBusinessPage, Individual).success.value
 
-        val answerRowConverter = AnswerRowConverter(userAnswers, name.displayName, countryOptions)
+        val answerRowConverter = AnswerRowConverter(userAnswers, name.displayName)(checkAnswersFormatters)
 
         val result = answerRowConverter.enumQuestion(
           IndividualOrBusinessPage,
@@ -54,7 +53,7 @@ class AnswerRowConverterSpec extends SpecBase {
 
         val userAnswers = emptyUserAnswers.set(IndividualOrBusinessPage, Business).success.value
 
-        val answerRowConverter = AnswerRowConverter(userAnswers, name.displayName, countryOptions)
+        val answerRowConverter = AnswerRowConverter(userAnswers, name.displayName)(checkAnswersFormatters)
 
         val result = answerRowConverter.enumQuestion(
           IndividualOrBusinessPage,
@@ -73,7 +72,7 @@ class AnswerRowConverterSpec extends SpecBase {
 
         val userAnswers = emptyUserAnswers.set(PassportOrIdCardPage, Passport).success.value
 
-        val answerRowConverter = AnswerRowConverter(userAnswers, name.displayName, countryOptions)
+        val answerRowConverter = AnswerRowConverter(userAnswers, name.displayName)(checkAnswersFormatters)
 
         val result = answerRowConverter.enumQuestion(
           PassportOrIdCardPage,
@@ -89,7 +88,7 @@ class AnswerRowConverterSpec extends SpecBase {
 
         val userAnswers = emptyUserAnswers.set(PassportOrIdCardPage, IdCard).success.value
 
-        val answerRowConverter = AnswerRowConverter(userAnswers, name.displayName, countryOptions)
+        val answerRowConverter = AnswerRowConverter(userAnswers, name.displayName)(checkAnswersFormatters)
 
         val result = answerRowConverter.enumQuestion(
           PassportOrIdCardPage,
