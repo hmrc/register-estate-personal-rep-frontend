@@ -74,9 +74,4 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   private val maxYear: Int = configuration.get[Int]("dates.maximum.year")
   lazy val maxDate: LocalDate = LocalDate.of(maxYear, maxMonth, maxDay)
 
-  private lazy val accessibilityLinkBaseUrl = configuration.get[String]("urls.accessibility")
-  def accessibilityLinkUrl(implicit request: Request[_]): String = {
-    val userAction = URLEncoder.encode(new URI(request.uri).getPath, "UTF-8")
-    s"$accessibilityLinkBaseUrl?userAction=$userAction"
-  }
 }
