@@ -16,37 +16,41 @@
 
 @import controllers.business.routes._
 @import config.FrontendAppConfig
+@import views.html.components.{ErrorSummary, SubmitButton, InputText}
 
 @this(
-        main_template: MainTemplate,
+        mainTemplate: MainTemplate,
         formHelper: FormWithCSRF,
+        errorSummary: ErrorSummary,
+        submitButton: SubmitButton,
+        inputText: InputText,
         appConfig: FrontendAppConfig
 )
 
 @(form: Form[_], name: String, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = s"${errorPrefix(form)}${messages("business.utr.title")}"
+@mainTemplate(
+    title = s"${errorPrefix(form)}${messages("business.utr.title")}",
+    showBackLink = true
 ) {
 
     @formHelper(action = UtrController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
-
-        @components.input_text(
+        @inputText(
             field = form("value"),
             label = messages("business.utr.heading", name),
-            headingIsLabel = true,
-            hint = Some(messages("business.utr.hint")),
-            labelClass=Some("heading-large"),
-            inputMode = Some("numeric")
+            labelAsHeading = true,
+            labelClass = Some("govuk-label--l"),
+            inputClass = Some("govuk-input--width-10"),
+            inputMode = Some("numeric"),
+            hint = Some(messages("business.utr.hint"))
         )
 
         <p>@messages("business.utr.p1") <a target="_blank" href="https://www.gov.uk/find-lost-utr-number">@messages("business.utr.link")</a>.</p>
 
-        @components.submit_button()
+        @submitButton()
 
         <p><a href="@appConfig.registerEstateHubOverview">@messages("site.returnToRegistrationProgress")</a></p>
     }
