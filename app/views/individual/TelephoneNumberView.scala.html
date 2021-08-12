@@ -16,34 +16,39 @@
 
 @import controllers.individual.routes._
 @import config.FrontendAppConfig
+@import views.html.components.{ErrorSummary, InputText, SubmitButton}
 
 @this(
-    main_template: MainTemplate,
+    mainTemplate: MainTemplate,
     formHelper: FormWithCSRF,
+    errorSummary: ErrorSummary,
+    inputText: InputText,
+    submitButton: SubmitButton,
     appConfig: FrontendAppConfig
 )
 
 @(form: Form[_], mode: Mode, name: String)(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = s"${errorPrefix(form)}${messages("individual.telephoneNumber.title")}"
+@mainTemplate(
+    title = s"${errorPrefix(form)}${messages("individual.telephoneNumber.title")}",
+    showBackLink = true
     ) {
 
     @formHelper(action = TelephoneNumberController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
-
-        @components.input_tele(
+        @inputText(
             field = form("value"),
             label = messages("individual.telephoneNumber.heading", name),
-            labelClass = Some("heading-large"),
+            labelClass = Some("govuk-label--l"),
             labelAsHeading = true,
-            hint = Some(messages("individual.telephoneNumber.hint"))
+            hint = Some(messages("individual.telephoneNumber.hint")),
+            inputType = Some("tel"),
+            autocomplete = Some("tel"),
         )
 
-        @components.submit_button()
+        @submitButton()
 
         <p><a href="@appConfig.registerEstateHubOverview">@messages("site.returnToRegistrationProgress")</a></p>
     }
