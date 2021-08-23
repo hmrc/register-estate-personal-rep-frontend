@@ -16,13 +16,13 @@
 
 @import controllers.business.routes._
 @import config.FrontendAppConfig
-@import views.html.components.{ErrorSummary, InputText, SubmitButton}
+@import views.html.components.{ErrorSummary, InputTelephone, SubmitButton}
 
 @this(
         mainTemplate: MainTemplate,
         formHelper: FormWithCSRF,
         errorSummary: ErrorSummary,
-        inputText: InputText,
+        inputTelephone: InputTelephone,
         submitButton: SubmitButton,
         appConfig: FrontendAppConfig
 )
@@ -38,14 +38,12 @@
 
         @errorSummary(form.errors)
 
-        @inputText(
+        @inputTelephone(
             field = form("value"),
             label = messages("business.telephoneNumber.heading", name),
             labelClass = Some("govuk-label--l"),
             labelAsHeading = true,
-            hint = Some(messages("business.telephoneNumber.hint")),
-            inputType = Some("tel"),
-            autocomplete = Some("tel"),
+            hint = Some(messages("business.telephoneNumber.hint"))
         )
 
         @submitButton()
