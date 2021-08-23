@@ -14,15 +14,13 @@
  * limitations under the License.
  *@
 
-@import config.FrontendAppConfig
 @import views.html.components.{Heading, SubmitButton}
 
 @this(
     mainTemplate: MainTemplate,
     formHelper: FormWithCSRF,
     submitButton: SubmitButton,
-    heading: Heading,
-    appConfig: FrontendAppConfig,
+    heading: Heading
 )
 
 @()(implicit request: Request[_], messages: Messages)
