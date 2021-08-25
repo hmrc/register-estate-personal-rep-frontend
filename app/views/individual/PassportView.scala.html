@@ -46,6 +46,7 @@
 
         @select(field = form("country"),
             label = messages("individual.passport.country"),
+            labelClasses = Set(""),
             options = countryOptions,
             placeholder = Some(messages("individual.passport.country.select")),
             formGroupClasses = Set("autocomplete-wrapper"),
@@ -61,6 +62,7 @@
         @inputDate(
             field = form("expiryDate"),
             legend = messages("individual.passport.expiryDate"),
+            legendClass = "",
             hint = Some(messages("individual.passport.expiryDate.hint")),
             legendAsHeading = false
         )
