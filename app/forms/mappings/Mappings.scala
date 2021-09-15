@@ -17,11 +17,9 @@
 package forms.mappings
 
 import java.time.LocalDate
-
 import play.api.data.FieldMapping
 import play.api.data.Forms.of
 import models.Enumerable
-
 trait Mappings extends Formatters with Constraints {
 
   protected def nino(errorKey: String = "error.required"): FieldMapping[String] =
@@ -55,4 +53,8 @@ trait Mappings extends Formatters with Constraints {
                            requiredKey: String,
                            args: Seq[String] = Seq.empty): FieldMapping[LocalDate] =
     of(new LocalDateFormatter(invalidKey, allRequiredKey, twoRequiredKey, requiredKey, args))
+
+  protected def utr(requiredKey: String, invalidKey: String, lengthKey: String): FieldMapping[String] =
+    of(utrFormatter(requiredKey, invalidKey, lengthKey))
+
 }
