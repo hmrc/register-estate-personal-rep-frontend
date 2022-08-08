@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
     SbtDistributablesPlugin.publishingSettings,
     inConfig(Test)(testSettings),
     majorVersion := 0,
-    scalaVersion := "2.12.12",
+    scalaVersion := "2.12.15",
     SilencerSettings(),
     name := appName,
     RoutesKeys.routesImport += "models._",
