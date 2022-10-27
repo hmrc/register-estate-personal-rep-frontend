@@ -20,7 +20,6 @@ import com.google.inject.AbstractModule
 import config.annotations._
 import controllers.actions._
 import navigation.{BusinessNavigator, IndividualNavigator, Navigator}
-import repositories.{DefaultSessionRepository, SessionRepository}
 
 class Module extends AbstractModule {
 
@@ -31,8 +30,6 @@ class Module extends AbstractModule {
 
     // For session based storage instead of cred based, change to SessionIdentifierAction
     bind(classOf[IdentifierAction]).to(classOf[AuthenticatedIdentifierAction]).asEagerSingleton()
-
-    bind(classOf[SessionRepository]).to(classOf[DefaultSessionRepository]).asEagerSingleton()
 
     bind(classOf[Navigator]).annotatedWith(classOf[Individual]).to(classOf[IndividualNavigator]).asEagerSingleton()
     bind(classOf[Navigator]).annotatedWith(classOf[Business]).to(classOf[BusinessNavigator]).asEagerSingleton()

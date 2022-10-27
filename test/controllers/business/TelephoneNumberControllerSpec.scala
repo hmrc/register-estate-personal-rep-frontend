@@ -21,9 +21,8 @@ import config.annotations.Business
 import forms.TelephoneNumberFormProvider
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
-import org.mockito.Matchers._
-import org.mockito.Mockito._
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.ArgumentMatchers._
+import org.mockito.MockitoSugar
 import pages.business.{CompanyNamePage, TelephoneNumberPage}
 import play.api.inject.bind
 import play.api.mvc.Call

@@ -16,12 +16,11 @@
 
 package models
 
-import java.time.LocalDateTime
-
 import pages._
 import play.api.libs.json._
 import queries.Gettable
 
+import java.time.LocalDateTime
 import scala.util.{Failure, Success, Try}
 
 final case class UserAnswers(
@@ -81,6 +80,8 @@ final case class UserAnswers(
 }
 
 object UserAnswers {
+
+  val format: Format[UserAnswers] = Format(reads, writes)
 
   implicit lazy val reads: Reads[UserAnswers] = {
 
