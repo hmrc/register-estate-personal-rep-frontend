@@ -71,4 +71,7 @@ class FrontendAppConfig @Inject() (configuration: Configuration,
   private val maxYear: Int = configuration.get[Int]("dates.maximum.year")
   lazy val maxDate: LocalDate = LocalDate.of(maxYear, maxMonth, maxDay)
 
+  lazy val cachettlSessionInSeconds: Long = configuration.get[Int]("mongodb.timeToLiveInSeconds")
+  lazy val dropIndexes: Boolean = configuration.getOptional[Boolean]("microservice.services.features.mongo.dropIndexes").getOrElse(false)
+
 }

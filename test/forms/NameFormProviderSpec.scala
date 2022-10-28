@@ -127,5 +127,4 @@ class NameFormProviderSpec extends StringFieldBehaviours {
         requiredError = FormError(fieldName, requiredKey, Seq(fieldName))
       )
     }
-
-  }
+}

@@ -19,10 +19,9 @@ package controllers.business
 import base.SpecBase
 import connectors.{EstateConnector, EstatesStoreConnector}
 import models.UkAddress
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
+import org.mockito.ArgumentMatchers.any
+import org.mockito.MockitoSugar
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatestplus.mockito.MockitoSugar
 import pages.business._
 import play.api.inject.bind
 import play.api.test.FakeRequest
