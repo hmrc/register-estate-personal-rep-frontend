@@ -61,15 +61,4 @@ class SessionRepository @Inject()(mongo: MongoComponent,
     collection.replaceOne(selector, newUser, replaceOptions).headOption().map(_.exists(_.wasAcknowledged()))
   }
 
-//  def set(userAnswers: UserAnswers): Future[Boolean] = {
-//
-//    val selector = equal("_id", userAnswers.id)
-//
-//    val modifier = Updates.set("lastUpdated", toBson(LocalDateTime.now))
-//
-//    val updateOptions = new UpdateOptions().upsert(true)
-//
-//    collection.updateOne(selector, modifier, updateOptions).headOption().map(_.exists(_.wasAcknowledged()))
-//  }
-
 }
