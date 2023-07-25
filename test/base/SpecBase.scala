@@ -20,7 +20,7 @@ import config.FrontendAppConfig
 import controllers.actions._
 import models.UserAnswers
 import navigation.FakeNavigator
-import org.scalatest.TryValues
+import org.scalatest.{EitherValues, TryValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
@@ -28,19 +28,25 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
-import play.api.mvc.Call
+import play.api.mvc.{AnyContentAsEmpty, Call}
 import play.api.test.FakeRequest
 import repositories.SessionRepository
 
-trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with Mocked with TryValues with ScalaFutures with IntegrationPatience {
+trait SpecBase extends PlaySpec
+  with GuiceOneAppPerSuite
+  with Mocked
+  with TryValues
+  with ScalaFutures
+  with IntegrationPatience
+  with EitherValues {
 
   val userAnswersId = "id"
 
   val fakeNavigator = new FakeNavigator()
 
-  def emptyUserAnswers = UserAnswers(userAnswersId, Json.obj())
+  def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId, Json.obj())
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
   def injector: Injector = app.injector
 
@@ -48,7 +54,7 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with Mocked with TryVal
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  def fakeRequest = FakeRequest("", "")
+  def fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
 
   implicit def messages: Messages = messagesApi.preferred(fakeRequest)
 

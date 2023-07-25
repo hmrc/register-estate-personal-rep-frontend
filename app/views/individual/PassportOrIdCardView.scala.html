@@ -35,7 +35,7 @@
     showBackLink = true
     ) {
 
-    @formHelper(action = PassportOrIdCardController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = PassportOrIdCardController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors, radioOptions = PassportOrIdCard.options.toSeq)
 
