@@ -34,7 +34,7 @@
     showBackLink = true
 ) {
 
-    @formHelper(action = LivesInTheUkYesNoController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = LivesInTheUkYesNoController.onSubmit(mode), Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors, isYesNo = true)
 

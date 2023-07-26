@@ -34,7 +34,7 @@
     showBackLink = true
 ) {
 
-    @formHelper(action = NonUkCompanyNameController.onSubmit(mode), 'autoComplete -> "on") {
+    @formHelper(action = NonUkCompanyNameController.onSubmit(mode), Symbol("autoComplete") -> "on") {
 
         @errorSummary(form.errors)
 

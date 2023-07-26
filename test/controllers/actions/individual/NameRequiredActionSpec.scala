@@ -51,7 +51,7 @@ class NameRequiredActionSpec extends SpecBase with ScalaFutures {
         )
 
         whenReady(futureResult) { r =>
-          val result = Future.successful(r.left.get)
+          val result = Future.successful(r.left.value)
           status(result) mustEqual SEE_OTHER
           redirectLocation(result).value mustEqual controllers.individual.routes.NameController.onPageLoad(NormalMode).url
         }
@@ -75,7 +75,7 @@ class NameRequiredActionSpec extends SpecBase with ScalaFutures {
         )
 
         whenReady(futureResult) { result =>
-          result.right.get.name mustEqual "John Doe"
+          result.value.name mustEqual "John Doe"
         }
       }
     }
