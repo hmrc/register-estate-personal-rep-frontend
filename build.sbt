@@ -1,11 +1,9 @@
 import play.sbt.routes.RoutesKeys
 import sbt.Def
 import scoverage.ScoverageKeys
-import uk.gov.hmrc.DefaultBuildSettings
-import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
-scalaVersion := "2.13.13"
-majorVersion := 0
+ThisBuild / scalaVersion := "2.13.13"
+ThisBuild / majorVersion := 0
 
 lazy val appName: String = "register-estate-personal-rep-frontend"
 
@@ -13,8 +11,6 @@ lazy val microservice = (project in file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
   .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
   .settings(
-    DefaultBuildSettings.scalaSettings,
-    DefaultBuildSettings.defaultSettings(),
     inConfig(Test)(testSettings),
     name := appName,
     RoutesKeys.routesImport += "models._",
@@ -35,6 +31,7 @@ lazy val microservice = (project in file("."))
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
     scalacOptions ++= Seq(
+      "-feature",
       "-Wconf:cat=unused-imports&src=html/.*:s",
       "-Wconf:cat=unused-imports&src=routes/.*:s",
     ),
