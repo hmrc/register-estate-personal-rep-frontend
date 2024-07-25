@@ -17,15 +17,18 @@
 package connectors
 
 import config.FrontendAppConfig
+
 import javax.inject.Inject
 import models.{BusinessPersonalRep, IndividualPersonalRep}
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HttpReads.Implicits
-import uk.gov.hmrc.http.HttpReads.Implicits.{throwOnFailure, readEitherOf, readFromJson}
-import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, HttpClient}
+import uk.gov.hmrc.http.HttpReads.Implicits.{readEitherOf, throwOnFailure}
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOps}
+
 import scala.concurrent.{ExecutionContext, Future}
 
-class EstateConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
+class EstateConnector @Inject()(http: HttpClientV2, config : FrontendAppConfig) {
 
   implicit def httpResponse: HttpReads[HttpResponse] =
     throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
@@ -33,21 +36,25 @@ class EstateConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
   private val individualPersonalRepUrl: String = s"${config.estatesUrl}/estates/personal-rep/individual"
 
   def addIndividualPersonalRep(personalRep: IndividualPersonalRep)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
-    http.POST[JsValue, HttpResponse](individualPersonalRepUrl, Json.toJson(personalRep))
+    http.post(url"$individualPersonalRepUrl")
+      .withBody(Json.toJson(personalRep))
+      .execute[HttpResponse]
   }
 
   def getIndividualPersonalRep()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] = {
-    http.GET[JsValue](individualPersonalRepUrl)
+    http.get(url"$individualPersonalRepUrl").execute[JsValue]
   }
 
   private val businessPersonalRepUrl = s"${config.estatesUrl}/estates/personal-rep/organisation"
 
   def addBusinessPersonalRep(personalRep: BusinessPersonalRep)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
-    http.POST[JsValue, HttpResponse](businessPersonalRepUrl, Json.toJson(personalRep))
+    http.post(url"$businessPersonalRepUrl")
+      .withBody(Json.toJson(personalRep))
+      .execute[HttpResponse]
   }
 
   def getBusinessPersonalRep()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] = {
-    http.GET[JsValue](businessPersonalRepUrl)
+    http.get(url"$businessPersonalRepUrl").execute[JsValue]
   }
 
 }
