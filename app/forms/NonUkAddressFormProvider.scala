@@ -47,8 +47,7 @@ class NonUkAddressFormProvider @Inject() extends Mappings {
             )
           ),
       "line3" ->
-        optional(Forms.text
-          .transform(trimWhitespace, identity[String])
+        optional(text()
           .verifying(
             firstError(
               maxLength(35, "nonUkAddress.line3.error.length"),
