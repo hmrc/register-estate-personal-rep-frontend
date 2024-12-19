@@ -33,7 +33,6 @@ site.hidden-edit=Newid {0}
 site.no=Na
 site.yes=Iawn
 site.continue=Yn eich blaen
-site.returnToRegistrationProgress=Yn ôl i gynnydd cofrestru
 service.name=Cofrestru Ystâd a’i Chynnal
 site.service_section=Cynrychiolydd personol
 site.textarea.char_limit=(Y terfyn yw {0} o gymeriadau)
