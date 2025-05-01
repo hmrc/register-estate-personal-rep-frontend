@@ -20,8 +20,9 @@ import base.SpecBase
 import connectors.{EstateConnector, EstatesStoreConnector}
 import models.{Name, UkAddress}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatestplus.mockito.MockitoSugar
 import pages.individual._
 import play.api.inject.bind
 import play.api.test.FakeRequest
