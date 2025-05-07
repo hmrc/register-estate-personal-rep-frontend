@@ -41,7 +41,8 @@
         @inputYesNo(
             field = form("value"),
             label = messages("individual.ninoYesNo.heading", name),
-            legendAsHeading = true
+            legendAsHeading = true,
+            hint = Some(messages("individual.ninoYesNo.hint"))
         )
 
         @submitButton()

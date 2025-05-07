@@ -116,6 +116,7 @@ individual.dateOfBirth.error.past=Mae’n rhaid i’r dyddiad geni fod ar ôl 31
 individual.ninoYesNo.checkYourAnswersLabel=A oes gan {0} rif Yswiriant Gwladol?
 individual.ninoYesNo.title=A oes rhif Yswiriant Gwladol gan y cynrychiolydd personol?
 individual.ninoYesNo.heading=A oes gan {0} rif Yswiriant Gwladol?
+individual.ninoYesNo.hint = Mae hwn ar ei gerdyn Yswiriant Gwladol. Er enghraifft, ‘QQ 12 34 56 C’.
 individual.ninoYesNo.error.required=Dewiswch ‘Iawn’ os oes gan y cynrychiolydd personol rif Yswiriant Gwladol
 individual.nino.checkYourAnswersLabel=Beth yw rhif Yswiriant Gwladol {0}?
 individual.nino.title=Beth yw rhif Yswiriant Gwladol y cynrychiolydd personol?

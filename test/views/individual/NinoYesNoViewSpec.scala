@@ -44,5 +44,8 @@ class NinoYesNoViewSpec extends YesNoViewBehaviours {
     behave like yesNoPage(form, applyView, prefix, Some(name.displayName))
 
     behave like pageWithASubmitButton(applyView(form))
+
+    behave like pageWithHint(form, applyView, prefix + ".hint")
+
   }
 }
