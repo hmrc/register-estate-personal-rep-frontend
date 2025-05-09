@@ -20,6 +20,7 @@ import base.SpecBase
 import connectors.EstateConnector
 import models.NormalMode
 import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
