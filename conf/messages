@@ -140,7 +140,7 @@ individual.ninoYesNo.error.required = Select yes if the personal representative 
 individual.nino.checkYourAnswersLabel = What is {0}’s National Insurance number?
 individual.nino.title = What is the personal representative’s National Insurance number?
 individual.nino.heading = What is {0}’s National Insurance number?
-individual.nino.hint = It is on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
+individual.nino.hint = It’s on your National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
 individual.nino.error.required = Enter the personal representative’s National Insurance number
 individual.nino.error.invalidFormat = Enter the personal representative’s National Insurance number in the correct format
 
