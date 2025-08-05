@@ -65,5 +65,3 @@ lazy val testSettings: Seq[Def.Setting[?]] = Seq(
     "-Dconfig.resource=test.application.conf"
   )
 )
-
-addCommandAlias("scalastyleAll", "all scalastyle Test/scalastyle")

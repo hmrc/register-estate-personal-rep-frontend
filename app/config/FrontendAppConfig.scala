@@ -50,7 +50,6 @@ class FrontendAppConfig @Inject() (configuration: Configuration,
 
   lazy val estatesUrl: String = servicesConfig.baseUrl("estates")
   lazy val estatesStoreUrl: String = servicesConfig.baseUrl("estates-store") + "/estates-store"
-    //configuration.get[Service]("microservice.services.estates-store").baseUrl + "/estates-store"
 
   lazy val registerEstateHubOverview: String = configuration.get[String]("urls.registerEstateHubOverview")
 

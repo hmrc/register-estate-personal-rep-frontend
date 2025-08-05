@@ -77,8 +77,8 @@ class MessagesSpec extends SpecBase {
       assertCorrectUseOfQuotesForWelshMessages()
     }
     "have a resolvable message for keys which take args" in {
-      val englishWithArgsMsgKeys = defaultMessages collect { case (key, value) if countArgs(value) > 0 => key }
-      val welshWithArgsMsgKeys = welshMessages collect { case (key, value) if countArgs(value) > 0 => key }
+      val englishWithArgsMsgKeys = defaultMessages collect { case (messageKey, messageValue) if countArgs(messageValue) > 0 => messageKey }
+      val welshWithArgsMsgKeys = welshMessages collect { case (messageKey, messageValue) if countArgs(messageValue) > 0 => messageKey }
       val missingFromEnglish = englishWithArgsMsgKeys.toList diff welshWithArgsMsgKeys.toList
       val missingFromWelsh = welshWithArgsMsgKeys.toList diff englishWithArgsMsgKeys.toList
       missingFromEnglish foreach { key =>
