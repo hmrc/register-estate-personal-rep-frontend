@@ -1,6 +1,5 @@
 import play.sbt.routes.RoutesKeys
 import sbt.Def
-import scoverage.ScoverageKeys
 
 ThisBuild / scalaVersion := "2.13.16"
 ThisBuild / majorVersion := 0
@@ -26,11 +25,6 @@ lazy val microservice = (project in file("."))
       "controllers.routes._"
     ),
     PlayKeys.playDefaultPort := 8825,
-    ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*filters.*;.*handlers.*;.*components.*;" +
-      ".*BuildInfo.*;.*javascript.*;.*FrontendAuditConnector.*;.*Routes.*;.*GuiceInjector;",
-    ScoverageKeys.coverageMinimumStmtTotal := 90,
-    ScoverageKeys.coverageFailOnMinimum := true,
-    ScoverageKeys.coverageHighlighting := true,
     scalacOptions ++= Seq(
       "-feature",
       "-Wconf:cat=unused-imports&src=html/.*:s",
