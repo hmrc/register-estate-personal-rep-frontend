@@ -1,6 +1,5 @@
 import play.sbt.routes.RoutesKeys
 import sbt.Def
-import scoverage.ScoverageKeys
 
 ThisBuild / scalaVersion := "2.13.16"
 ThisBuild / majorVersion := 0
@@ -10,6 +9,7 @@ lazy val appName: String = "register-estate-personal-rep-frontend"
 lazy val microservice = (project in file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
   .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
+  .settings(CodeCoverageSettings())
   .settings(
     inConfig(Test)(testSettings),
     name := appName,
@@ -25,11 +25,6 @@ lazy val microservice = (project in file("."))
       "controllers.routes._"
     ),
     PlayKeys.playDefaultPort := 8825,
-    ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*filters.*;.*handlers.*;.*components.*;" +
-      ".*BuildInfo.*;.*javascript.*;.*FrontendAuditConnector.*;.*Routes.*;.*GuiceInjector;",
-    ScoverageKeys.coverageMinimumStmtTotal := 90,
-    ScoverageKeys.coverageFailOnMinimum := true,
-    ScoverageKeys.coverageHighlighting := true,
     scalacOptions ++= Seq(
       "-feature",
       "-Wconf:cat=unused-imports&src=html/.*:s",
@@ -64,5 +59,3 @@ lazy val testSettings: Seq[Def.Setting[?]] = Seq(
     "-Dconfig.resource=test.application.conf"
   )
 )
-
-addCommandAlias("scalastyleAll", "all scalastyle Test/scalastyle")
