@@ -32,8 +32,8 @@ class PassportFormProviderSpec extends PassportOrIdCardFieldBehaviours with Fake
   ".country" must {
 
     val requiredKey = s"$prefix.country.error.required"
-    val lengthKey = s"$prefix.country.error.length"
-    val maxLength = 100
+    val lengthKey   = s"$prefix.country.error.length"
+    val maxLength   = 100
 
     val fieldName = "country"
 
@@ -60,8 +60,8 @@ class PassportFormProviderSpec extends PassportOrIdCardFieldBehaviours with Fake
   ".number" must {
 
     val requiredKey = s"$prefix.number.error.required"
-    val lengthKey = s"$prefix.number.error.length"
-    val maxLength = 30
+    val lengthKey   = s"$prefix.number.error.length"
+    val maxLength   = 30
 
     val fieldName = "number"
 
@@ -124,4 +124,5 @@ class PassportFormProviderSpec extends PassportOrIdCardFieldBehaviours with Fake
     )
 
   }
+
 }

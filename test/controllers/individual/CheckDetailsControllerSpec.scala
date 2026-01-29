@@ -36,25 +36,41 @@ import scala.concurrent.Future
 
 class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
-  private lazy val checkDetailsRoute = routes.CheckDetailsController.onPageLoad().url
+  private lazy val checkDetailsRoute  = routes.CheckDetailsController.onPageLoad().url
   private lazy val submitDetailsRoute = routes.CheckDetailsController.onSubmit().url
-  private lazy val redirectRoute = "http://localhost:8822/register-an-estate/registration-progress"
+  private lazy val redirectRoute      = "http://localhost:8822/register-an-estate/registration-progress"
 
-  private val name: Name = Name("First", None, "Last")
-  private val dateOfBirth: LocalDate = LocalDate.parse("2010-02-03")
-  private val nino: String = "AA123456A"
-  private val address: UkAddress = UkAddress("Line 1", "Line 2", None, None, "postcode")
-  private val telephoneNumber: String  = "0987654321"
+  private val name: Name              = Name("First", None, "Last")
+  private val dateOfBirth: LocalDate  = LocalDate.parse("2010-02-03")
+  private val nino: String            = "AA123456A"
+  private val address: UkAddress      = UkAddress("Line 1", "Line 2", None, None, "postcode")
+  private val telephoneNumber: String = "0987654321"
 
   private val userAnswers = emptyUserAnswers
-    .set(NamePage, name).success.value
-    .set(DateOfBirthPage, dateOfBirth).success.value
-    .set(NinoYesNoPage, true).success.value
-    .set(NinoPage, nino).success.value
-    .set(LivesInTheUkYesNoPage, true).success.value
-    .set(UkAddressPage, address).success.value
-    .set(EmailAddressYesNoPage, false).success.value
-    .set(TelephoneNumberPage, telephoneNumber).success.value
+    .set(NamePage, name)
+    .success
+    .value
+    .set(DateOfBirthPage, dateOfBirth)
+    .success
+    .value
+    .set(NinoYesNoPage, true)
+    .success
+    .value
+    .set(NinoPage, nino)
+    .success
+    .value
+    .set(LivesInTheUkYesNoPage, true)
+    .success
+    .value
+    .set(UkAddressPage, address)
+    .success
+    .value
+    .set(EmailAddressYesNoPage, false)
+    .success
+    .value
+    .set(TelephoneNumberPage, telephoneNumber)
+    .success
+    .value
 
   "CheckDetails Controller" must {
 
@@ -66,8 +82,8 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
 
       val result = route(application, request).value
 
-      val view = application.injector.instanceOf[CheckDetailsView]
-      val printHelper = application.injector.instanceOf[IndividualPrintHelper]
+      val view          = application.injector.instanceOf[CheckDetailsView]
+      val printHelper   = application.injector.instanceOf[IndividualPrintHelper]
       val answerSection = printHelper(userAnswers, name.displayName)
 
       status(result) mustEqual OK
@@ -78,7 +94,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
 
     "redirect to the hub when submitted" in {
 
-      val mockEstateConnector = mock[EstateConnector]
+      val mockEstateConnector       = mock[EstateConnector]
       val mockEstatesStoreConnector = mock[EstatesStoreConnector]
 
       val application =
@@ -87,8 +103,10 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
           .overrides(bind[EstatesStoreConnector].toInstance(mockEstatesStoreConnector))
           .build()
 
-      when(mockEstateConnector.addIndividualPersonalRep(any())(any(), any())).thenReturn(Future.successful(HttpResponse(OK, "")))
-      when(mockEstatesStoreConnector.setTaskComplete()(any(), any())).thenReturn(Future.successful(HttpResponse(OK, "")))
+      when(mockEstateConnector.addIndividualPersonalRep(any())(any(), any()))
+        .thenReturn(Future.successful(HttpResponse(OK, "")))
+      when(mockEstatesStoreConnector.setTaskComplete()(any(), any()))
+        .thenReturn(Future.successful(HttpResponse(OK, "")))
 
       val request = FakeRequest(POST, submitDetailsRoute)
 
@@ -102,4 +120,5 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
     }
 
   }
+
 }

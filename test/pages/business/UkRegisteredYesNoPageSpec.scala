@@ -19,7 +19,6 @@ package pages.business
 import models.UserAnswers
 import pages.behaviours.PageBehaviours
 
-
 class UkRegisteredYesNoPageSpec extends PageBehaviours {
 
   "UkRegisteredYesNoPage" must {
@@ -39,4 +38,5 @@ class UkRegisteredYesNoPageSpec extends PageBehaviours {
       userAnswers.get.get(UtrPage) mustNot be(defined)
     }
   }
+
 }

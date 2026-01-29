@@ -25,7 +25,7 @@ import views.html.individual.UkAddressView
 
 class UkAddressViewSpec extends UkAddressViewBehaviours {
 
-  val prefix = "individual.ukAddress"
+  val prefix     = "individual.ukAddress"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   override val form: Form[UkAddress] = new UkAddressFormProvider()()
@@ -49,4 +49,5 @@ class UkAddressViewSpec extends UkAddressViewBehaviours {
 
     behave like pageWithASubmitButton(applyView(form))
   }
+
 }

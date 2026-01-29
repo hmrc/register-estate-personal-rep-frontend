@@ -23,30 +23,55 @@ import pages.Page
 import pages.business._
 import play.api.mvc.Call
 
-class BusinessNavigator @Inject()() extends Navigator {
+class BusinessNavigator @Inject() () extends Navigator {
 
   override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = routes(mode)(page)(userAnswers)
 
   private def simpleNavigation(mode: Mode): PartialFunction[Page, Call] = {
-    case UtrPage => rts.AddressUkYesNoController.onPageLoad(mode)
+    case UtrPage                          => rts.AddressUkYesNoController.onPageLoad(mode)
     case UkAddressPage | NonUkAddressPage => rts.EmailAddressYesNoController.onPageLoad(mode)
-    case EmailAddressPage => rts.TelephoneNumberController.onPageLoad(mode)
-    case TelephoneNumberPage => rts.CheckDetailsController.onPageLoad()
+    case EmailAddressPage                 => rts.TelephoneNumberController.onPageLoad(mode)
+    case TelephoneNumberPage              => rts.CheckDetailsController.onPageLoad()
 
   }
 
   private def conditionalNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
-    case UkRegisteredYesNoPage => ua =>
-      yesNoNav(ua, UkRegisteredYesNoPage, rts.UkCompanyNameController.onPageLoad(mode), rts.NonUkCompanyNameController.onPageLoad(mode))
-    case CompanyNamePage => ua =>
-      yesNoNav(ua, UkRegisteredYesNoPage, rts.UtrController.onPageLoad(mode), rts.AddressUkYesNoController.onPageLoad(mode))
-    case AddressUkYesNoPage => ua =>
-      yesNoNav(ua, AddressUkYesNoPage, rts.UkAddressController.onPageLoad(mode), rts.NonUkAddressController.onPageLoad(mode))
-    case EmailAddressYesNoPage => ua =>
-      yesNoNav(ua, EmailAddressYesNoPage, rts.EmailAddressController.onPageLoad(mode), rts.TelephoneNumberController.onPageLoad(mode))
+    case UkRegisteredYesNoPage =>
+      ua =>
+        yesNoNav(
+          ua,
+          UkRegisteredYesNoPage,
+          rts.UkCompanyNameController.onPageLoad(mode),
+          rts.NonUkCompanyNameController.onPageLoad(mode)
+        )
+    case CompanyNamePage       =>
+      ua =>
+        yesNoNav(
+          ua,
+          UkRegisteredYesNoPage,
+          rts.UtrController.onPageLoad(mode),
+          rts.AddressUkYesNoController.onPageLoad(mode)
+        )
+    case AddressUkYesNoPage    =>
+      ua =>
+        yesNoNav(
+          ua,
+          AddressUkYesNoPage,
+          rts.UkAddressController.onPageLoad(mode),
+          rts.NonUkAddressController.onPageLoad(mode)
+        )
+    case EmailAddressYesNoPage =>
+      ua =>
+        yesNoNav(
+          ua,
+          EmailAddressYesNoPage,
+          rts.EmailAddressController.onPageLoad(mode),
+          rts.TelephoneNumberController.onPageLoad(mode)
+        )
   }
 
   private def routes(mode: Mode): PartialFunction[Page, UserAnswers => Call] =
-    simpleNavigation(mode) andThen (c => (_:UserAnswers) => c) orElse
+    simpleNavigation(mode) andThen (c => (_: UserAnswers) => c) orElse
       conditionalNavigation(mode)
+
 }

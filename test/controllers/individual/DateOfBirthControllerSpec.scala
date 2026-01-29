@@ -34,14 +34,16 @@ class DateOfBirthControllerSpec extends SpecBase {
 
   lazy val dateOfBirthRoute: String = routes.DateOfBirthController.onPageLoad(NormalMode).url
 
-  val formProvider = new DateOfBirthFormProvider(frontendAppConfig)
+  val formProvider          = new DateOfBirthFormProvider(frontendAppConfig)
   val form: Form[LocalDate] = formProvider.withPrefix("individual.dateOfBirth")
-  val name: Name = Name("First", None, "Last")
+  val name: Name            = Name("First", None, "Last")
 
   val validAnswer: LocalDate = LocalDate.parse("2019-02-03")
 
   val baseAnswers: UserAnswers = emptyUserAnswers
-    .set(NamePage, name).success.value
+    .set(NamePage, name)
+    .success
+    .value
 
   "DateOfBirth Controller" must {
 
@@ -66,7 +68,9 @@ class DateOfBirthControllerSpec extends SpecBase {
     "populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = baseAnswers
-        .set(DateOfBirthPage, validAnswer).success.value
+        .set(DateOfBirthPage, validAnswer)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -167,4 +171,5 @@ class DateOfBirthControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

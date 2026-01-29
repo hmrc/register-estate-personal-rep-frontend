@@ -86,8 +86,10 @@ class IndexControllerSpec extends SpecBase {
             .overrides(bind[EstateConnector].toInstance(mockEstateConnector))
             .build()
 
-        when(mockEstateConnector.getIndividualPersonalRep()(any(), any())).thenReturn(Future.successful(Json.parse(indJson)))
-        when(mockEstateConnector.getBusinessPersonalRep()(any(), any())).thenReturn(Future.successful(Json.parse(emptyJson)))
+        when(mockEstateConnector.getIndividualPersonalRep()(any(), any()))
+          .thenReturn(Future.successful(Json.parse(indJson)))
+        when(mockEstateConnector.getBusinessPersonalRep()(any(), any()))
+          .thenReturn(Future.successful(Json.parse(emptyJson)))
 
         val request = FakeRequest(GET, routes.IndexController.onPageLoad.url)
 
@@ -110,8 +112,10 @@ class IndexControllerSpec extends SpecBase {
             .overrides(bind[EstateConnector].toInstance(mockEstateConnector))
             .build()
 
-        when(mockEstateConnector.getIndividualPersonalRep()(any(), any())).thenReturn(Future.successful(Json.parse(emptyJson)))
-        when(mockEstateConnector.getBusinessPersonalRep()(any(), any())).thenReturn(Future.successful(Json.parse(orgJson)))
+        when(mockEstateConnector.getIndividualPersonalRep()(any(), any()))
+          .thenReturn(Future.successful(Json.parse(emptyJson)))
+        when(mockEstateConnector.getBusinessPersonalRep()(any(), any()))
+          .thenReturn(Future.successful(Json.parse(orgJson)))
 
         val request = FakeRequest(GET, routes.IndexController.onPageLoad.url)
 
@@ -134,8 +138,10 @@ class IndexControllerSpec extends SpecBase {
             .overrides(bind[EstateConnector].toInstance(mockEstateConnector))
             .build()
 
-        when(mockEstateConnector.getIndividualPersonalRep()(any(), any())).thenReturn(Future.successful(Json.parse(emptyJson)))
-        when(mockEstateConnector.getBusinessPersonalRep()(any(), any())).thenReturn(Future.successful(Json.parse(emptyJson)))
+        when(mockEstateConnector.getIndividualPersonalRep()(any(), any()))
+          .thenReturn(Future.successful(Json.parse(emptyJson)))
+        when(mockEstateConnector.getBusinessPersonalRep()(any(), any()))
+          .thenReturn(Future.successful(Json.parse(emptyJson)))
 
         val request = FakeRequest(GET, routes.IndexController.onPageLoad.url)
 
@@ -143,10 +149,13 @@ class IndexControllerSpec extends SpecBase {
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result) mustBe Some(controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode).url)
+        redirectLocation(result) mustBe Some(
+          controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode).url
+        )
 
         application.stop()
       }
     }
   }
+
 }

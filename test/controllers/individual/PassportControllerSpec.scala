@@ -36,14 +36,16 @@ class PassportControllerSpec extends SpecBase {
 
   lazy val passportRoute: String = routes.PassportController.onPageLoad(NormalMode).url
 
-  val formProvider = new PassportFormProvider(frontendAppConfig)
+  val formProvider         = new PassportFormProvider(frontendAppConfig)
   val form: Form[Passport] = formProvider.withPrefix("individual.passport")
-  val name: Name = Name("First", None, "Last")
+  val name: Name           = Name("First", None, "Last")
 
   val validAnswer: Passport = Passport("country", "number", LocalDate.parse("2019-02-03"))
 
   val baseAnswers: UserAnswers = emptyUserAnswers
-    .set(NamePage, name).success.value
+    .set(NamePage, name)
+    .success
+    .value
 
   val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptions].options
 
@@ -70,7 +72,9 @@ class PassportControllerSpec extends SpecBase {
     "populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = baseAnswers
-        .set(PassportPage, validAnswer).success.value
+        .set(PassportPage, validAnswer)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -100,8 +104,8 @@ class PassportControllerSpec extends SpecBase {
       val request =
         FakeRequest(POST, passportRoute)
           .withFormUrlEncodedBody(
-            "country" -> "country",
-            "number" -> "123456",
+            "country"          -> "country",
+            "number"           -> "123456",
             "expiryDate.day"   -> validAnswer.expirationDate.getDayOfMonth.toString,
             "expiryDate.month" -> validAnswer.expirationDate.getMonthValue.toString,
             "expiryDate.year"  -> validAnswer.expirationDate.getYear.toString
@@ -159,8 +163,8 @@ class PassportControllerSpec extends SpecBase {
       val request =
         FakeRequest(POST, passportRoute)
           .withFormUrlEncodedBody(
-            "country" -> "country",
-            "number" -> "123456",
+            "country"          -> "country",
+            "number"           -> "123456",
             "expiryDate.day"   -> validAnswer.expirationDate.getDayOfMonth.toString,
             "expiryDate.month" -> validAnswer.expirationDate.getMonthValue.toString,
             "expiryDate.year"  -> validAnswer.expirationDate.getYear.toString
@@ -175,4 +179,5 @@ class PassportControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

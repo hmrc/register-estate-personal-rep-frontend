@@ -21,12 +21,14 @@ import java.time.LocalDate
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-case class IndividualPersonalRep(name: Name,
-                                 dateOfBirth: LocalDate,
-                                 identification: IndividualIdentification,
-                                 address: Address,
-                                 phoneNumber: String,
-                                 email: Option[String])
+case class IndividualPersonalRep(
+  name: Name,
+  dateOfBirth: LocalDate,
+  identification: IndividualIdentification,
+  address: Address,
+  phoneNumber: String,
+  email: Option[String]
+)
 
 object IndividualPersonalRep extends PersonalRep {
 
@@ -36,7 +38,7 @@ object IndividualPersonalRep extends PersonalRep {
       __.lazyRead(readAtSubPath[IndividualIdentification](__ \ Symbol("identification"))) and
       __.lazyRead(readAtSubPath[Address](__ \ Symbol("identification") \ Symbol("address"))) and
       (__ \ Symbol("phoneNumber")).read[String] and
-      (__ \ Symbol("email")).readNullable[String]).tupled.map{
+      (__ \ Symbol("email")).readNullable[String]).tupled.map {
 
       case (name, dob, identification, address, phoneNumber, email) =>
         IndividualPersonalRep(name, dob, identification, address, phoneNumber, email)
@@ -48,7 +50,6 @@ object IndividualPersonalRep extends PersonalRep {
       (__ \ Symbol("identification")).write[IndividualIdentification] and
       (__ \ Symbol("identification") \ Symbol("address")).write[Address] and
       (__ \ "phoneNumber").write[String] and
-      (__ \ "email").writeNullable[String]
-      ).apply(unlift(IndividualPersonalRep.unapply))
+      (__ \ "email").writeNullable[String]).apply(unlift(IndividualPersonalRep.unapply))
 
 }

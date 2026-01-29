@@ -32,5 +32,5 @@ class NinoFormProvider @Inject() extends Mappings {
           )
         )
     )
-}
 
+}

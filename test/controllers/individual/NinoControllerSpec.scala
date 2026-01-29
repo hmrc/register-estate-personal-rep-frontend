@@ -32,14 +32,16 @@ class NinoControllerSpec extends SpecBase {
 
   lazy val ninoRoute: String = routes.NinoController.onPageLoad(NormalMode).url
 
-  val formProvider = new NinoFormProvider()
+  val formProvider       = new NinoFormProvider()
   val form: Form[String] = formProvider.withPrefix("individual.nino")
-  val name: Name = Name("First", None, "Last")
+  val name: Name         = Name("First", None, "Last")
 
   val validAnswer: String = "AA000000A"
 
   val baseAnswers: UserAnswers = emptyUserAnswers
-    .set(NamePage, name).success.value
+    .set(NamePage, name)
+    .success
+    .value
 
   "Nino Controller" must {
 
@@ -64,7 +66,9 @@ class NinoControllerSpec extends SpecBase {
     "populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = baseAnswers
-        .set(NinoPage, validAnswer).success.value
+        .set(NinoPage, validAnswer)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -157,4 +161,5 @@ class NinoControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

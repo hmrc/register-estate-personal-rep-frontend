@@ -35,23 +35,37 @@ import scala.concurrent.Future
 
 class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFutures {
 
-  private lazy val checkDetailsRoute = controllers.business.routes.CheckDetailsController.onPageLoad().url
+  private lazy val checkDetailsRoute  = controllers.business.routes.CheckDetailsController.onPageLoad().url
   private lazy val submitDetailsRoute = controllers.business.routes.CheckDetailsController.onSubmit().url
-  private lazy val completedRoute = "http://localhost:8822/register-an-estate/registration-progress"
+  private lazy val completedRoute     = "http://localhost:8822/register-an-estate/registration-progress"
 
-  private val name = "Test"
-  private val utr = "1234567890"
+  private val name        = "Test"
+  private val utr         = "1234567890"
   private val phoneNumber = "0987654321"
-  private val address = UkAddress("line 1", "line 2", None, None, "AB1 1AB")
+  private val address     = UkAddress("line 1", "line 2", None, None, "AB1 1AB")
 
   private val userAnswers = emptyUserAnswers
-    .set(UkRegisteredYesNoPage, true).success.value
-    .set(CompanyNamePage, name).success.value
-    .set(UtrPage, utr).success.value
-    .set(AddressUkYesNoPage, true).success.value
-    .set(UkAddressPage, address).success.value
-    .set(EmailAddressYesNoPage, false).success.value
-    .set(TelephoneNumberPage, phoneNumber).success.value
+    .set(UkRegisteredYesNoPage, true)
+    .success
+    .value
+    .set(CompanyNamePage, name)
+    .success
+    .value
+    .set(UtrPage, utr)
+    .success
+    .value
+    .set(AddressUkYesNoPage, true)
+    .success
+    .value
+    .set(UkAddressPage, address)
+    .success
+    .value
+    .set(EmailAddressYesNoPage, false)
+    .success
+    .value
+    .set(TelephoneNumberPage, phoneNumber)
+    .success
+    .value
 
   "CheckDetails Controller" must {
 
@@ -63,8 +77,8 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
 
       val result = route(application, request).value
 
-      val view = application.injector.instanceOf[CheckDetailsView]
-      val printHelper = application.injector.instanceOf[BusinessPrintHelper]
+      val view          = application.injector.instanceOf[CheckDetailsView]
+      val printHelper   = application.injector.instanceOf[BusinessPrintHelper]
       val answerSection = printHelper(userAnswers, name)
 
       status(result) mustEqual OK
@@ -75,7 +89,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
 
     "redirect to the hub when submitted" in {
 
-      val mockEstateConnector = mock[EstateConnector]
+      val mockEstateConnector       = mock[EstateConnector]
       val mockEstatesStoreConnector = mock[EstatesStoreConnector]
 
       val application =
@@ -84,8 +98,10 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
           .overrides(bind[EstatesStoreConnector].toInstance(mockEstatesStoreConnector))
           .build()
 
-      when(mockEstateConnector.addBusinessPersonalRep(any())(any(), any())).thenReturn(Future.successful(HttpResponse(OK, "")))
-      when(mockEstatesStoreConnector.setTaskComplete()(any(), any())).thenReturn(Future.successful(HttpResponse(OK, "")))
+      when(mockEstateConnector.addBusinessPersonalRep(any())(any(), any()))
+        .thenReturn(Future.successful(HttpResponse(OK, "")))
+      when(mockEstatesStoreConnector.setTaskComplete()(any(), any()))
+        .thenReturn(Future.successful(HttpResponse(OK, "")))
 
       val request = FakeRequest(POST, submitDetailsRoute)
 
@@ -99,4 +115,5 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
     }
 
   }
+
 }

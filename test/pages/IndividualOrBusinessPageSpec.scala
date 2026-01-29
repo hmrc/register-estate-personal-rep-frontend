@@ -76,4 +76,5 @@ class IndividualOrBusinessPageSpec extends PageBehaviours {
       userAnswers.get.get(ind.NonUkAddressPage) mustNot be(defined)
     }
   }
+
 }

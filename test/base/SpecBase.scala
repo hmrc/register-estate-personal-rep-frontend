@@ -32,13 +32,14 @@ import play.api.mvc.{AnyContentAsEmpty, Call}
 import play.api.test.FakeRequest
 import repositories.SessionRepository
 
-trait SpecBase extends PlaySpec
-  with GuiceOneAppPerSuite
-  with Mocked
-  with TryValues
-  with ScalaFutures
-  with IntegrationPatience
-  with EitherValues {
+trait SpecBase
+    extends PlaySpec
+    with GuiceOneAppPerSuite
+    with Mocked
+    with TryValues
+    with ScalaFutures
+    with IntegrationPatience
+    with EitherValues {
 
   val userAnswersId = "id"
 
@@ -66,4 +67,5 @@ trait SpecBase extends PlaySpec
         bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers)),
         bind[SessionRepository].toInstance(sessionRepository)
       )
+
 }

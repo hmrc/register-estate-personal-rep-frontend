@@ -24,7 +24,7 @@ import pages.individual._
 import play.api.i18n.Messages
 import viewmodels.{AnswerRow, AnswerSection}
 
-class IndividualPrintHelper @Inject()(checkAnswersFormatters: CheckAnswersFormatters) {
+class IndividualPrintHelper @Inject() (checkAnswersFormatters: CheckAnswersFormatters) {
 
   def apply(userAnswers: UserAnswers, name: String)(implicit messages: Messages): AnswerSection = {
 
@@ -38,7 +38,11 @@ class IndividualPrintHelper @Inject()(checkAnswersFormatters: CheckAnswersFormat
         "individualOrBusiness"
       ),
       converter.nameQuestion(NamePage, "individual.name", NameController.onPageLoad(NormalMode).url),
-      converter.dateQuestion(DateOfBirthPage, "individual.dateOfBirth", DateOfBirthController.onPageLoad(NormalMode).url),
+      converter.dateQuestion(
+        DateOfBirthPage,
+        "individual.dateOfBirth",
+        DateOfBirthController.onPageLoad(NormalMode).url
+      ),
       converter.yesNoQuestion(NinoYesNoPage, "individual.ninoYesNo", NinoYesNoController.onPageLoad(NormalMode).url),
       converter.ninoQuestion(NinoPage, "individual.nino", NinoController.onPageLoad(NormalMode).url),
       converter.enumQuestion(
@@ -47,14 +51,34 @@ class IndividualPrintHelper @Inject()(checkAnswersFormatters: CheckAnswersFormat
         PassportOrIdCardController.onPageLoad(NormalMode).url,
         "passportOrIdCard"
       ),
-      converter.passportDetailsQuestion(PassportPage, "individual.passport", PassportController.onPageLoad(NormalMode).url),
+      converter.passportDetailsQuestion(
+        PassportPage,
+        "individual.passport",
+        PassportController.onPageLoad(NormalMode).url
+      ),
       converter.idCardDetailsQuestion(IdCardPage, "individual.idCard", IdCardController.onPageLoad(NormalMode).url),
-      converter.yesNoQuestion(LivesInTheUkYesNoPage, "individual.livesInTheUkYesNo", LivesInTheUkYesNoController.onPageLoad(NormalMode).url),
+      converter.yesNoQuestion(
+        LivesInTheUkYesNoPage,
+        "individual.livesInTheUkYesNo",
+        LivesInTheUkYesNoController.onPageLoad(NormalMode).url
+      ),
       converter.addressQuestion(UkAddressPage, "individual.ukAddress", UkAddressController.onPageLoad(NormalMode).url),
-      converter.addressQuestion(NonUkAddressPage, "individual.nonUkAddress", NonUkAddressController.onPageLoad(NormalMode).url),
-      converter.yesNoQuestion(EmailAddressYesNoPage, "individual.emailYesNo", EmailAddressYesNoController.onPageLoad(NormalMode).url),
+      converter.addressQuestion(
+        NonUkAddressPage,
+        "individual.nonUkAddress",
+        NonUkAddressController.onPageLoad(NormalMode).url
+      ),
+      converter.yesNoQuestion(
+        EmailAddressYesNoPage,
+        "individual.emailYesNo",
+        EmailAddressYesNoController.onPageLoad(NormalMode).url
+      ),
       converter.stringQuestion(EmailAddressPage, "individual.email", EmailAddressController.onPageLoad(NormalMode).url),
-      converter.stringQuestion(TelephoneNumberPage, "individual.telephoneNumber", TelephoneNumberController.onPageLoad(NormalMode).url)
+      converter.stringQuestion(
+        TelephoneNumberPage,
+        "individual.telephoneNumber",
+        TelephoneNumberController.onPageLoad(NormalMode).url
+      )
     ).flatten
 
     AnswerSection(

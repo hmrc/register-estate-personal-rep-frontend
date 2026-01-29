@@ -52,4 +52,5 @@ class NameViewSpec extends QuestionViewBehaviours[Name] {
 
     behave like pageWithASubmitButton(applyView(form))
   }
+
 }

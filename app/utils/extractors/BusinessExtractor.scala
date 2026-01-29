@@ -25,45 +25,47 @@ import scala.util.Try
 
 class BusinessExtractor {
 
-  def apply(personalRep: BusinessPersonalRep, userAnswers: UserAnswers): Try[UserAnswers] = {
-    userAnswers.set(IndividualOrBusinessPage, Business)
+  def apply(personalRep: BusinessPersonalRep, userAnswers: UserAnswers): Try[UserAnswers] =
+    userAnswers
+      .set(IndividualOrBusinessPage, Business)
       .flatMap(answers => extractName(personalRep, answers))
       .flatMap(answers => extractAddress(personalRep.address, answers))
       .flatMap(answers => extractEmailAddress(personalRep.email, answers))
       .flatMap(_.set(TelephoneNumberPage, personalRep.phoneNumber))
-  }
 
-  private def extractName(personalRep: BusinessPersonalRep, userAnswers: UserAnswers): Try[UserAnswers] = {
+  private def extractName(personalRep: BusinessPersonalRep, userAnswers: UserAnswers): Try[UserAnswers] =
     personalRep.utr match {
       case Some(utr) =>
-        userAnswers.set(UkRegisteredYesNoPage, true)
-        .flatMap(_.set(CompanyNamePage, personalRep.name))
-        .flatMap(_.set(UtrPage, utr))
-      case None =>
-        userAnswers.set(UkRegisteredYesNoPage, false)
-        .flatMap(_.set(CompanyNamePage, personalRep.name))
+        userAnswers
+          .set(UkRegisteredYesNoPage, true)
+          .flatMap(_.set(CompanyNamePage, personalRep.name))
+          .flatMap(_.set(UtrPage, utr))
+      case None      =>
+        userAnswers
+          .set(UkRegisteredYesNoPage, false)
+          .flatMap(_.set(CompanyNamePage, personalRep.name))
     }
-  }
 
-  private def extractAddress(address: Address, userAnswers: UserAnswers): Try[UserAnswers] = {
+  private def extractAddress(address: Address, userAnswers: UserAnswers): Try[UserAnswers] =
     address match {
-      case ukAddress: UkAddress =>
-        userAnswers.set(AddressUkYesNoPage, true)
+      case ukAddress: UkAddress       =>
+        userAnswers
+          .set(AddressUkYesNoPage, true)
           .flatMap(_.set(UkAddressPage, ukAddress))
       case nonUkAddress: NonUkAddress =>
-        userAnswers.set(AddressUkYesNoPage, false)
+        userAnswers
+          .set(AddressUkYesNoPage, false)
           .flatMap(_.set(NonUkAddressPage, nonUkAddress))
     }
-  }
 
-  private def extractEmailAddress(emailAddress: Option[String], userAnswers: UserAnswers): Try[UserAnswers] = {
+  private def extractEmailAddress(emailAddress: Option[String], userAnswers: UserAnswers): Try[UserAnswers] =
     emailAddress match {
       case Some(email) =>
-        userAnswers.set(EmailAddressYesNoPage, true)
+        userAnswers
+          .set(EmailAddressYesNoPage, true)
           .flatMap(_.set(EmailAddressPage, email))
-      case None =>
+      case None        =>
         userAnswers.set(EmailAddressYesNoPage, false)
     }
-  }
 
 }

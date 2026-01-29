@@ -32,41 +32,39 @@ import utils.Session
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CheckDetailsController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        val appConfig: FrontendAppConfig,
-                                        actions: Actions,
-                                        connector: EstateConnector,
-                                        estatesStoreConnector: EstatesStoreConnector,
-                                        printHelper: BusinessPrintHelper,
-                                        mapper: BusinessMapper,
-                                        view: CheckDetailsView
-)(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with Logging {
+class CheckDetailsController @Inject() (
+  override val messagesApi: MessagesApi,
+  val controllerComponents: MessagesControllerComponents,
+  val appConfig: FrontendAppConfig,
+  actions: Actions,
+  connector: EstateConnector,
+  estatesStoreConnector: EstatesStoreConnector,
+  printHelper: BusinessPrintHelper,
+  mapper: BusinessMapper,
+  view: CheckDetailsView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport with Logging {
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithBusinessName {
-    implicit request =>
-
-      val section: AnswerSection = printHelper(request.userAnswers, request.businessName)
-      Ok(view(Seq(section)))
+  def onPageLoad(): Action[AnyContent] = actions.authWithBusinessName { implicit request =>
+    val section: AnswerSection = printHelper(request.userAnswers, request.businessName)
+    Ok(view(Seq(section)))
   }
 
-  def onSubmit(): Action[AnyContent] = actions.authWithBusinessName.async {
-    implicit request =>
-
-      mapper(request.userAnswers) match {
-        case None =>
-          logger.error(s"[Session ID: ${Session.id(hc)}]" +
-            s" unable to build Business Personal Rep from user answers, cannot continue with submitting transform")
-          Future.successful(InternalServerError)
-          Future.successful(InternalServerError)
-        case Some(personalRep) =>
-          for {
-            _ <- connector.addBusinessPersonalRep(personalRep)
-            _ <- estatesStoreConnector.setTaskComplete()
-          } yield {
-            Redirect(appConfig.registerEstateHubOverview)
-          }
-      }
+  def onSubmit(): Action[AnyContent] = actions.authWithBusinessName.async { implicit request =>
+    mapper(request.userAnswers) match {
+      case None              =>
+        logger.error(
+          s"[Session ID: ${Session.id(hc)}]" +
+            s" unable to build Business Personal Rep from user answers, cannot continue with submitting transform"
+        )
+        Future.successful(InternalServerError)
+        Future.successful(InternalServerError)
+      case Some(personalRep) =>
+        for {
+          _ <- connector.addBusinessPersonalRep(personalRep)
+          _ <- estatesStoreConnector.setTaskComplete()
+        } yield Redirect(appConfig.registerEstateHubOverview)
+    }
   }
+
 }

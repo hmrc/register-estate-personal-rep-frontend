@@ -21,7 +21,7 @@ import models.NormalMode
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.business._
 
-class BusinessNavigatorSpec extends SpecBase with ScalaCheckPropertyChecks  {
+class BusinessNavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
   val navigator = new BusinessNavigator
 
@@ -33,92 +33,117 @@ class BusinessNavigatorSpec extends SpecBase with ScalaCheckPropertyChecks  {
 
       "Uk Registered Yes/No page -> Yes -> Uk Company Name page" in {
         val answers = emptyUserAnswers
-          .set(UkRegisteredYesNoPage, true).success.value
+          .set(UkRegisteredYesNoPage, true)
+          .success
+          .value
 
-        navigator.nextPage(UkRegisteredYesNoPage, mode, answers)
+        navigator
+          .nextPage(UkRegisteredYesNoPage, mode, answers)
           .mustBe(controllers.business.routes.UkCompanyNameController.onPageLoad(mode))
       }
 
       "Uk Registered Yes/No page -> No -> Non Uk Company Name page" in {
         val answers = emptyUserAnswers
-          .set(UkRegisteredYesNoPage, false).success.value
+          .set(UkRegisteredYesNoPage, false)
+          .success
+          .value
 
-        navigator.nextPage(UkRegisteredYesNoPage, mode, answers)
+        navigator
+          .nextPage(UkRegisteredYesNoPage, mode, answers)
           .mustBe(controllers.business.routes.NonUkCompanyNameController.onPageLoad(mode))
       }
 
       "Uk Company Name page -> UTR page" in {
         val answers = emptyUserAnswers
-          .set(UkRegisteredYesNoPage, true).success.value
+          .set(UkRegisteredYesNoPage, true)
+          .success
+          .value
 
-        navigator.nextPage(CompanyNamePage, mode, answers)
+        navigator
+          .nextPage(CompanyNamePage, mode, answers)
           .mustBe(controllers.business.routes.UtrController.onPageLoad(mode))
       }
 
       "Non Uk Company Name page -> Is address in UK page" in {
         val answers = emptyUserAnswers
-          .set(UkRegisteredYesNoPage, false).success.value
+          .set(UkRegisteredYesNoPage, false)
+          .success
+          .value
 
-        navigator.nextPage(CompanyNamePage, mode, answers)
+        navigator
+          .nextPage(CompanyNamePage, mode, answers)
           .mustBe(controllers.business.routes.AddressUkYesNoController.onPageLoad(mode))
       }
 
-      "UTR page -> Is address in UK page" in {
-        navigator.nextPage(UtrPage, mode, emptyUserAnswers)
+      "UTR page -> Is address in UK page" in
+        navigator
+          .nextPage(UtrPage, mode, emptyUserAnswers)
           .mustBe(controllers.business.routes.AddressUkYesNoController.onPageLoad(mode))
-      }
 
       "Is address in UK page -> Yes -> UK address page" in {
         val answers = emptyUserAnswers
-          .set(AddressUkYesNoPage, true).success.value
+          .set(AddressUkYesNoPage, true)
+          .success
+          .value
 
-        navigator.nextPage(AddressUkYesNoPage, mode, answers)
+        navigator
+          .nextPage(AddressUkYesNoPage, mode, answers)
           .mustBe(controllers.business.routes.UkAddressController.onPageLoad(mode))
       }
 
       "Is address in UK page -> No -> Non-UK address page" in {
         val answers = emptyUserAnswers
-          .set(AddressUkYesNoPage, false).success.value
+          .set(AddressUkYesNoPage, false)
+          .success
+          .value
 
-        navigator.nextPage(AddressUkYesNoPage, mode, answers)
+        navigator
+          .nextPage(AddressUkYesNoPage, mode, answers)
           .mustBe(controllers.business.routes.NonUkAddressController.onPageLoad(mode))
       }
 
-      "UK address page -> Email address yes no page" in {
-        navigator.nextPage(UkAddressPage, mode, emptyUserAnswers)
+      "UK address page -> Email address yes no page" in
+        navigator
+          .nextPage(UkAddressPage, mode, emptyUserAnswers)
           .mustBe(controllers.business.routes.EmailAddressYesNoController.onPageLoad(mode))
-      }
 
-      "Non-UK address page -> Email address yes no page" in {
-        navigator.nextPage(NonUkAddressPage, mode, emptyUserAnswers)
+      "Non-UK address page -> Email address yes no page" in
+        navigator
+          .nextPage(NonUkAddressPage, mode, emptyUserAnswers)
           .mustBe(controllers.business.routes.EmailAddressYesNoController.onPageLoad(mode))
-      }
 
       "Email address yes no page -> YES -> Email address page" in {
         val userAnswers = emptyUserAnswers
-          .set(EmailAddressYesNoPage, true).success.value
+          .set(EmailAddressYesNoPage, true)
+          .success
+          .value
 
-        navigator.nextPage(EmailAddressYesNoPage, mode, userAnswers)
+        navigator
+          .nextPage(EmailAddressYesNoPage, mode, userAnswers)
           .mustBe(controllers.business.routes.EmailAddressController.onPageLoad(mode))
       }
 
       "Email address yes no page -> NO -> Telephone number page" in {
         val userAnswers = emptyUserAnswers
-          .set(EmailAddressYesNoPage, false).success.value
+          .set(EmailAddressYesNoPage, false)
+          .success
+          .value
 
-        navigator.nextPage(EmailAddressYesNoPage, mode, userAnswers)
+        navigator
+          .nextPage(EmailAddressYesNoPage, mode, userAnswers)
           .mustBe(controllers.business.routes.TelephoneNumberController.onPageLoad(mode))
       }
 
-      "Email address page -> Telephone number page" in {
-        navigator.nextPage(EmailAddressPage, mode, emptyUserAnswers)
+      "Email address page -> Telephone number page" in
+        navigator
+          .nextPage(EmailAddressPage, mode, emptyUserAnswers)
           .mustBe(controllers.business.routes.TelephoneNumberController.onPageLoad(mode))
-      }
 
-      "Telephone number -> Check details page" in {
-        navigator.nextPage(TelephoneNumberPage, mode, emptyUserAnswers)
+      "Telephone number -> Check details page" in
+        navigator
+          .nextPage(TelephoneNumberPage, mode, emptyUserAnswers)
           .mustBe(controllers.business.routes.CheckDetailsController.onPageLoad())
-      }
     }
   }
+
 }

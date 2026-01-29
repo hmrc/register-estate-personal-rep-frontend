@@ -32,14 +32,16 @@ class PassportOrIdCardControllerSpec extends SpecBase {
 
   lazy val passportOrIdCardRoute: String = routes.PassportOrIdCardController.onPageLoad(NormalMode).url
 
-  val formProvider = new PassportOrIdCardFormProvider()
+  val formProvider                 = new PassportOrIdCardFormProvider()
   val form: Form[PassportOrIdCard] = formProvider.withPrefix("individual.passportOrIdCard")
-  val name: Name = Name("First", None, "Last")
+  val name: Name                   = Name("First", None, "Last")
 
   val validAnswer: PassportOrIdCard = PassportOrIdCard.Passport
 
   val baseAnswers: UserAnswers = emptyUserAnswers
-    .set(NamePage, name).success.value
+    .set(NamePage, name)
+    .success
+    .value
 
   "PassportOrIdCard Controller" must {
 
@@ -64,7 +66,9 @@ class PassportOrIdCardControllerSpec extends SpecBase {
     "populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = baseAnswers
-        .set(PassportOrIdCardPage, validAnswer).success.value
+        .set(PassportOrIdCardPage, validAnswer)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -157,4 +161,5 @@ class PassportOrIdCardControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

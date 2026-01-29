@@ -30,7 +30,7 @@ class IndividualOrBusinessControllerSpec extends SpecBase {
 
   lazy val individualOrBusinessRoute: String = routes.IndividualOrBusinessController.onPageLoad(NormalMode).url
 
-  val formProvider = new IndividualOrBusinessFormProvider()
+  val formProvider                     = new IndividualOrBusinessFormProvider()
   val form: Form[IndividualOrBusiness] = formProvider()
 
   "IndividualOrBusiness Controller" must {
@@ -144,4 +144,5 @@ class IndividualOrBusinessControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

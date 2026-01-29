@@ -25,51 +25,57 @@ import scala.util.Try
 
 class IndividualExtractor {
 
-  def apply(personalRep: IndividualPersonalRep, userAnswers: UserAnswers): Try[UserAnswers] = {
-    userAnswers.set(IndividualOrBusinessPage, Individual)
+  def apply(personalRep: IndividualPersonalRep, userAnswers: UserAnswers): Try[UserAnswers] =
+    userAnswers
+      .set(IndividualOrBusinessPage, Individual)
       .flatMap(_.set(NamePage, personalRep.name))
       .flatMap(_.set(DateOfBirthPage, personalRep.dateOfBirth))
       .flatMap(answers => extractIdentification(personalRep.identification, answers))
       .flatMap(answers => extractAddress(personalRep.address, answers))
       .flatMap(answers => extractEmailAddress(personalRep.email, answers))
       .flatMap(_.set(TelephoneNumberPage, personalRep.phoneNumber))
-  }
 
-  private def extractIdentification(identification: IndividualIdentification, userAnswers: UserAnswers): Try[UserAnswers] = {
+  private def extractIdentification(
+    identification: IndividualIdentification,
+    userAnswers: UserAnswers
+  ): Try[UserAnswers] =
     identification match {
-      case NationalInsuranceNumber(nino) =>
-        userAnswers.set(NinoYesNoPage, true)
+      case NationalInsuranceNumber(nino)                    =>
+        userAnswers
+          .set(NinoYesNoPage, true)
           .flatMap(_.set(NinoPage, nino))
       case Passport(countryOfIssue, number, expirationDate) =>
-        userAnswers.set(NinoYesNoPage, false)
+        userAnswers
+          .set(NinoYesNoPage, false)
           .flatMap(_.set(PassportOrIdCardPage, PassportOrIdCard.Passport))
           .flatMap(_.set(PassportPage, Passport(countryOfIssue, number, expirationDate)))
-      case IdCard(countryOfIssue, number, expirationDate) =>
-        userAnswers.set(NinoYesNoPage, false)
+      case IdCard(countryOfIssue, number, expirationDate)   =>
+        userAnswers
+          .set(NinoYesNoPage, false)
           .flatMap(_.set(PassportOrIdCardPage, PassportOrIdCard.IdCard))
           .flatMap(_.set(IdCardPage, IdCard(countryOfIssue, number, expirationDate)))
     }
-  }
 
-  private def extractAddress(address: Address, userAnswers: UserAnswers): Try[UserAnswers] = {
+  private def extractAddress(address: Address, userAnswers: UserAnswers): Try[UserAnswers] =
     address match {
-      case ukAddress: UkAddress =>
-        userAnswers.set(LivesInTheUkYesNoPage, true)
+      case ukAddress: UkAddress       =>
+        userAnswers
+          .set(LivesInTheUkYesNoPage, true)
           .flatMap(_.set(UkAddressPage, ukAddress))
       case nonUkAddress: NonUkAddress =>
-        userAnswers.set(LivesInTheUkYesNoPage, false)
+        userAnswers
+          .set(LivesInTheUkYesNoPage, false)
           .flatMap(_.set(NonUkAddressPage, nonUkAddress))
     }
-  }
 
-  private def extractEmailAddress(emailAddress: Option[String], userAnswers: UserAnswers): Try[UserAnswers] = {
+  private def extractEmailAddress(emailAddress: Option[String], userAnswers: UserAnswers): Try[UserAnswers] =
     emailAddress match {
       case Some(email) =>
-        userAnswers.set(EmailAddressYesNoPage, true)
+        userAnswers
+          .set(EmailAddressYesNoPage, true)
           .flatMap(_.set(EmailAddressPage, email))
-      case None =>
+      case None        =>
         userAnswers.set(EmailAddressYesNoPage, false)
     }
-  }
 
 }

@@ -25,7 +25,7 @@ import views.html.individual.NinoYesNoView
 
 class NinoYesNoViewSpec extends YesNoViewBehaviours {
 
-  val prefix = "individual.ninoYesNo"
+  val prefix     = "individual.ninoYesNo"
   val name: Name = Name("First", None, "Last")
 
   val form: Form[Boolean] = new YesNoFormProvider().withPrefix(prefix)
@@ -48,4 +48,5 @@ class NinoYesNoViewSpec extends YesNoViewBehaviours {
     behave like pageWithHint(form, applyView, prefix + ".hint")
 
   }
+
 }

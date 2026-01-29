@@ -39,13 +39,15 @@ class UtrControllerSpec extends SpecBase with MockitoSugar {
   override def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new UtrFormProvider()
-  val form = formProvider.withPrefix("business.utr")
-  val name = "Name"
+  val form         = formProvider.withPrefix("business.utr")
+  val name         = "Name"
 
   val validAnswer = "1234567890"
 
   override val emptyUserAnswers = UserAnswers("id")
-    .set(CompanyNamePage, name).success.value
+    .set(CompanyNamePage, name)
+    .success
+    .value
 
   lazy val utrRoute = routes.UtrController.onPageLoad(NormalMode).url
 
@@ -71,7 +73,7 @@ class UtrControllerSpec extends SpecBase with MockitoSugar {
 
     "populate the view correctly on a GET when the question has previously been answered" in {
 
-      val ua = emptyUserAnswers.set(UtrPage, validAnswer)
+      val ua          = emptyUserAnswers.set(UtrPage, validAnswer)
       val application = applicationBuilder(userAnswers = Some(ua.success.value)).build()
 
       val request = FakeRequest(GET, utrRoute)
@@ -167,4 +169,5 @@ class UtrControllerSpec extends SpecBase with MockitoSugar {
       application.stop()
     }
   }
+
 }

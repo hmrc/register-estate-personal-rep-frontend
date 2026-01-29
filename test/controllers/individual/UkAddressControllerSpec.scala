@@ -32,14 +32,16 @@ class UkAddressControllerSpec extends SpecBase {
 
   lazy val ukAddressRoute: String = routes.UkAddressController.onPageLoad(NormalMode).url
 
-  val formProvider = new UkAddressFormProvider()
+  val formProvider          = new UkAddressFormProvider()
   val form: Form[UkAddress] = formProvider()
-  val name: Name = Name("First", None, "Last")
+  val name: Name            = Name("First", None, "Last")
 
   val validAnswer: UkAddress = UkAddress("Line 1", "Line 2", None, None, "AB1 1AB")
 
   val baseAnswers: UserAnswers = emptyUserAnswers
-    .set(NamePage, name).success.value
+    .set(NamePage, name)
+    .success
+    .value
 
   "UkAddress Controller" must {
 
@@ -64,7 +66,9 @@ class UkAddressControllerSpec extends SpecBase {
     "populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = baseAnswers
-        .set(UkAddressPage, validAnswer).success.value
+        .set(UkAddressPage, validAnswer)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -165,4 +169,5 @@ class UkAddressControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

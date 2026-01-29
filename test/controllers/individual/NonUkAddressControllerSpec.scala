@@ -34,15 +34,17 @@ class NonUkAddressControllerSpec extends SpecBase {
 
   lazy val nonUkAddressRoute: String = routes.NonUkAddressController.onPageLoad(NormalMode).url
 
-  val formProvider = new NonUkAddressFormProvider()
+  val formProvider             = new NonUkAddressFormProvider()
   val form: Form[NonUkAddress] = formProvider()
-  val name: Name = Name("First", None, "Last")
+  val name: Name               = Name("First", None, "Last")
 
   val validAnswer: NonUkAddress =
     NonUkAddress("Line 1", "Line 2", None, "country")
 
   val baseAnswers: UserAnswers = emptyUserAnswers
-    .set(NamePage, name).success.value
+    .set(NamePage, name)
+    .success
+    .value
 
   val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptionsNonUK].options
 
@@ -69,7 +71,9 @@ class NonUkAddressControllerSpec extends SpecBase {
     "populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = baseAnswers
-        .set(NonUkAddressPage, validAnswer).success.value
+        .set(NonUkAddressPage, validAnswer)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -170,4 +174,5 @@ class NonUkAddressControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

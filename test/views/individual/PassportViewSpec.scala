@@ -27,7 +27,7 @@ import views.html.individual.PassportView
 
 class PassportViewSpec extends QuestionViewBehaviours[Passport] {
 
-  val prefix = "individual.passport"
+  val prefix     = "individual.passport"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   override val form: Form[Passport] = new PassportFormProvider(frontendAppConfig).withPrefix(prefix)
@@ -58,4 +58,5 @@ class PassportViewSpec extends QuestionViewBehaviours[Passport] {
 
     behave like pageWithASubmitButton(applyView(form))
   }
+
 }

@@ -25,7 +25,7 @@ import views.html.individual.NinoView
 
 class NinoViewSpec extends QuestionViewBehaviours[String] {
 
-  val prefix = "individual.nino"
+  val prefix     = "individual.nino"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   override val form: Form[String] = new NinoFormProvider().withPrefix(prefix)
@@ -41,13 +41,10 @@ class NinoViewSpec extends QuestionViewBehaviours[String] {
 
     behave like pageWithBackLink(applyView(form))
 
-    behave like pageWithTextFields(form, applyView,
-      prefix,
-      Some(name.displayName),
-      "value"
-    )
+    behave like pageWithTextFields(form, applyView, prefix, Some(name.displayName), "value")
 
     behave like pageWithASubmitButton(applyView(form))
 
   }
+
 }
