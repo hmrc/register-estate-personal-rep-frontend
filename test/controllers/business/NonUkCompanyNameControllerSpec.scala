@@ -39,8 +39,8 @@ class NonUkCompanyNameControllerSpec extends SpecBase with MockitoSugar {
   override def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new StringFormProvider()
-  val form = formProvider.withPrefix("business.nonUkCompany.name", 105)
-  val name = "Name"
+  val form         = formProvider.withPrefix("business.nonUkCompany.name", 105)
+  val name         = "Name"
 
   lazy val nameRoute = routes.NonUkCompanyNameController.onPageLoad(NormalMode).url
 
@@ -66,7 +66,7 @@ class NonUkCompanyNameControllerSpec extends SpecBase with MockitoSugar {
 
     "populate the view correctly on a GET when the question has previously been answered" in {
 
-      val ua = emptyUserAnswers.set(CompanyNamePage, name)
+      val ua          = emptyUserAnswers.set(CompanyNamePage, name)
       val application = applicationBuilder(userAnswers = Some(ua.success.value)).build()
 
       val request = FakeRequest(GET, nameRoute)
@@ -162,4 +162,5 @@ class NonUkCompanyNameControllerSpec extends SpecBase with MockitoSugar {
       application.stop()
     }
   }
+
 }

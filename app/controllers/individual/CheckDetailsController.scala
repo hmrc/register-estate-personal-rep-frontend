@@ -32,41 +32,38 @@ import views.html.individual.CheckDetailsView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CheckDetailsController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        actions: Actions,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: CheckDetailsView,
-                                        val appConfig: FrontendAppConfig,
-                                        printHelper: IndividualPrintHelper,
-                                        mapper: IndividualMapper,
-                                        connector: EstateConnector,
-                                        estatesStoreConnector: EstatesStoreConnector
-                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with Logging {
+class CheckDetailsController @Inject() (
+  override val messagesApi: MessagesApi,
+  actions: Actions,
+  val controllerComponents: MessagesControllerComponents,
+  view: CheckDetailsView,
+  val appConfig: FrontendAppConfig,
+  printHelper: IndividualPrintHelper,
+  mapper: IndividualMapper,
+  connector: EstateConnector,
+  estatesStoreConnector: EstatesStoreConnector
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport with Logging {
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithIndividualName {
-    implicit request =>
-
-      val section: AnswerSection = printHelper(request.userAnswers, request.name)
-      Ok(view(Seq(section)))
+  def onPageLoad(): Action[AnyContent] = actions.authWithIndividualName { implicit request =>
+    val section: AnswerSection = printHelper(request.userAnswers, request.name)
+    Ok(view(Seq(section)))
   }
 
-  def onSubmit(): Action[AnyContent] = actions.authWithIndividualName.async {
-    implicit request =>
-
-      mapper(request.userAnswers) match {
-        case None =>
-          logger.error(s"[Session ID: ${Session.id(hc)}]" +
-            s" unable to build Individual Personal Rep from user answers, cannot continue with submitting transform")
-          Future.successful(InternalServerError)
-        case Some(personalRep) =>
-          for {
-            _ <- connector.addIndividualPersonalRep(personalRep)
-            _ <- estatesStoreConnector.setTaskComplete()
-          } yield {
-            Redirect(appConfig.registerEstateHubOverview)
-          }
-      }
+  def onSubmit(): Action[AnyContent] = actions.authWithIndividualName.async { implicit request =>
+    mapper(request.userAnswers) match {
+      case None              =>
+        logger.error(
+          s"[Session ID: ${Session.id(hc)}]" +
+            s" unable to build Individual Personal Rep from user answers, cannot continue with submitting transform"
+        )
+        Future.successful(InternalServerError)
+      case Some(personalRep) =>
+        for {
+          _ <- connector.addIndividualPersonalRep(personalRep)
+          _ <- estatesStoreConnector.setTaskComplete()
+        } yield Redirect(appConfig.registerEstateHubOverview)
+    }
   }
 
 }

@@ -32,40 +32,38 @@ import views.html.individual.NinoView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class NinoController @Inject()(
-                                val controllerComponents: MessagesControllerComponents,
-                                actions: Actions,
-                                formProvider: NinoFormProvider,
-                                view: NinoView,
-                                repository: SessionRepository,
-                                @Individual navigator: Navigator
-                              )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class NinoController @Inject() (
+  val controllerComponents: MessagesControllerComponents,
+  actions: Actions,
+  formProvider: NinoFormProvider,
+  view: NinoView,
+  repository: SessionRepository,
+  @Individual navigator: Navigator
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form: Form[String] = formProvider.withPrefix("individual.nino")
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithIndividualName {
-    implicit request =>
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithIndividualName { implicit request =>
+    val preparedForm = request.userAnswers.get(NinoPage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(NinoPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode, request.name))
+    Ok(view(preparedForm, mode, request.name))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithIndividualName.async {
-    implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, request.name))),
-
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithIndividualName.async { implicit request =>
+    form
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, request.name))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(NinoPage, value))
-            _ <- repository.set(updatedAnswers)
+            _              <- repository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(NinoPage, mode, updatedAnswers))
       )
   }
+
 }

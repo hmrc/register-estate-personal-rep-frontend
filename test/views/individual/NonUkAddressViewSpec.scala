@@ -27,7 +27,7 @@ import views.html.individual.NonUkAddressView
 
 class NonUkAddressViewSpec extends NonUkAddressViewBehaviours {
 
-  val prefix = "individual.nonUkAddress"
+  val prefix     = "individual.nonUkAddress"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   override val form: Form[NonUkAddress] = new NonUkAddressFormProvider()()
@@ -53,4 +53,5 @@ class NonUkAddressViewSpec extends NonUkAddressViewBehaviours {
 
     behave like pageWithASubmitButton(applyView(form))
   }
+
 }

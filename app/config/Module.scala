@@ -34,4 +34,5 @@ class Module extends AbstractModule {
     bind(classOf[Navigator]).annotatedWith(classOf[Individual]).to(classOf[IndividualNavigator]).asEagerSingleton()
     bind(classOf[Navigator]).annotatedWith(classOf[Business]).to(classOf[BusinessNavigator]).asEagerSingleton()
   }
+
 }

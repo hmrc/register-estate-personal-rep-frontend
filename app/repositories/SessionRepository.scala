@@ -28,21 +28,21 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class SessionRepository @Inject()(mongo: MongoComponent,
-                                         config: FrontendAppConfig
-                                        )(implicit val ec: ExecutionContext)
-  extends PlayMongoRepository[UserAnswers] (
-    mongoComponent = mongo,
-    collectionName = "user-answers",
-    domainFormat   = UserAnswers.format,
-    indexes = Seq(
-      IndexModel(
-        Indexes.ascending("lastUpdated"),
-        IndexOptions()
-          .name("user-answers-last-updated-index")
-          .expireAfter(config.cachettlSessionInSeconds, TimeUnit.SECONDS))
-    ), replaceIndexes = config.dropIndexes
-  ){
+class SessionRepository @Inject() (mongo: MongoComponent, config: FrontendAppConfig)(implicit val ec: ExecutionContext)
+    extends PlayMongoRepository[UserAnswers](
+      mongoComponent = mongo,
+      collectionName = "user-answers",
+      domainFormat = UserAnswers.format,
+      indexes = Seq(
+        IndexModel(
+          Indexes.ascending("lastUpdated"),
+          IndexOptions()
+            .name("user-answers-last-updated-index")
+            .expireAfter(config.cachettlSessionInSeconds, TimeUnit.SECONDS)
+        )
+      ),
+      replaceIndexes = config.dropIndexes
+    ) {
 
   def get(id: String): Future[Option[UserAnswers]] = {
     val selector = Filters.equal("_id", id)

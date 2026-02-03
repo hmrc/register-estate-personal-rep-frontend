@@ -39,13 +39,15 @@ class TelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
   override def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new TelephoneNumberFormProvider()
-  val form = formProvider.withPrefix("business.telephoneNumber")
-  val name = "Name"
+  val form         = formProvider.withPrefix("business.telephoneNumber")
+  val name         = "Name"
 
   val validAnswer = "1234567890"
 
   override val emptyUserAnswers = UserAnswers("id")
-    .set(CompanyNamePage, name).success.value
+    .set(CompanyNamePage, name)
+    .success
+    .value
 
   lazy val telephoneNumberRoute = routes.TelephoneNumberController.onPageLoad(NormalMode).url
 
@@ -71,7 +73,7 @@ class TelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
 
     "populate the view correctly on a GET when the question has previously been answered" in {
 
-      val ua = emptyUserAnswers.set(TelephoneNumberPage, validAnswer)
+      val ua          = emptyUserAnswers.set(TelephoneNumberPage, validAnswer)
       val application = applicationBuilder(userAnswers = Some(ua.success.value)).build()
 
       val request = FakeRequest(GET, telephoneNumberRoute)
@@ -167,4 +169,5 @@ class TelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
       application.stop()
     }
   }
+
 }

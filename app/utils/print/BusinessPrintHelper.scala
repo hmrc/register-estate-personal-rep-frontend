@@ -24,20 +24,28 @@ import pages.business._
 import play.api.i18n.Messages
 import viewmodels.AnswerSection
 
-class BusinessPrintHelper @Inject()(checkAnswersFormatters: CheckAnswersFormatters) {
+class BusinessPrintHelper @Inject() (checkAnswersFormatters: CheckAnswersFormatters) {
 
   def apply(userAnswers: UserAnswers, businessName: String)(implicit messages: Messages): AnswerSection = {
 
     val converter = AnswerRowConverter(userAnswers, businessName)(checkAnswersFormatters)
 
-    val ukRegPrefix = userAnswers.get(UkRegisteredYesNoPage).map(if (_) {"uk"} else {"nonUk"}).getOrElse("uk")
+    val ukRegPrefix = userAnswers
+      .get(UkRegisteredYesNoPage)
+      .map(if (_) {
+        "uk"
+      } else { "nonUk" })
+      .getOrElse("uk")
 
-    val companyNameChangeRoute = userAnswers.get(UkRegisteredYesNoPage).map{
-      if (_) {rts.UkCompanyNameController.onPageLoad(NormalMode).url
-      } else {
-        rts.NonUkCompanyNameController.onPageLoad(NormalMode).url
+    val companyNameChangeRoute = userAnswers
+      .get(UkRegisteredYesNoPage)
+      .map {
+        if (_) { rts.UkCompanyNameController.onPageLoad(NormalMode).url }
+        else {
+          rts.NonUkCompanyNameController.onPageLoad(NormalMode).url
+        }
       }
-    }.getOrElse(rts.UkCompanyNameController.onPageLoad(NormalMode).url)
+      .getOrElse(rts.UkCompanyNameController.onPageLoad(NormalMode).url)
 
     AnswerSection(
       None,
@@ -48,16 +56,45 @@ class BusinessPrintHelper @Inject()(checkAnswersFormatters: CheckAnswersFormatte
           controllers.routes.IndividualOrBusinessController.onPageLoad(NormalMode).url,
           "individualOrBusiness"
         ),
-        converter.yesNoQuestion(UkRegisteredYesNoPage, "business.ukRegisteredYesNo", rts.UkRegisteredYesNoController.onPageLoad(NormalMode).url),
+        converter.yesNoQuestion(
+          UkRegisteredYesNoPage,
+          "business.ukRegisteredYesNo",
+          rts.UkRegisteredYesNoController.onPageLoad(NormalMode).url
+        ),
         converter.stringQuestion(CompanyNamePage, s"business.${ukRegPrefix}Company.name", companyNameChangeRoute),
         converter.stringQuestion(UtrPage, "business.utr", rts.UtrController.onPageLoad(NormalMode).url),
-        converter.yesNoQuestion(AddressUkYesNoPage, "business.addressUkYesNo", rts.AddressUkYesNoController.onPageLoad(NormalMode).url),
-        converter.addressQuestion(UkAddressPage, "business.ukAddress", rts.UkAddressController.onPageLoad(NormalMode).url),
-        converter.addressQuestion(NonUkAddressPage, "business.nonUkAddress", rts.NonUkAddressController.onPageLoad(NormalMode).url),
-        converter.yesNoQuestion(EmailAddressYesNoPage, "business.emailYesNo", rts.EmailAddressYesNoController.onPageLoad(NormalMode).url),
-        converter.stringQuestion(EmailAddressPage, "business.email", rts.EmailAddressController.onPageLoad(NormalMode).url),
-        converter.stringQuestion(TelephoneNumberPage, "business.telephoneNumber", rts.TelephoneNumberController.onPageLoad(NormalMode).url)
+        converter.yesNoQuestion(
+          AddressUkYesNoPage,
+          "business.addressUkYesNo",
+          rts.AddressUkYesNoController.onPageLoad(NormalMode).url
+        ),
+        converter.addressQuestion(
+          UkAddressPage,
+          "business.ukAddress",
+          rts.UkAddressController.onPageLoad(NormalMode).url
+        ),
+        converter.addressQuestion(
+          NonUkAddressPage,
+          "business.nonUkAddress",
+          rts.NonUkAddressController.onPageLoad(NormalMode).url
+        ),
+        converter.yesNoQuestion(
+          EmailAddressYesNoPage,
+          "business.emailYesNo",
+          rts.EmailAddressYesNoController.onPageLoad(NormalMode).url
+        ),
+        converter.stringQuestion(
+          EmailAddressPage,
+          "business.email",
+          rts.EmailAddressController.onPageLoad(NormalMode).url
+        ),
+        converter.stringQuestion(
+          TelephoneNumberPage,
+          "business.telephoneNumber",
+          rts.TelephoneNumberController.onPageLoad(NormalMode).url
+        )
       ).flatten
     )
   }
+
 }

@@ -31,17 +31,24 @@ import utils.WireMockHelper
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper with ScalaFutures
-  with Inside with BeforeAndAfterAll with BeforeAndAfterEach with IntegrationPatience {
+class EstateConnectorSpec
+    extends SpecBase
+    with Generators
+    with WireMockHelper
+    with ScalaFutures
+    with Inside
+    with BeforeAndAfterAll
+    with BeforeAndAfterEach
+    with IntegrationPatience {
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
 
-  val utr = "1000000008"
-  val index = 0
-  val description = "description"
-  val date: LocalDate = LocalDate.parse("2019-02-03")
-  val address: UkAddress = UkAddress("Line 1", "Line 2", None, None, "AB1 1AB")
+  val utr                 = "1000000008"
+  val index               = 0
+  val description         = "description"
+  val date: LocalDate     = LocalDate.parse("2019-02-03")
+  val address: UkAddress  = UkAddress("Line 1", "Line 2", None, None, "AB1 1AB")
   val phoneNumber: String = "0987654321"
-  val email: String = "email@example.com"
+  val email: String       = "email@example.com"
 
   "estate connector" when {
 
@@ -66,9 +73,10 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
             .configure(
               Seq(
                 "microservice.services.estates.port" -> server.port(),
-                "auditing.enabled" -> false
+                "auditing.enabled"                   -> false
               ): _*
-            ).build()
+            )
+            .build()
 
           val connector = application.injector.instanceOf[EstateConnector]
 
@@ -90,9 +98,10 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
             .configure(
               Seq(
                 "microservice.services.estates.port" -> server.port(),
-                "auditing.enabled" -> false
+                "auditing.enabled"                   -> false
               ): _*
-            ).build()
+            )
+            .build()
 
           val connector = application.injector.instanceOf[EstateConnector]
 
@@ -106,7 +115,7 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
           whenReady(result.failed) {
             case UpstreamErrorResponse.Upstream4xxResponse(upstream) =>
               upstream.statusCode mustBe BAD_REQUEST
-            case _ => fail()
+            case _                                                   => fail()
           }
 
           application.stop()
@@ -143,9 +152,10 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
             .configure(
               Seq(
                 "microservice.services.estates.port" -> server.port(),
-                "auditing.enabled" -> false
+                "auditing.enabled"                   -> false
               ): _*
-            ).build()
+            )
+            .build()
 
           val connector = application.injector.instanceOf[EstateConnector]
 
@@ -156,10 +166,9 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
 
           val futureValue = connector.getIndividualPersonalRep()
 
-          whenReady(futureValue) {
-            result =>
-              result.validate[IndividualPersonalRep].isSuccess mustBe true
-              result.validate[IndividualPersonalRep] mustEqual JsSuccess(personalRep)
+          whenReady(futureValue) { result =>
+            result.validate[IndividualPersonalRep].isSuccess mustBe true
+            result.validate[IndividualPersonalRep] mustEqual JsSuccess(personalRep)
           }
 
           application.stop()
@@ -176,9 +185,10 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
             .configure(
               Seq(
                 "microservice.services.estates.port" -> server.port(),
-                "auditing.enabled" -> false
+                "auditing.enabled"                   -> false
               ): _*
-            ).build()
+            )
+            .build()
 
           val connector = application.injector.instanceOf[EstateConnector]
 
@@ -189,9 +199,8 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
 
           val futureValue = connector.getIndividualPersonalRep()
 
-          whenReady(futureValue) {
-            result =>
-              result.validate[IndividualPersonalRep].isError mustBe true
+          whenReady(futureValue) { result =>
+            result.validate[IndividualPersonalRep].isError mustBe true
           }
 
           application.stop()
@@ -219,9 +228,10 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
             .configure(
               Seq(
                 "microservice.services.estates.port" -> server.port(),
-                "auditing.enabled" -> false
+                "auditing.enabled"                   -> false
               ): _*
-            ).build()
+            )
+            .build()
 
           val connector = application.injector.instanceOf[EstateConnector]
 
@@ -243,9 +253,10 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
             .configure(
               Seq(
                 "microservice.services.estates.port" -> server.port(),
-                "auditing.enabled" -> false
+                "auditing.enabled"                   -> false
               ): _*
-            ).build()
+            )
+            .build()
 
           val connector = application.injector.instanceOf[EstateConnector]
 
@@ -288,9 +299,10 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
             .configure(
               Seq(
                 "microservice.services.estates.port" -> server.port(),
-                "auditing.enabled" -> false
+                "auditing.enabled"                   -> false
               ): _*
-            ).build()
+            )
+            .build()
 
           val connector = application.injector.instanceOf[EstateConnector]
 
@@ -301,10 +313,9 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
 
           val futureValue = connector.getBusinessPersonalRep()
 
-          whenReady(futureValue) {
-            result =>
-              result.validate[BusinessPersonalRep].isSuccess mustBe true
-              result.validate[BusinessPersonalRep] mustEqual JsSuccess(personalRep)
+          whenReady(futureValue) { result =>
+            result.validate[BusinessPersonalRep].isSuccess mustBe true
+            result.validate[BusinessPersonalRep] mustEqual JsSuccess(personalRep)
           }
 
           application.stop()
@@ -321,9 +332,10 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
             .configure(
               Seq(
                 "microservice.services.estates.port" -> server.port(),
-                "auditing.enabled" -> false
+                "auditing.enabled"                   -> false
               ): _*
-            ).build()
+            )
+            .build()
 
           val connector = application.injector.instanceOf[EstateConnector]
 
@@ -334,9 +346,8 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
 
           val futureValue = connector.getBusinessPersonalRep()
 
-          whenReady(futureValue) {
-            result =>
-              result.validate[BusinessPersonalRep].isError mustBe true
+          whenReady(futureValue) { result =>
+            result.validate[BusinessPersonalRep].isError mustBe true
           }
 
           application.stop()
@@ -344,4 +355,5 @@ class EstateConnectorSpec extends SpecBase with Generators with WireMockHelper w
       }
     }
   }
+
 }

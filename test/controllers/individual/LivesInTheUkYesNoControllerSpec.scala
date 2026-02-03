@@ -32,14 +32,16 @@ class LivesInTheUkYesNoControllerSpec extends SpecBase {
 
   lazy val livesInTheUkYesNoRoute: String = routes.LivesInTheUkYesNoController.onPageLoad(NormalMode).url
 
-  val formProvider = new YesNoFormProvider()
+  val formProvider        = new YesNoFormProvider()
   val form: Form[Boolean] = formProvider.withPrefix("individual.livesInTheUkYesNo")
-  val name: Name = Name("First", None, "Last")
+  val name: Name          = Name("First", None, "Last")
 
   val validAnswer: Boolean = true
 
   val baseAnswers: UserAnswers = emptyUserAnswers
-    .set(NamePage, name).success.value
+    .set(NamePage, name)
+    .success
+    .value
 
   "LivesInTheUkYesNo Controller" must {
 
@@ -64,7 +66,9 @@ class LivesInTheUkYesNoControllerSpec extends SpecBase {
     "populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = baseAnswers
-        .set(LivesInTheUkYesNoPage, validAnswer).success.value
+        .set(LivesInTheUkYesNoPage, validAnswer)
+        .success
+        .value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -157,4 +161,5 @@ class LivesInTheUkYesNoControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

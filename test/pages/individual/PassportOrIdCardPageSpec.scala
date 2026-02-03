@@ -45,4 +45,5 @@ class PassportOrIdCardPageSpec extends PageBehaviours {
       userAnswers.get.get(PassportPage) mustNot be(defined)
     }
   }
+
 }

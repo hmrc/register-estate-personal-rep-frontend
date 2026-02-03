@@ -19,11 +19,13 @@ package models
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-final case class BusinessPersonalRep(name: String,
-                                     phoneNumber: String,
-                                     utr: Option[String],
-                                     address: Address,
-                                     email: Option[String])
+final case class BusinessPersonalRep(
+  name: String,
+  phoneNumber: String,
+  utr: Option[String],
+  address: Address,
+  email: Option[String]
+)
 
 object BusinessPersonalRep extends PersonalRep {
 
@@ -32,10 +34,8 @@ object BusinessPersonalRep extends PersonalRep {
       (__ \ Symbol("phoneNumber")).read[String] and
       __.lazyRead(readNullableAtSubPath[String](__ \ Symbol("identification") \ Symbol("utr"))) and
       __.lazyRead(readAtSubPath[Address](__ \ Symbol("identification") \ Symbol("address"))) and
-      (__ \ Symbol("email")).readNullable[String]).tupled.map {
-
-      case (name, phoneNumber, utr, address, email) =>
-        BusinessPersonalRep(name, phoneNumber, utr, address, email)
+      (__ \ Symbol("email")).readNullable[String]).tupled.map { case (name, phoneNumber, utr, address, email) =>
+      BusinessPersonalRep(name, phoneNumber, utr, address, email)
     }
 
   implicit val writes: Writes[BusinessPersonalRep] =
@@ -43,7 +43,6 @@ object BusinessPersonalRep extends PersonalRep {
       (__ \ Symbol("phoneNumber")).write[String] and
       (__ \ Symbol("identification") \ Symbol("utr")).writeNullable[String] and
       (__ \ Symbol("identification") \ Symbol("address")).write[Address] and
-      (__ \ "email").writeNullable[String]
-      ).apply(unlift(BusinessPersonalRep.unapply))
+      (__ \ "email").writeNullable[String]).apply(unlift(BusinessPersonalRep.unapply))
 
 }

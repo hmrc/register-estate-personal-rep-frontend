@@ -22,18 +22,18 @@ import play.api.data.{Form, FormError}
 
 class PassportOrIdCardFormProviderSpec extends OptionFieldBehaviours {
 
-  val prefix: String = "individual.passportOrIdCard"
+  val prefix: String               = "individual.passportOrIdCard"
   val form: Form[PassportOrIdCard] = new PassportOrIdCardFormProvider().withPrefix(prefix)
 
   ".value" must {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = s"$prefix.error.required"
 
     behave like optionsField[PassportOrIdCard](
       form,
       fieldName,
-      validValues  = PassportOrIdCard.values,
+      validValues = PassportOrIdCard.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 
@@ -43,4 +43,5 @@ class PassportOrIdCardFormProviderSpec extends OptionFieldBehaviours {
       requiredError = FormError(fieldName, requiredKey)
     )
   }
+
 }

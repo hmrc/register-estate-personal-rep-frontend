@@ -23,21 +23,21 @@ import models.IdCard
 import play.api.data.Form
 import play.api.data.Forms._
 
-class IdCardFormProvider @Inject()(appConfig: FrontendAppConfig) extends Mappings {
+class IdCardFormProvider @Inject() (appConfig: FrontendAppConfig) extends Mappings {
 
   val maxLengthCountyField = 100
   val maxLengthNumberField = 30
 
   def withPrefix(prefix: String): Form[IdCard] = Form(
     mapping(
-      "country" -> text(s"$prefix.country.error.required")
+      "country"    -> text(s"$prefix.country.error.required")
         .verifying(
           firstError(
             maxLength(maxLengthCountyField, s"$prefix.country.error.length"),
             nonEmptyString("country", s"$prefix.country.error.required")
           )
         ),
-      "number" -> text(s"$prefix.number.error.required")
+      "number"     -> text(s"$prefix.number.error.required")
         .verifying(
           firstError(
             maxLength(maxLengthNumberField, s"$prefix.number.error.length"),
@@ -55,14 +55,21 @@ class IdCardFormProvider @Inject()(appConfig: FrontendAppConfig) extends Mapping
           firstError(
             maxDate(
               appConfig.maxDate,
-              s"$prefix.expiryDate.error.future", "day", "month", "year"
+              s"$prefix.expiryDate.error.future",
+              "day",
+              "month",
+              "year"
             ),
             minDate(
               appConfig.minDate,
-              s"$prefix.expiryDate.error.past", "day", "month", "year"
+              s"$prefix.expiryDate.error.past",
+              "day",
+              "month",
+              "year"
             )
           )
         )
     )(IdCard.apply)(IdCard.unapply)
   )
+
 }

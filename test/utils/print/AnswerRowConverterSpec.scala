@@ -26,7 +26,7 @@ import play.twirl.api.Html
 
 class AnswerRowConverterSpec extends SpecBase {
 
-  val name: Name = Name("First", Some("Middle"), "Last")
+  val name: Name                                     = Name("First", Some("Middle"), "Last")
   val checkAnswersFormatters: CheckAnswersFormatters = injector.instanceOf[CheckAnswersFormatters]
 
   "Answer row converter" must {
@@ -101,4 +101,5 @@ class AnswerRowConverterSpec extends SpecBase {
       }
     }
   }
+
 }

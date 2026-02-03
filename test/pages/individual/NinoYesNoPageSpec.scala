@@ -55,4 +55,5 @@ class NinoYesNoPageSpec extends PageBehaviours {
       userAnswers.get.get(NinoPage) mustNot be(defined)
     }
   }
+
 }

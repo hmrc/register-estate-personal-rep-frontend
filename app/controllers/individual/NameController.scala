@@ -32,40 +32,38 @@ import views.html.individual.NameView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class NameController @Inject()(
-                                val controllerComponents: MessagesControllerComponents,
-                                actions: Actions,
-                                formProvider: NameFormProvider,
-                                view: NameView,
-                                repository: SessionRepository,
-                                @Individual navigator: Navigator
-                              )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class NameController @Inject() (
+  val controllerComponents: MessagesControllerComponents,
+  actions: Actions,
+  formProvider: NameFormProvider,
+  view: NameView,
+  repository: SessionRepository,
+  @Individual navigator: Navigator
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form: Form[Name] = formProvider.withPrefix("individual.name")
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData {
-    implicit request =>
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData { implicit request =>
+    val preparedForm = request.userAnswers.get(NamePage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(NamePage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+    Ok(view(preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.async {
-    implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.async { implicit request =>
+    form
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(NamePage, value))
-            _ <- repository.set(updatedAnswers)
+            _              <- repository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(NamePage, mode, updatedAnswers))
       )
   }
+
 }

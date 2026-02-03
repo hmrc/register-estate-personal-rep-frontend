@@ -22,7 +22,7 @@ import forms.StringFormProvider
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.business.{CompanyNamePage}
+import pages.business.CompanyNamePage
 import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -32,39 +32,38 @@ import views.html.business.NonUkCompanyNameView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class NonUkCompanyNameController @Inject()(
-                                         val controllerComponents: MessagesControllerComponents,
-                                         @Business navigator: Navigator,
-                                         actions: Actions,
-                                         formProvider: StringFormProvider,
-                                         sessionRepository: SessionRepository,
-                                         view: NonUkCompanyNameView
-                              )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class NonUkCompanyNameController @Inject() (
+  val controllerComponents: MessagesControllerComponents,
+  @Business navigator: Navigator,
+  actions: Actions,
+  formProvider: StringFormProvider,
+  sessionRepository: SessionRepository,
+  view: NonUkCompanyNameView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form: Form[String] = formProvider.withPrefix("business.nonUkCompany.name", 53)
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData {
-    implicit request =>
+  def onPageLoad(mode: Mode): Action[AnyContent] = actions.authWithData { implicit request =>
+    val preparedForm = request.userAnswers.get(CompanyNamePage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(CompanyNamePage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, mode))
+    Ok(view(preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.async {
-    implicit request =>
-      form.bindFromRequest().fold(
-        (formWithErrors: Form[_]) =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-        value => {
+  def onSubmit(mode: Mode): Action[AnyContent] = actions.authWithData.async { implicit request =>
+    form
+      .bindFromRequest()
+      .fold(
+        (formWithErrors: Form[_]) => Future.successful(BadRequest(view(formWithErrors, mode))),
+        value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(CompanyNamePage, value))
-            _ <- sessionRepository.set(updatedAnswers)
+            _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(CompanyNamePage, mode, updatedAnswers))
-        }
       )
   }
+
 }

@@ -28,33 +28,35 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOp
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class EstateConnector @Inject()(http: HttpClientV2, config : FrontendAppConfig) {
+class EstateConnector @Inject() (http: HttpClientV2, config: FrontendAppConfig) {
 
   implicit def httpResponse: HttpReads[HttpResponse] =
     throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
 
   private val individualPersonalRepUrl: String = s"${config.estatesUrl}/estates/personal-rep/individual"
 
-  def addIndividualPersonalRep(personalRep: IndividualPersonalRep)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
-    http.post(url"$individualPersonalRepUrl")
+  def addIndividualPersonalRep(
+    personalRep: IndividualPersonalRep
+  )(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+    http
+      .post(url"$individualPersonalRepUrl")
       .withBody(Json.toJson(personalRep))
       .execute[HttpResponse]
-  }
 
-  def getIndividualPersonalRep()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] = {
+  def getIndividualPersonalRep()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] =
     http.get(url"$individualPersonalRepUrl").execute[JsValue]
-  }
 
   private val businessPersonalRepUrl = s"${config.estatesUrl}/estates/personal-rep/organisation"
 
-  def addBusinessPersonalRep(personalRep: BusinessPersonalRep)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
-    http.post(url"$businessPersonalRepUrl")
+  def addBusinessPersonalRep(
+    personalRep: BusinessPersonalRep
+  )(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+    http
+      .post(url"$businessPersonalRepUrl")
       .withBody(Json.toJson(personalRep))
       .execute[HttpResponse]
-  }
 
-  def getBusinessPersonalRep()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] = {
+  def getBusinessPersonalRep()(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] =
     http.get(url"$businessPersonalRepUrl").execute[JsValue]
-  }
 
 }
