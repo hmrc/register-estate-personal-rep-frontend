@@ -56,6 +56,11 @@ class FrontendAppConfig @Inject() (
 
   lazy val registerEstateHubOverview: String = configuration.get[String]("urls.registerEstateHubOverview")
 
+  lazy val basGatewayBaseUrl: String       = configuration.get[String]("bas-gateway.host")
+  lazy val feedbackFrontendUrl: String     = configuration.get[String]("feedback-frontend.url")
+  lazy val timeOutUrl: String              = configuration.get[String]("urls.timeOut")
+  lazy val logoutWithBasGatewayUrl: String = s"$basGatewayBaseUrl$logoutUrl"
+
   lazy val languageTranslationEnabled: Boolean =
     configuration.get[Boolean]("microservice.services.features.welsh-translation")
 
